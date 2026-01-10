@@ -1,6 +1,6 @@
 # rx_lab
 
-A new Flutter project.
+The Reactive Programming Lab
 
 ## Getting Started
 
