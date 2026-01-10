@@ -27,6 +27,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/data/
 
 flutter_launcher_icons:
   image_path: "assets/images/logo.png"
