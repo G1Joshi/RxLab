@@ -1,0 +1,1824 @@
+{
+  "operators": [
+    {
+      "name": "Aggregate",
+      "description": "Combine emissions into a single value."
+    },
+    {
+      "name": "All",
+      "description": "Determine whether all items meet criteria."
+    },
+    {
+      "name": "Amb",
+      "description": "Given multiple source Observables, emit from the first one that emits."
+    },
+    {
+      "name": "ambArray",
+      "description": "Array variant of Amb."
+    },
+    {
+      "name": "ambWith",
+      "description": "Operator variant of Amb."
+    },
+    {
+      "name": "and_",
+      "description": "Intermediary for combining patterns."
+    },
+    {
+      "name": "And",
+      "description": "Combine sets of items via Pattern and Plan."
+    },
+    {
+      "name": "Any",
+      "description": "Check if any item meets a criteria."
+    },
+    {
+      "name": "apply",
+      "description": "Apply a function to emissions."
+    },
+    {
+      "name": "as_blocking",
+      "description": "Blocking variant of an observable."
+    },
+    {
+      "name": "asObservable",
+      "description": "Hide the identity of the source observable."
+    },
+    {
+      "name": "AssertEqual",
+      "description": "Verify two observables are equal."
+    },
+    {
+      "name": "asyncAction",
+      "description": "Perform an action asynchronously."
+    },
+    {
+      "name": "asyncFunc",
+      "description": "Convert synchronous function to async."
+    },
+    {
+      "name": "Average",
+      "description": "Calculate the average of numbers emitted."
+    },
+    {
+      "name": "averageDouble",
+      "description": "Double-specific average."
+    },
+    {
+      "name": "averageFloat",
+      "description": "Float-specific average."
+    },
+    {
+      "name": "averageInteger",
+      "description": "Int-specific average."
+    },
+    {
+      "name": "averageLong",
+      "description": "Long-specific average."
+    },
+    {
+      "name": "blocking",
+      "description": "Wait for observable to complete."
+    },
+    {
+      "name": "blockingFirst",
+      "description": "Blocks until the first item is emitted."
+    },
+    {
+      "name": "blockingForEach",
+      "description": "Blocks while applying function to each item."
+    },
+    {
+      "name": "blockingIterable",
+      "description": "Convert observable to blocking iterable."
+    },
+    {
+      "name": "blockingLast",
+      "description": "Blocks until the last item is emitted."
+    },
+    {
+      "name": "blockingLatest",
+      "description": "Returns most recent item without blocking source."
+    },
+    {
+      "name": "blockingMostRecent",
+      "description": "Continually return latest or default value."
+    },
+    {
+      "name": "blockingNext",
+      "description": "Returns an iterable for items emitted."
+    },
+    {
+      "name": "blockingSingle",
+      "description": "Blocks for exactly one emission."
+    },
+    {
+      "name": "blockingSubscribe",
+      "description": "Subscribe and block current thread."
+    },
+    {
+      "name": "Buffer",
+      "description": "Periodically gather items into bundles."
+    },
+    {
+      "name": "bufferWithCount",
+      "description": "Buffer items by fixed count."
+    },
+    {
+      "name": "bufferWithTime",
+      "description": "Buffer items by fixed time window."
+    },
+    {
+      "name": "bufferWithTimeOrCount",
+      "description": "Buffer by time or count limit."
+    },
+    {
+      "name": "byLine",
+      "description": "Split string stream into lines."
+    },
+    {
+      "name": "cache",
+      "description": "Ensure observers see the same sequence without re-executing."
+    },
+    {
+      "name": "cacheWithInitialCapacity",
+      "description": "Cache with specific buffer size."
+    },
+    {
+      "name": "case",
+      "description": "Conditional switch based on source."
+    },
+    {
+      "name": "Cast",
+      "description": "Cast emissions to a particular type."
+    },
+    {
+      "name": "Catch",
+      "description": "Recover from an onError notification."
+    },
+    {
+      "name": "catchError",
+      "description": "RxJS 6+ variant of Catch."
+    },
+    {
+      "name": "catchException",
+      "description": "Resume with another observable after error."
+    },
+    {
+      "name": "collect",
+      "description": "Collect emissions into a mutable container."
+    },
+    {
+      "name": "collect (RxScala version of Filter)",
+      "description": "Filter and transform emissions."
+    },
+    {
+      "name": "collectInto",
+      "description": "Collect into a provided instance."
+    },
+    {
+      "name": "CombineLatest",
+      "description": "Combine the latest item from multiple sources."
+    },
+    {
+      "name": "combineLatestDelayError",
+      "description": "CombineLatest, but delay errors till end."
+    },
+    {
+      "name": "combineLatestWith",
+      "description": "Operator variant of CombineLatest."
+    },
+    {
+      "name": "Concat",
+      "description": "Emit the emissions from multiple Observables without interleaving."
+    },
+    {
+      "name": "concat_all",
+      "description": "Concatenate inner observables sequentially."
+    },
+    {
+      "name": "concatAll",
+      "description": "Concatenate inner observables sequentially."
+    },
+    {
+      "name": "concatArray",
+      "description": "Concatenate an array of observables."
+    },
+    {
+      "name": "concatArrayDelayError",
+      "description": "Concat array, delaying errors."
+    },
+    {
+      "name": "concatArrayEager",
+      "description": "Concat array eagerly."
+    },
+    {
+      "name": "concatDelayError",
+      "description": "Concat delaying error for next."
+    },
+    {
+      "name": "concatEager",
+      "description": "Concat eagerly."
+    },
+    {
+      "name": "concatMap",
+      "description": "Map to observable and concat sequentially."
+    },
+    {
+      "name": "concatMapDelayError",
+      "description": "ConcatMap with delayed errors."
+    },
+    {
+      "name": "concatMapEager",
+      "description": "ConcatMap eagerly."
+    },
+    {
+      "name": "concatMapEagerDelayError",
+      "description": "ConcatMap eager with delayed error."
+    },
+    {
+      "name": "concatMapIterable",
+      "description": "Map to iterable and concat."
+    },
+    {
+      "name": "concatMapObserver",
+      "description": "Explicit observer map."
+    },
+    {
+      "name": "concatMapTo",
+      "description": "Map each value to same observable."
+    },
+    {
+      "name": "concatWith",
+      "description": "Concat current with another."
+    },
+    {
+      "name": "Connect",
+      "description": "Instruct a connectable Observable to begin emitting."
+    },
+    {
+      "name": "connect_forever",
+      "description": "Connect and never disconnect."
+    },
+    {
+      "name": "cons",
+      "description": "Prepend an element."
+    },
+    {
+      "name": "Contains",
+      "description": "Determine whether an Observable emits a particular item."
+    },
+    {
+      "name": "controlled",
+      "description": "Manually control emission flow."
+    },
+    {
+      "name": "Count",
+      "description": "Count the number of items emitted."
+    },
+    {
+      "name": "countLong",
+      "description": "Count items as a long integer."
+    },
+    {
+      "name": "Create",
+      "description": "Create an Observable from scratch."
+    },
+    {
+      "name": "cycle",
+      "description": "Repeat sequence infinitely."
+    },
+    {
+      "name": "Debounce",
+      "description": "Only emit an item if a particular timespan has passed."
+    },
+    {
+      "name": "decode",
+      "description": "Decode binary data streams."
+    },
+    {
+      "name": "DefaultIfEmpty",
+      "description": "Emit a default item if the source is empty."
+    },
+    {
+      "name": "Defer",
+      "description": "Do not create the Observable until the observer subscribes."
+    },
+    {
+      "name": "deferFuture",
+      "description": "Defer a future result."
+    },
+    {
+      "name": "Delay",
+      "description": "Shift emissions forward in time."
+    },
+    {
+      "name": "delaySubscription",
+      "description": "Delay the subscription action."
+    },
+    {
+      "name": "delayWithSelector",
+      "description": "Delay based on selection."
+    },
+    {
+      "name": "Dematerialize",
+      "description": "Convert Notification objects back into regular emissions."
+    },
+    {
+      "name": "Distinct",
+      "description": "Suppress duplicate items."
+    },
+    {
+      "name": "distinctKey",
+      "description": "Distinct by specific key."
+    },
+    {
+      "name": "distinctUntilChanged",
+      "description": "Ignore contiguous duplicates."
+    },
+    {
+      "name": "distinctUntilKeyChanged",
+      "description": "Ignore contiguous key duplicates."
+    },
+    {
+      "name": "Do",
+      "description": "Register an action to take upon various lifecycle events."
+    },
+    {
+      "name": "doAction",
+      "description": "Perform action side effect."
+    },
+    {
+      "name": "doAfterTerminate",
+      "description": "Side effect after ending."
+    },
+    {
+      "name": "doOnComplete",
+      "description": "Side effect on success."
+    },
+    {
+      "name": "doOnCompleted",
+      "description": "Side effect on completion."
+    },
+    {
+      "name": "doOnDispose",
+      "description": "Side effect on unsubscribe."
+    },
+    {
+      "name": "doOnEach",
+      "description": "Side effect on every event."
+    },
+    {
+      "name": "doOnError",
+      "description": "Side effect on error."
+    },
+    {
+      "name": "doOnLifecycle",
+      "description": "Lifecycle-wide side effects."
+    },
+    {
+      "name": "doOnNext",
+      "description": "Side effect on data."
+    },
+    {
+      "name": "doOnRequest",
+      "description": "Side effect on backpressure request."
+    },
+    {
+      "name": "doOnSubscribe",
+      "description": "Side effect on start."
+    },
+    {
+      "name": "doOnTerminate",
+      "description": "Side effect on termination."
+    },
+    {
+      "name": "doOnUnsubscribe",
+      "description": "Side effect on disconnect."
+    },
+    {
+      "name": "doseq",
+      "description": "Implicit side-effect loop."
+    },
+    {
+      "name": "doWhile",
+      "description": "Repeat while condition true."
+    },
+    {
+      "name": "drop",
+      "description": "Drop first records."
+    },
+    {
+      "name": "dropRight",
+      "description": "Drop last records."
+    },
+    {
+      "name": "dropUntil",
+      "description": "Drop until signal."
+    },
+    {
+      "name": "dropWhile",
+      "description": "Drop while condition met."
+    },
+    {
+      "name": "ElementAt",
+      "description": "Emit only item n emitted by an Observable."
+    },
+    {
+      "name": "ElementAtOrDefault",
+      "description": "ElementAt with fallback."
+    },
+    {
+      "name": "Empty",
+      "description": "Create an Observable that emits no items and terminates normally."
+    },
+    {
+      "name": "emptyObservable",
+      "description": "Alias for Empty."
+    },
+    {
+      "name": "empty?",
+      "description": "Check if source is empty."
+    },
+    {
+      "name": "encode",
+      "description": "Encode string streams."
+    },
+    {
+      "name": "ensures",
+      "description": "Ensure cleanup."
+    },
+    {
+      "name": "error",
+      "description": "Create observable that errors."
+    },
+    {
+      "name": "every",
+      "description": "Boolean test for all."
+    },
+    {
+      "name": "exclusive",
+      "description": "Exclusive stream access."
+    },
+    {
+      "name": "exists",
+      "description": "Boolean test for any."
+    },
+    {
+      "name": "expand",
+      "description": "Recursive flatMap."
+    },
+    {
+      "name": "failWith",
+      "description": "Immediate error release."
+    },
+    {
+      "name": "Filter",
+      "description": "Emit only those items that pass a predicate test."
+    },
+    {
+      "name": "filterNot",
+      "description": "Inverted filter."
+    },
+    {
+      "name": "Finally",
+      "description": "Perform an action when an Observable terminates."
+    },
+    {
+      "name": "finallyAction",
+      "description": "Alias for Finally."
+    },
+    {
+      "name": "finallyDo",
+      "description": "Alias for Finally."
+    },
+    {
+      "name": "find",
+      "description": "Find first match."
+    },
+    {
+      "name": "findIndex",
+      "description": "Find index of first match."
+    },
+    {
+      "name": "First",
+      "description": "Emit only the first item from an Observable."
+    },
+    {
+      "name": "firstElement",
+      "description": "Emit first element as Maybe."
+    },
+    {
+      "name": "FirstOrDefault",
+      "description": "First with default fallback."
+    },
+    {
+      "name": "firstOrElse",
+      "description": "First or provided value."
+    },
+    {
+      "name": "FlatMap",
+      "description": "Transform items into Observables and flatten them."
+    },
+    {
+      "name": "flatMapFirst",
+      "description": "Exhaust map variant."
+    },
+    {
+      "name": "flatMapIterable",
+      "description": "Map to iterable and flatten."
+    },
+    {
+      "name": "flatMapIterableWith",
+      "description": "Variant with result selector."
+    },
+    {
+      "name": "flatMapLatest",
+      "description": "Switch map variant."
+    },
+    {
+      "name": "flatMapObserver",
+      "description": "Full observer map."
+    },
+    {
+      "name": "flatMapWith",
+      "description": "Map with combinatonal selector."
+    },
+    {
+      "name": "flatMapWithMaxConcurrent",
+      "description": "FlatMap with concurrency limit."
+    },
+    {
+      "name": "flat_map_with_index",
+      "description": "FlatMap with index."
+    },
+    {
+      "name": "flatten",
+      "description": "Flatten inner observables."
+    },
+    {
+      "name": "flattenDelayError",
+      "description": "Flatten, delaying error."
+    },
+    {
+      "name": "foldl",
+      "description": "Sequential reduction."
+    },
+    {
+      "name": "foldLeft",
+      "description": "Sequential reduction."
+    },
+    {
+      "name": "for",
+      "description": "Iterative creation."
+    },
+    {
+      "name": "forall",
+      "description": "Predicate for all."
+    },
+    {
+      "name": "ForEach",
+      "description": "Invoke a function on each item emitted."
+    },
+    {
+      "name": "forEachFuture",
+      "description": "ForEach returning future."
+    },
+    {
+      "name": "forEachWhile",
+      "description": "ForEach until false."
+    },
+    {
+      "name": "forIn",
+      "description": "Creation loop."
+    },
+    {
+      "name": "forkJoin",
+      "description": "Wait for all to finish."
+    },
+    {
+      "name": "From",
+      "description": "Convert other objects or data structures into Observables."
+    },
+    {
+      "name": "fromAction",
+      "description": "Create from action."
+    },
+    {
+      "name": "fromArray",
+      "description": "Create from array."
+    },
+    {
+      "name": "FromAsyncPattern",
+      "description": "Create from async pattern."
+    },
+    {
+      "name": "fromCallable",
+      "description": "Create from callable."
+    },
+    {
+      "name": "fromCallback",
+      "description": "Create from callback."
+    },
+    {
+      "name": "FromEvent",
+      "description": "Create from event."
+    },
+    {
+      "name": "FromEventPattern",
+      "description": "Create from event pattern."
+    },
+    {
+      "name": "fromFunc0",
+      "description": "Create from function."
+    },
+    {
+      "name": "fromFuture",
+      "description": "Create from future."
+    },
+    {
+      "name": "fromIterable",
+      "description": "Create from iterable."
+    },
+    {
+      "name": "fromIterator",
+      "description": "Create from iterator."
+    },
+    {
+      "name": "from_list",
+      "description": "Create from list."
+    },
+    {
+      "name": "fromNodeCallback",
+      "description": "Create from Node callback."
+    },
+    {
+      "name": "fromPromise",
+      "description": "Create from promise."
+    },
+    {
+      "name": "fromPublisher",
+      "description": "Create from publisher."
+    },
+    {
+      "name": "fromRunnable",
+      "description": "Create from runnable."
+    },
+    {
+      "name": "Generate",
+      "description": "Create an Observable by using a loop-like generator."
+    },
+    {
+      "name": "generateWithAbsoluteTime",
+      "description": "Generate with schedule."
+    },
+    {
+      "name": "generateWithRelativeTime",
+      "description": "Generate with delay."
+    },
+    {
+      "name": "generator",
+      "description": "Python-style generator."
+    },
+    {
+      "name": "GetEnumerator",
+      "description": "Get enumerable iterator."
+    },
+    {
+      "name": "getIterator",
+      "description": "Alias for iterator."
+    },
+    {
+      "name": "GroupBy",
+      "description": "Divide an Observable into a set of Observables organized by key."
+    },
+    {
+      "name": "GroupByUntil",
+      "description": "Group until signal."
+    },
+    {
+      "name": "GroupJoin",
+      "description": "Combine items from two Observables using time windows."
+    },
+    {
+      "name": "head",
+      "description": "Alias for First."
+    },
+    {
+      "name": "headOption",
+      "description": "First as option."
+    },
+    {
+      "name": "headOrElse",
+      "description": "First or fallback."
+    },
+    {
+      "name": "if",
+      "description": "Conditional branching."
+    },
+    {
+      "name": "ifThen",
+      "description": "Functional if."
+    },
+    {
+      "name": "IgnoreElements",
+      "description": "Do not emit any items but mirror termination."
+    },
+    {
+      "name": "indexOf",
+      "description": "Emit index of item."
+    },
+    {
+      "name": "interleave",
+      "description": "Interleave streams."
+    },
+    {
+      "name": "interpose",
+      "description": "Insert delimiter."
+    },
+    {
+      "name": "Interval",
+      "description": "Emit a sequence of integers spaced by an interval."
+    },
+    {
+      "name": "intervalRange",
+      "description": "Bounded interval."
+    },
+    {
+      "name": "into",
+      "description": "Collect into container."
+    },
+    {
+      "name": "isEmpty",
+      "description": "Test for emptiness."
+    },
+    {
+      "name": "items",
+      "description": "Emission collection."
+    },
+    {
+      "name": "Join",
+      "description": "Combine items emitted by two Observables based on time windows."
+    },
+    {
+      "name": "join (string)",
+      "description": "String join reduction."
+    },
+    {
+      "name": "jortSort",
+      "description": "Stupid sort strategy."
+    },
+    {
+      "name": "jortSortUntil",
+      "description": "JortSort until signal."
+    },
+    {
+      "name": "Just",
+      "description": "Convert an object into an Observable that emits that object."
+    },
+    {
+      "name": "keep",
+      "description": "Compact filter mapping."
+    },
+    {
+      "name": "keep-indexed",
+      "description": "Indexed compact mapping."
+    },
+    {
+      "name": "Last",
+      "description": "Emit only the last item emitted by an Observable."
+    },
+    {
+      "name": "lastElement",
+      "description": "Last item as Maybe."
+    },
+    {
+      "name": "lastOption",
+      "description": "Last item as Option."
+    },
+    {
+      "name": "LastOrDefault",
+      "description": "Last item with fallback."
+    },
+    {
+      "name": "lastOrElse",
+      "description": "Last item or default."
+    },
+    {
+      "name": "Latest",
+      "description": "Observable of latest results."
+    },
+    {
+      "name": "latest (Rx.rb version of Switch)",
+      "description": "Switch behavior."
+    },
+    {
+      "name": "length",
+      "description": "Count variant."
+    },
+    {
+      "name": "let",
+      "description": "Local scoped execution."
+    },
+    {
+      "name": "letBind",
+      "description": "Scoped bonding."
+    },
+    {
+      "name": "lift",
+      "description": "Internal operator hooking."
+    },
+    {
+      "name": "limit",
+      "description": "Alias for Take."
+    },
+    {
+      "name": "LongCount",
+      "description": "Long int count."
+    },
+    {
+      "name": "ManySelect",
+      "description": "Windowed selector."
+    },
+    {
+      "name": "Map",
+      "description": "Transform each item emitted by applying a function."
+    },
+    {
+      "name": "map (RxClojure version of Zip)",
+      "description": "Zip variant."
+    },
+    {
+      "name": "MapCat",
+      "description": "FlatMap variant."
+    },
+    {
+      "name": "mapCat (RxClojure version of Zip)",
+      "description": "Zip variant."
+    },
+    {
+      "name": "map-indexed",
+      "description": "Map with index."
+    },
+    {
+      "name": "mapTo",
+      "description": "Static mapping."
+    },
+    {
+      "name": "mapWithIndex",
+      "description": "Indexed mapping."
+    },
+    {
+      "name": "Materialize",
+      "description": "Represent both items and notifications as emitted items."
+    },
+    {
+      "name": "Max",
+      "description": "Emit the maximum-valued item."
+    },
+    {
+      "name": "MaxBy",
+      "description": "Max using specific key."
+    },
+    {
+      "name": "Merge",
+      "description": "Combine multiple Observables into one."
+    },
+    {
+      "name": "mergeAll",
+      "description": "Merge inner streams."
+    },
+    {
+      "name": "mergeArray",
+      "description": "Merge observable array."
+    },
+    {
+      "name": "mergeArrayDelayError",
+      "description": "Merge array delaying errors."
+    },
+    {
+      "name": "merge_concurrent",
+      "description": "Concurrent merging limit."
+    },
+    {
+      "name": "mergeDelayError",
+      "description": "Merge delaying errors."
+    },
+    {
+      "name": "mergeObservable",
+      "description": "Alias for Merge."
+    },
+    {
+      "name": "mergeWith",
+      "description": "Merge current with other."
+    },
+    {
+      "name": "Min",
+      "description": "Emit the minimum-valued item."
+    },
+    {
+      "name": "MinBy",
+      "description": "Min using specific key."
+    },
+    {
+      "name": "MostRecent",
+      "description": "Latest emission or default."
+    },
+    {
+      "name": "Multicast",
+      "description": "Bridge emissions to multiple observers."
+    },
+    {
+      "name": "multicastWithSelector",
+      "description": "Multicast with selector mapping."
+    },
+    {
+      "name": "nest",
+      "description": "Wrap in observable."
+    },
+    {
+      "name": "Never",
+      "description": "Create an Observable that emits no items and never terminates."
+    },
+    {
+      "name": "Next",
+      "description": "Wait for next value."
+    },
+    {
+      "name": "Next (BlockingObservable version)",
+      "description": "Blocking wait for next."
+    },
+    {
+      "name": "none",
+      "description": "Check if none match."
+    },
+    {
+      "name": "nonEmpty",
+      "description": "Inverse of isEmpty."
+    },
+    {
+      "name": "nth",
+      "description": "Alias for ElementAt."
+    },
+    {
+      "name": "ObserveOn",
+      "description": "Specify the scheduler an observer will use."
+    },
+    {
+      "name": "ObserveOnDispatcher",
+      "description": "Observe on UI thread."
+    },
+    {
+      "name": "observeSingleOn",
+      "description": "Observe for single value."
+    },
+    {
+      "name": "of",
+      "description": "Create from arguments."
+    },
+    {
+      "name": "of_array",
+      "description": "Array creation."
+    },
+    {
+      "name": "ofArrayChanges",
+      "description": "Track array diffs."
+    },
+    {
+      "name": "of_enumerable",
+      "description": "Enumerable creation."
+    },
+    {
+      "name": "of_enumerator",
+      "description": "Enumerator creation."
+    },
+    {
+      "name": "ofObjectChanges",
+      "description": "Track object diffs."
+    },
+    {
+      "name": "OfType",
+      "description": "Filter emissions to only those of a certain type."
+    },
+    {
+      "name": "ofWithScheduler",
+      "description": "Of with scheduler."
+    },
+    {
+      "name": "onBackpressureBlock",
+      "description": "Block on pressure."
+    },
+    {
+      "name": "onBackpressureBuffer",
+      "description": "Buffer pressure."
+    },
+    {
+      "name": "onBackpressureDrop",
+      "description": "Drop on pressure."
+    },
+    {
+      "name": "OnErrorResumeNext",
+      "description": "Continue with a second Observable if the first errors."
+    },
+    {
+      "name": "onErrorReturn",
+      "description": "Return value on error."
+    },
+    {
+      "name": "onErrorReturnItem",
+      "description": "Return item on error."
+    },
+    {
+      "name": "onExceptionResumeNext",
+      "description": "Resume after exception."
+    },
+    {
+      "name": "onTerminateDetach",
+      "description": "Detach on end."
+    },
+    {
+      "name": "orElse",
+      "description": "Fallback value."
+    },
+    {
+      "name": "pairs",
+      "description": "Key-value pair emissions."
+    },
+    {
+      "name": "pairwise",
+      "description": "Tupled emissions."
+    },
+    {
+      "name": "partition",
+      "description": "Split observable in two."
+    },
+    {
+      "name": "partition-all",
+      "description": "Chunky partitions."
+    },
+    {
+      "name": "pausable",
+      "description": "Pause emission flow."
+    },
+    {
+      "name": "pausableBuffered",
+      "description": "Pausable with buffer."
+    },
+    {
+      "name": "pluck",
+      "description": "Select property from object."
+    },
+    {
+      "name": "product",
+      "description": "Multiplication reduction."
+    },
+    {
+      "name": "Publish",
+      "description": "Convert an ordinary Observable into a connectable one."
+    },
+    {
+      "name": "PublishLast",
+      "description": "Emit only the last item and connect."
+    },
+    {
+      "name": "publish_synchronized",
+      "description": "Synced publishing."
+    },
+    {
+      "name": "publishValue",
+      "description": "Publish with initial value."
+    },
+    {
+      "name": "raise_error",
+      "description": "Alias for Error."
+    },
+    {
+      "name": "Range",
+      "description": "Emit a range of sequential integers."
+    },
+    {
+      "name": "Reduce",
+      "description": "Apply a function to each item and emit the final value."
+    },
+    {
+      "name": "reduceWith",
+      "description": "Reduce with initial seed."
+    },
+    {
+      "name": "reductions",
+      "description": "Scan variant."
+    },
+    {
+      "name": "RefCount",
+      "description": "Make a connectable Observable behave like an ordinary one."
+    },
+    {
+      "name": "Repeat",
+      "description": "Emit a sequence of items repeatedly."
+    },
+    {
+      "name": "repeat_infinitely",
+      "description": "Endless repeats."
+    },
+    {
+      "name": "repeatUntil",
+      "description": "Repeat until condition met."
+    },
+    {
+      "name": "repeatWhen",
+      "description": "Repeat based on feedback."
+    },
+    {
+      "name": "Replay",
+      "description": "Ensure observers see the same sequence, even if they subscribe late."
+    },
+    {
+      "name": "rescue_error",
+      "description": "Error handling variant."
+    },
+    {
+      "name": "rest",
+      "description": "Skip first element."
+    },
+    {
+      "name": "Retry",
+      "description": "If an error occurs, resubscribe to the source."
+    },
+    {
+      "name": "retry_infinitely",
+      "description": "Endless retries."
+    },
+    {
+      "name": "retryUntil",
+      "description": "Retry until condition."
+    },
+    {
+      "name": "retryWhen",
+      "description": "Retry based on feedback."
+    },
+    {
+      "name": "Return",
+      "description": "Alias for Just."
+    },
+    {
+      "name": "returnElement",
+      "description": "Alias for Just."
+    },
+    {
+      "name": "returnValue",
+      "description": "Alias for Just."
+    },
+    {
+      "name": "runAsync",
+      "description": "Execute async task."
+    },
+    {
+      "name": "safeSubscribe",
+      "description": "Subscribe with crash protection."
+    },
+    {
+      "name": "Sample",
+      "description": "Emit the most recent item within periodic intervals."
+    },
+    {
+      "name": "Scan",
+      "description": "Apply a function sequentially and emit each successive value."
+    },
+    {
+      "name": "scanWith",
+      "description": "Scan with seed function."
+    },
+    {
+      "name": "scope",
+      "description": "Lifecycle scoping."
+    },
+    {
+      "name": "Select (alternate name of Map)",
+      "description": "LINQ-style mapping."
+    },
+    {
+      "name": "select (alternate name of Filter)",
+      "description": "LINQ-style filtering."
+    },
+    {
+      "name": "selectConcat",
+      "description": "Alias for ConcatMap."
+    },
+    {
+      "name": "selectConcatObserver",
+      "description": "Explicit concat map."
+    },
+    {
+      "name": "SelectMany",
+      "description": "Alias for FlatMap."
+    },
+    {
+      "name": "selectManyObserver",
+      "description": "Explicit flat map."
+    },
+    {
+      "name": "select_switch",
+      "description": "Alias for SwitchMap."
+    },
+    {
+      "name": "selectSwitch",
+      "description": "Alias for SwitchMap."
+    },
+    {
+      "name": "selectSwitchFirst",
+      "description": "Alias for ExhaustMap."
+    },
+    {
+      "name": "selectWithMaxConcurrent",
+      "description": "Safe selection limit."
+    },
+    {
+      "name": "select_with_index",
+      "description": "Indexed selection."
+    },
+    {
+      "name": "seq",
+      "description": "Sequential creation."
+    },
+    {
+      "name": "SequenceEqual",
+      "description": "Determine whether two Observables emit the same sequence."
+    },
+    {
+      "name": "sequence_eql?",
+      "description": "Equality test."
+    },
+    {
+      "name": "SequenceEqualWith",
+      "description": "Equality with comparator."
+    },
+    {
+      "name": "Serialize",
+      "description": "Force an Observable to make serialized calls."
+    },
+    {
+      "name": "share",
+      "description": "Shorthand for Publish().RefCount()."
+    },
+    {
+      "name": "shareReplay",
+      "description": "Share and cache."
+    },
+    {
+      "name": "shareValue",
+      "description": "Share with behavior."
+    },
+    {
+      "name": "Single",
+      "description": "Emit only one item, or an error if not exactly one."
+    },
+    {
+      "name": "singleElement",
+      "description": "Exactly one Maybe."
+    },
+    {
+      "name": "SingleOrDefault",
+      "description": "Exactly one or fallback."
+    },
+    {
+      "name": "singleOption",
+      "description": "Exactly one Option."
+    },
+    {
+      "name": "singleOrElse",
+      "description": "Exactly one or default."
+    },
+    {
+      "name": "size",
+      "description": "Alias for Count."
+    },
+    {
+      "name": "Skip",
+      "description": "Suppress the first n items emitted."
+    },
+    {
+      "name": "SkipLast",
+      "description": "Suppress the last n items emitted."
+    },
+    {
+      "name": "skipLastWithTime",
+      "description": "Skip last by time."
+    },
+    {
+      "name": "SkipUntil",
+      "description": "Discard items until a second Observable emits."
+    },
+    {
+      "name": "skipUntilWithTime",
+      "description": "Discard until time signal."
+    },
+    {
+      "name": "SkipWhile",
+      "description": "Discard items until a condition becomes false."
+    },
+    {
+      "name": "skipWhileWithIndex",
+      "description": "Indexed skip while."
+    },
+    {
+      "name": "skip_with_time",
+      "description": "Timed skip."
+    },
+    {
+      "name": "slice",
+      "description": "Subsequence extraction."
+    },
+    {
+      "name": "sliding",
+      "description": "Windowed view."
+    },
+    {
+      "name": "slidingBuffer",
+      "description": "Sliding window output."
+    },
+    {
+      "name": "some",
+      "description": "Existence check."
+    },
+    {
+      "name": "sort",
+      "description": "Operator sort."
+    },
+    {
+      "name": "sorted",
+      "description": "Stream sort."
+    },
+    {
+      "name": "sort-by",
+      "description": "Keyed sort."
+    },
+    {
+      "name": "sorted-list-by",
+      "description": "List sorted emissions."
+    },
+    {
+      "name": "split",
+      "description": "Delimited split."
+    },
+    {
+      "name": "split-with",
+      "description": "Predicated split."
+    },
+    {
+      "name": "Start",
+      "description": "Emit the return value of a function."
+    },
+    {
+      "name": "startAsync",
+      "description": "Task launch."
+    },
+    {
+      "name": "startFuture",
+      "description": "Future launch."
+    },
+    {
+      "name": "StartWith",
+      "description": "Emit a sequence of items before the source."
+    },
+    {
+      "name": "startWithArray",
+      "description": "Prepend array."
+    },
+    {
+      "name": "stringConcat",
+      "description": "Join string variant."
+    },
+    {
+      "name": "stopAndWait",
+      "description": "Backpressure wait."
+    },
+    {
+      "name": "subscribe",
+      "description": "Generic subscriber."
+    },
+    {
+      "name": "subscribeActual",
+      "description": "Internal implementation Hook."
+    },
+    {
+      "name": "SubscribeOn",
+      "description": "Specify the scheduler the Observable should use on subscription."
+    },
+    {
+      "name": "SubscribeOnDispatcher",
+      "description": "Start on UI thread."
+    },
+    {
+      "name": "subscribeOnCompleted",
+      "description": "Completion-only sub."
+    },
+    {
+      "name": "subscribeOnError",
+      "description": "Error-only sub."
+    },
+    {
+      "name": "subscribeOnNext",
+      "description": "Data-only sub."
+    },
+    {
+      "name": "subscribeWith",
+      "description": "Unified subscription."
+    },
+    {
+      "name": "Sum",
+      "description": "Calculate the sum of all emitted numbers."
+    },
+    {
+      "name": "sumDouble",
+      "description": "Double-specific sum."
+    },
+    {
+      "name": "sumFloat",
+      "description": "Float-specific sum."
+    },
+    {
+      "name": "sumInteger",
+      "description": "Int-specific sum."
+    },
+    {
+      "name": "sumLong",
+      "description": "Long-specific sum."
+    },
+    {
+      "name": "Switch",
+      "description": "Switch to the most recently emitted Observable."
+    },
+    {
+      "name": "switchCase",
+      "description": "Case selection switch."
+    },
+    {
+      "name": "switchIfEmpty",
+      "description": "Switch if source dry."
+    },
+    {
+      "name": "switchLatest",
+      "description": "Alias for switch."
+    },
+    {
+      "name": "switchMap",
+      "description": "Map to observable and switch."
+    },
+    {
+      "name": "switchMapDelayError",
+      "description": "SwitchMap with error delay."
+    },
+    {
+      "name": "switchOnNext",
+      "description": "Alias for switch."
+    },
+    {
+      "name": "switchOnNextDelayError",
+      "description": "Switch with error delay."
+    },
+    {
+      "name": "Synchronize",
+      "description": "Thread-safe stream."
+    },
+    {
+      "name": "Take",
+      "description": "Emit only the first n items."
+    },
+    {
+      "name": "take_with_time",
+      "description": "Timed take."
+    },
+    {
+      "name": "takeFirst",
+      "description": "Alias for First."
+    },
+    {
+      "name": "TakeLast",
+      "description": "Emit only the last n items."
+    },
+    {
+      "name": "takeLastBuffer",
+      "description": "Buffered last items."
+    },
+    {
+      "name": "takeLastBufferWithTime",
+      "description": "Timed buffer of last."
+    },
+    {
+      "name": "takeLastWithTime",
+      "description": "Timed last take."
+    },
+    {
+      "name": "takeRight (see also: TakeLast)",
+      "description": "Selection from end."
+    },
+    {
+      "name": "TakeUntil",
+      "description": "Discard items after a second Observable emits."
+    },
+    {
+      "name": "takeUntilWithTime",
+      "description": "End at time signal."
+    },
+    {
+      "name": "TakeWhile",
+      "description": "Discard items after a condition becomes false."
+    },
+    {
+      "name": "takeWhileWithIndex",
+      "description": "Indexed take while."
+    },
+    {
+      "name": "tail",
+      "description": "Alias for Skip(1)."
+    },
+    {
+      "name": "tap",
+      "description": "Alias for Do."
+    },
+    {
+      "name": "tapOnCompleted",
+      "description": "Side effect on success."
+    },
+    {
+      "name": "tapOnError",
+      "description": "Side effect on error."
+    },
+    {
+      "name": "tapOnNext",
+      "description": "Side effect on data."
+    },
+    {
+      "name": "Then",
+      "description": "Intermediary for Pattern/Plan combinations."
+    },
+    {
+      "name": "thenDo",
+      "description": "Sequence execution."
+    },
+    {
+      "name": "Throttle",
+      "description": "Emit items only if a timespan has passed without other emissions."
+    },
+    {
+      "name": "throttleFirst",
+      "description": "Limit frequency of emissions."
+    },
+    {
+      "name": "throttleLast",
+      "description": "Periodic sampling."
+    },
+    {
+      "name": "throttleLatest",
+      "description": "Most recent per window."
+    },
+    {
+      "name": "throttleWithSelector",
+      "description": "Selector throttled."
+    },
+    {
+      "name": "throttleWithTimeout",
+      "description": "Alias for Debounce."
+    },
+    {
+      "name": "Throw",
+      "description": "Create an Observable that terminates immediately with an error."
+    },
+    {
+      "name": "throwError",
+      "description": "RxJS 6+ alias for Throw."
+    },
+    {
+      "name": "throwException",
+      "description": "Alias for Throw."
+    },
+    {
+      "name": "TimeInterval",
+      "description": "Emit items representing time elapsed between emissions."
+    },
+    {
+      "name": "Timeout",
+      "description": "Issue an error if a particular timespan passes without an emission."
+    },
+    {
+      "name": "timeoutWithSelector",
+      "description": "Timed timeout selection."
+    },
+    {
+      "name": "Timer",
+      "description": "Emit a single item after a given delay."
+    },
+    {
+      "name": "Timestamp",
+      "description": "Attach a timestamp to each emitted item."
+    },
+    {
+      "name": "To",
+      "description": "Convert an Observable into another structure."
+    },
+    {
+      "name": "to_a",
+      "description": "Convert to array."
+    },
+    {
+      "name": "ToArray",
+      "description": "Convert to array."
+    },
+    {
+      "name": "ToAsync",
+      "description": "Convert to async function."
+    },
+    {
+      "name": "toBlocking",
+      "description": "Convert to blocking observable."
+    },
+    {
+      "name": "toBuffer",
+      "description": "Collect to buffer."
+    },
+    {
+      "name": "to_dict",
+      "description": "Convert to dictionary."
+    },
+    {
+      "name": "ToDictionary",
+      "description": "Convert to dictionary."
+    },
+    {
+      "name": "ToEnumerable",
+      "description": "Convert to enumerable."
+    },
+    {
+      "name": "ToEvent",
+      "description": "Convert to event."
+    },
+    {
+      "name": "ToEventPattern",
+      "description": "Convert to event pattern."
+    },
+    {
+      "name": "ToFlowable",
+      "description": "Convert to Flowable."
+    },
+    {
+      "name": "ToFuture",
+      "description": "Convert to future."
+    },
+    {
+      "name": "to_h",
+      "description": "Convert to hash map."
+    },
+    {
+      "name": "toIndexedSeq",
+      "description": "Convert to indexed sequence."
+    },
+    {
+      "name": "toIterable",
+      "description": "Convert to iterable."
+    },
+    {
+      "name": "toIterator",
+      "description": "Convert to iterator."
+    },
+    {
+      "name": "ToList",
+      "description": "Convert to list."
+    },
+    {
+      "name": "ToLookup",
+      "description": "Convert to keyed lookup."
+    },
+    {
+      "name": "toMap",
+      "description": "Convert to map object."
+    },
+    {
+      "name": "toMultiMap",
+      "description": "Convert to multi-value map."
+    },
+    {
+      "name": "ToObservable",
+      "description": "Ensure object is observable."
+    },
+    {
+      "name": "toSet",
+      "description": "Convert to set."
+    },
+    {
+      "name": "toSortedList",
+      "description": "Convert to sorted list."
+    },
+    {
+      "name": "toStream",
+      "description": "Convert to platform stream."
+    },
+    {
+      "name": "ToTask",
+      "description": "Convert to async task."
+    },
+    {
+      "name": "toTraversable",
+      "description": "Convert to traversable."
+    },
+    {
+      "name": "toVector",
+      "description": "Convert to vector."
+    },
+    {
+      "name": "tumbling",
+      "description": "Chunky windowing."
+    },
+    {
+      "name": "tumblingBuffer",
+      "description": "Windowed buffering."
+    },
+    {
+      "name": "unsafeCreate",
+      "description": "Internal raw creator."
+    },
+    {
+      "name": "unsubscribeOn",
+      "description": "Specify scheduler for unsubscription."
+    },
+    {
+      "name": "Using",
+      "description": "Create a resource with the same lifespan as the Observable."
+    },
+    {
+      "name": "When",
+      "description": "Execute plans created via Pattern intermediaries."
+    },
+    {
+      "name": "Where",
+      "description": "Filter alias."
+    },
+    {
+      "name": "while",
+      "description": "Creation loop."
+    },
+    {
+      "name": "whileDo",
+      "description": "Loop creation."
+    },
+    {
+      "name": "Window",
+      "description": "Subdivide items into Observable windows."
+    },
+    {
+      "name": "windowWithCount",
+      "description": "Count-based windowing."
+    },
+    {
+      "name": "windowWithTime",
+      "description": "Time-based windowing."
+    },
+    {
+      "name": "windowWithTimeOrCount",
+      "description": "Hybrid windowing."
+    },
+    {
+      "name": "windowed",
+      "description": "Chunky windowing."
+    },
+    {
+      "name": "withFilter",
+      "description": "Lazy filtering."
+    },
+    {
+      "name": "withLatestFrom",
+      "description": "Source combined with latest from secondary."
+    },
+    {
+      "name": "Zip",
+      "description": "Combine emissions via a function and emit single items."
+    },
+    {
+      "name": "zipArray",
+      "description": "Zip array of observables."
+    },
+    {
+      "name": "zipIterable",
+      "description": "Zip iterable of observables."
+    },
+    {
+      "name": "zipWith",
+      "description": "Operator zip variant."
+    },
+    {
+      "name": "zipWithIndex",
+      "description": "Zip with index sequence."
+    },
+    {
+      "name": "++",
+      "description": "Concat operator."
+    },
+    {
+      "name": "+:",
+      "description": "Prepend operator."
+    },
+    {
+      "name": ":+",
+      "description": "Append operator."
+    }
+  ]
+}
