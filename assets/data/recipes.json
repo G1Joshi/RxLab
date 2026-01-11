@@ -1,0 +1,84 @@
+{
+  "recipes": [
+    {
+      "title": "Search Autocomplete",
+      "description": "Debounced search with loading state",
+      "icon": "search",
+      "color": "indigo",
+      "problem": "You want to search as the user types, but not on every keystroke which would overload your API.",
+      "solution": "Use debounce to wait for a pause in typing, switchMap to cancel previous requests, and distinct to avoid duplicate searches.",
+      "operatorsUsed": ["debounce", "distinct", "switchMap", "filter"],
+      "codeExample": "searchResults = searchText\n  .debounce(300.ms)\n  .filter(query => query.length >= 2)\n  .distinct()\n  .switchMap(query => searchApi(query)\n    .startWith(Loading())\n    .catchError(SearchError()))\n  .share()\n\n// Effect:\n// - Waits 300ms after typing stops\n// - Ignores queries < 2 chars\n// - Cancels previous search on new query\n// - Shows loading state"
+    },
+    {
+      "title": "Form Validation",
+      "description": "Real-time validation with multiple fields",
+      "icon": "check_circle",
+      "color": "green",
+      "problem": "You need to validate multiple form fields and only enable submit when all are valid.",
+      "solution": "Use combineLatest to get latest values from all fields, then map to validation result.",
+      "operatorsUsed": ["combineLatest", "map", "startWith", "distinct"],
+      "codeExample": "isFormValid = combineLatest(\n  email.map(isValidEmail),\n  password.map(isStrongPassword),\n  age.map(isValidAge)\n).map((e, p, a) => e && p && a)\n .distinct()\n\n// Enable button only when valid\nisFormValid.subscribe(valid => {\n  submitButton.enabled = valid\n})"
+    },
+    {
+      "title": "Retry with Exponential Backoff",
+      "description": "Smart retry for network failures",
+      "icon": "refresh",
+      "color": "orange",
+      "problem": "Network requests can fail temporarily. You want to retry with increasing delays.",
+      "solution": "Use retryWhen with a delay that increases exponentially on each failure.",
+      "operatorsUsed": ["retryWhen", "delay", "take", "scan"],
+      "codeExample": "fetchFromApi()\n  .retryWhen(errors => errors\n    .scan((delay, _) => delay * 2, 1000)  // 1s, 2s, 4s...\n    .take(3)  // Max 3 retries\n    .flatMap(delay => {\n      print(\"Retrying in \" + delay + \"ms...\")\n      return timer(delay)\n    }))\n  .subscribe(handleData)\n\n// Retry delays: 1s → 2s → 4s → give up"
+    },
+    {
+      "title": "Infinite Scroll / Pagination",
+      "description": "Load more data as user scrolls",
+      "icon": "view_list",
+      "color": "purple",
+      "problem": "You need to load more items when the user reaches the bottom of the list.",
+      "solution": "Combine scroll events with page state, throttle to avoid rapid calls, and accumulate results.",
+      "operatorsUsed": ["scan", "switchMap", "startWith", "throttle"],
+      "codeExample": "items = loadMoreTrigger\n  .throttle(500.ms)\n  .scan((page, _) => page + 1, 0)\n  .startWith(0)\n  .switchMap(page => fetchPage(page)\n    .map(items => Success(page, items))\n    .startWith(Loading())\n    .catchError(Error()))\n  .scan((allItems, result) => {\n    if (result is Success)\n      return allItems + result.items\n    return allItems\n  }, [])"
+    },
+    {
+      "title": "Smart Polling",
+      "description": "Poll API with pause on error/background",
+      "icon": "sync",
+      "color": "teal",
+      "problem": "You need to poll an API periodically but pause when app is in background or on error.",
+      "solution": "Use switchMap with timer, pause on lifecycle events, and handle errors without killing the poll.",
+      "operatorsUsed": ["switchMap", "interval", "takeUntil", "catchError"],
+      "codeExample": "appActive = appLifecycle\n  .map(state => state == Resumed)\n\npollData = appActive\n  .switchMap(active => active\n    ? interval(30.seconds)\n        .startWith(Unit)\n        .switchMap(_ => fetchData()\n          .catchError(cachedData))\n    : empty())\n  .shareReplay(1)\n\n// Polls every 30s when active\n// Pauses in background\n// Uses cache on error"
+    },
+    {
+      "title": "Cached Network Request",
+      "description": "Cache with stale-while-revalidate",
+      "icon": "cached",
+      "color": "blue",
+      "problem": "Show cached data immediately, then update with fresh data when available.",
+      "solution": "Use concat to emit cached first, then fresh. Or merge for parallel.",
+      "operatorsUsed": ["concat", "merge", "shareReplay", "distinct"],
+      "codeExample": "getCachedThenFresh(id) {\n  cached = getFromCache(id)\n  fresh = fetchFromApi(id)\n    .doOnNext(data => saveToCache(id, data))\n  \n  return concat(cached, fresh)\n    .distinct()  // Skip if fresh == cached\n    .shareReplay(1)\n}\n\n// Emits: cached → fresh (if different)"
+    },
+    {
+      "title": "Undo/Redo Stack",
+      "description": "Implement undo/redo with streams",
+      "icon": "undo",
+      "color": "deepPurple",
+      "problem": "You need to maintain a history of state changes for undo/redo functionality.",
+      "solution": "Use scan to build history stack, with commands for undo, redo, and new edits.",
+      "operatorsUsed": ["scan", "map", "startWith", "distinct"],
+      "codeExample": "history = commands\n  .scan((state, command) => {\n    switch (command) {\n      case Undo: return state.undo()\n      case Redo: return state.redo()\n      case Edit(value): return state.push(value)\n    }\n  }, HistoryState.empty)\n\ncurrentValue = history.map(h => h.current)\ncanUndo = history.map(h => h.canUndo)\ncanRedo = history.map(h => h.canRedo)"
+    },
+    {
+      "title": "Drag and Drop",
+      "description": "Handle drag events with streams",
+      "icon": "pan_tool",
+      "color": "pink",
+      "problem": "You need to track mouse/touch from start to end of a drag gesture.",
+      "solution": "Use takeUntil to capture events between mousedown and mouseup.",
+      "operatorsUsed": ["switchMap", "takeUntil", "map", "startWith"],
+      "codeExample": "drags = mouseDown\n  .switchMap(start => mouseMove\n    .map(move => DragEvent(\n      start: start.position,\n      current: move.position,\n      delta: move.position - start.position\n    ))\n    .takeUntil(mouseUp))\n\ndrags.subscribe(drag => {\n  element.transform = translate(drag.delta.x, drag.delta.y)\n})"
+    }
+  ]
+}
