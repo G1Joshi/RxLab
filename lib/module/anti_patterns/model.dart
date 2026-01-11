@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../common/common.dart';
+
 class AntiPatternData {
   final String title;
   final String description;
@@ -47,29 +49,10 @@ class AntiPatternData {
   }
 
   IconData get iconData {
-    return switch (icon) {
-      'memory' => Icons.memory,
-      'layers' => Icons.layers,
-      'search' => Icons.search,
-      'error_outline' => Icons.error_outline,
-      'whatshot' => Icons.whatshot,
-      'hourglass_empty' => Icons.hourglass_empty,
-      'psychology' => Icons.psychology,
-      'speed' => Icons.speed,
-      _ => Icons.warning,
-    };
+    return Utils.getIcon(icon, fallback: Icons.warning);
   }
 
   Color get colorValue {
-    return switch (color) {
-      'red' => Colors.red,
-      'orange' => Colors.orange,
-      'blue' => Colors.blue,
-      'deepOrange' => Colors.deepOrange,
-      'purple' => Colors.purple,
-      'teal' => Colors.teal,
-      'amber' => Colors.amber,
-      _ => Colors.grey,
-    };
+    return Utils.getColor(color);
   }
 }

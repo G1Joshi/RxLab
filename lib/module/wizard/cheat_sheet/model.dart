@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/common.dart';
+
 class CheatSheetCategory {
   final String title;
   final String icon;
@@ -31,31 +33,11 @@ class CheatSheetCategory {
   }
 
   Color get colorValue {
-    return switch (color) {
-      'green' => Colors.green,
-      'blue' => Colors.blue,
-      'purple' => Colors.purple,
-      'orange' => Colors.orange,
-      'teal' => Colors.teal,
-      'red' => Colors.red,
-      'grey' => Colors.grey,
-      'indigo' => Colors.indigo,
-      _ => Colors.grey,
-    };
+    return Utils.getColor(color);
   }
 
   IconData get iconData {
-    return switch (icon) {
-      'add_circle' => Icons.add_circle,
-      'transform' => Icons.transform,
-      'filter_list' => Icons.filter_list,
-      'speed' => Icons.speed,
-      'merge_type' => Icons.merge_type,
-      'healing' => Icons.healing,
-      'build' => Icons.build,
-      'hourglass_empty' => Icons.hourglass_empty,
-      _ => Icons.help,
-    };
+    return Utils.getIcon(icon);
   }
 }
 
