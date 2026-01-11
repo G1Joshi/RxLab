@@ -109,12 +109,34 @@ enum OperatorCategory {
   filtering('Filtering', 'Filter or limit emissions'),
   combination('Combination', 'Combine multiple streams'),
   errorHandling('Error Handling', 'Handle stream errors'),
-  utility('Utility', 'Utility operations on streams');
+  utility('Utility', 'Utility operations on streams'),
+  conditional('Conditional', 'Conditional and boolean operators'),
+  aggregate('Aggregate', 'Mathematical and aggregate operators'),
+  connectable('Connectable', 'Connectable Observable operators'),
+  conversion('Conversion', 'Convert Observables to other types');
 
   final String displayName;
   final String description;
 
   const OperatorCategory(this.displayName, this.description);
+
+  String get label => displayName;
+
+  Color get color {
+    return switch (this) {
+      OperatorCategory.creation => Colors.green,
+      OperatorCategory.transformation => AppTheme.marbleColors[0],
+      OperatorCategory.filtering => AppTheme.marbleColors[1],
+      OperatorCategory.combination => AppTheme.marbleColors[6],
+      OperatorCategory.errorHandling => Colors.red,
+      OperatorCategory.utility => AppTheme.marbleColors[7],
+      OperatorCategory.conditional => Colors.indigo,
+      OperatorCategory.aggregate => Colors.purple,
+      OperatorCategory.connectable => Colors.teal,
+      OperatorCategory.conversion => Colors.amber,
+    };
+  }
+
   static OperatorCategory parse(String value) {
     return switch (value.toLowerCase()) {
       'creation' => OperatorCategory.creation,
@@ -123,6 +145,10 @@ enum OperatorCategory {
       'combination' => OperatorCategory.combination,
       'error_handling' => OperatorCategory.errorHandling,
       'utility' => OperatorCategory.utility,
+      'conditional' => OperatorCategory.conditional,
+      'aggregate' => OperatorCategory.aggregate,
+      'connectable' => OperatorCategory.connectable,
+      'conversion' => OperatorCategory.conversion,
       _ => OperatorCategory.utility,
     };
   }
@@ -197,6 +223,14 @@ class OperatorDefinition {
         return Icons.healing;
       case OperatorCategory.utility:
         return Icons.build;
+      case OperatorCategory.conditional:
+        return Icons.help_outline;
+      case OperatorCategory.aggregate:
+        return Icons.functions;
+      case OperatorCategory.connectable:
+        return Icons.share;
+      case OperatorCategory.conversion:
+        return Icons.swap_horiz;
     }
   }
 
@@ -214,6 +248,14 @@ class OperatorDefinition {
         return Colors.red;
       case OperatorCategory.utility:
         return AppTheme.marbleColors[7];
+      case OperatorCategory.conditional:
+        return Colors.indigo;
+      case OperatorCategory.aggregate:
+        return Colors.purple;
+      case OperatorCategory.connectable:
+        return Colors.teal;
+      case OperatorCategory.conversion:
+        return Colors.amber;
     }
   }
 }
