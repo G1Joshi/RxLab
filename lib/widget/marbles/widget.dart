@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../common/common.dart';
+import '../widget.dart';
 
 class MarbleWidget extends StatefulWidget {
   final MarbleItem marble;
@@ -57,15 +57,7 @@ class _MarbleWidgetState extends State<MarbleWidget>
     final content = _buildMarbleContent(color);
 
     if (widget.isAnimated) {
-      return content
-          .animate()
-          .scale(
-            begin: const Offset(0, 0),
-            end: const Offset(1, 1),
-            duration: 400.ms,
-            curve: Curves.elasticOut,
-          )
-          .fadeIn(duration: 200.ms);
+      return content.scaleIn(begin: Offset.zero);
     }
 
     return content;

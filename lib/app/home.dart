@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../common/common.dart';
+import '../widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -131,16 +130,13 @@ class _NavItemState extends State<_NavItem> {
               if (widget.isSelected) ...[
                 const SizedBox(width: 8),
                 Text(
-                      widget.label,
-                      style: GoogleFonts.inter(
-                        color: AppTheme.primary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    )
-                    .animate()
-                    .fadeIn(duration: 200.ms)
-                    .slideX(begin: -0.2, end: 0),
+                  widget.label,
+                  style: AppTypography.inter(
+                    color: AppTheme.primary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ).entranceX(slideX: -0.2, delay: 200.ms),
               ],
             ],
           ),

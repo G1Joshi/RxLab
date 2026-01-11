@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -49,7 +47,7 @@ class _ConceptsScreenState extends State<ConceptsScreen> with DataLoadingMixin {
                         padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
                         child: Text(
                           'Core Concepts',
-                          style: GoogleFonts.outfit(
+                          style: AppTypography.outfit(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: AppTheme.textPrimary,
@@ -108,7 +106,7 @@ class _ConceptsScreenState extends State<ConceptsScreen> with DataLoadingMixin {
                 const SizedBox(width: 8),
                 Text(
                   'What is a Stream?',
-                  style: GoogleFonts.outfit(
+                  style: AppTypography.outfit(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.textPrimary,
@@ -129,7 +127,7 @@ class _ConceptsScreenState extends State<ConceptsScreen> with DataLoadingMixin {
                     child: Container(
                       height: 3,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [Colors.blue, Colors.purple],
                         ),
                         borderRadius: BorderRadius.circular(2),
@@ -150,7 +148,7 @@ class _ConceptsScreenState extends State<ConceptsScreen> with DataLoadingMixin {
           ],
         ),
       ),
-    ).animate().fadeIn(delay: 200.ms);
+    ).fadeIn(delay: 200.ms);
   }
 
   Widget _buildLearningTools(BuildContext context) {
@@ -181,7 +179,7 @@ class _ConceptsScreenState extends State<ConceptsScreen> with DataLoadingMixin {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(children: rows),
-    ).animate().fadeIn(delay: 200.ms);
+    ).fadeIn(delay: 200.ms);
   }
 
   Widget _buildToolItem(BuildContext context, Module tool) {
@@ -328,98 +326,90 @@ class _ConceptCardState extends State<_ConceptCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-          onEnter: (_) => setState(() => _isHovered = true),
-          onExit: (_) => setState(() => _isHovered = false),
-          child: GestureDetector(
-            onTap: widget.onTap,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              transform: Matrix4.diagonal3Values(
-                _isHovered ? 1.02 : 1.0,
-                _isHovered ? 1.02 : 1.0,
-                1.0,
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    widget.concept.colorValue.withAlpha(_isHovered ? 80 : 50),
-                    AppTheme.surface,
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: widget.concept.colorValue.withAlpha(
-                    _isHovered ? 150 : 80,
-                  ),
-                  width: 1.5,
-                ),
-                boxShadow: _isHovered
-                    ? [
-                        BoxShadow(
-                          color: widget.concept.colorValue.withAlpha(40),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
-                        ),
-                      ]
-                    : [],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          transform: Matrix4.diagonal3Values(
+            _isHovered ? 1.02 : 1.0,
+            _isHovered ? 1.02 : 1.0,
+            1.0,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                widget.concept.colorValue.withAlpha(_isHovered ? 80 : 50),
+                AppTheme.surface,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: widget.concept.colorValue.withAlpha(_isHovered ? 150 : 80),
+              width: 1.5,
+            ),
+            boxShadow: _isHovered
+                ? [
+                    BoxShadow(
+                      color: widget.concept.colorValue.withAlpha(40),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ]
+                : [],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: widget.concept.colorValue.withAlpha(30),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            widget.concept.iconData,
-                            color: widget.concept.colorValue,
-                            size: 24,
-                          ),
-                        ),
-                        const Spacer(),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          color: widget.concept.colorValue.withAlpha(
-                            _isHovered ? 255 : 100,
-                          ),
-                          size: 16,
-                        ),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: widget.concept.colorValue.withAlpha(30),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Icon(
+                        widget.concept.iconData,
+                        color: widget.concept.colorValue,
+                        size: 24,
+                      ),
                     ),
                     const Spacer(),
-                    Text(
-                      widget.concept.title,
-                      style: GoogleFonts.outfit(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimary,
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: widget.concept.colorValue.withAlpha(
+                        _isHovered ? 255 : 100,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      widget.concept.subtitle,
-                      style: TextStyle(
-                        color: AppTheme.textSecondary,
-                        fontSize: 13,
-                      ),
+                      size: 16,
                     ),
                   ],
                 ),
-              ),
+                const Spacer(),
+                Text(
+                  widget.concept.title,
+                  style: AppTypography.outfit(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  widget.concept.subtitle,
+                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+                ),
+              ],
             ),
           ),
-        )
-        .animate(delay: Duration(milliseconds: 50 * widget.index))
-        .fadeIn(duration: 300.ms)
-        .slideX(begin: 0.05, end: 0);
+        ),
+      ),
+    ).entrance();
   }
 }
 
@@ -461,156 +451,211 @@ class ConceptDetailScreen extends StatelessWidget {
 
   Widget _buildHeroSection(BuildContext context) {
     return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
-          child: Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  concept.colorValue.withAlpha(40),
-                  concept.colorValue.withAlpha(15),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: concept.colorValue.withAlpha(60)),
-            ),
-            child: Column(
-              children: [
-                Icon(concept.iconData, color: concept.colorValue, size: 64),
-                const SizedBox(height: 16),
-                Text(
-                  concept.title,
-                  style: GoogleFonts.outfit(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  concept.subtitle,
-                  style: TextStyle(
-                    color: concept.colorValue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+      padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+      child: Container(
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              concept.colorValue.withAlpha(40),
+              concept.colorValue.withAlpha(15),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-        )
-        .animate()
-        .fadeIn(delay: 100.ms, duration: 400.ms)
-        .scale(begin: const Offset(0.95, 0.95));
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: concept.colorValue.withAlpha(60)),
+        ),
+        child: Column(
+          children: [
+            Icon(concept.iconData, color: concept.colorValue, size: 64),
+            const SizedBox(height: 16),
+            Text(
+              concept.title,
+              style: AppTypography.outfit(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.textPrimary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              concept.subtitle,
+              style: TextStyle(
+                color: concept.colorValue,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    ).entrance(delay: 100.ms);
   }
 
   Widget _buildExplanationSection(BuildContext context) {
     return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: AppTheme.glassDecoration,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: AppTheme.glassDecoration,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.info_outline, color: AppTheme.accent, size: 20),
-                    const SizedBox(width: 8),
-                    Text(
-                      'What is it?',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
+                Icon(Icons.info_outline, color: AppTheme.accent, size: 20),
+                const SizedBox(width: 8),
                 Text(
-                  concept.description,
-                  style: TextStyle(
-                    color: AppTheme.textSecondary,
-                    fontSize: 14,
-                    height: 1.6,
+                  'What is it?',
+                  style: AppTypography.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary,
                   ),
                 ),
               ],
             ),
-          ),
-        )
-        .animate()
-        .fadeIn(delay: 200.ms, duration: 300.ms)
-        .slideY(begin: 0.05, end: 0);
+            const SizedBox(height: 12),
+            Text(
+              concept.description,
+              style: TextStyle(
+                color: AppTheme.textSecondary,
+                fontSize: 14,
+                height: 1.6,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).entrance(delay: 200.ms);
   }
 
   Widget _buildKeyPointsSection(BuildContext context) {
     if (concept.keyPoints.isEmpty) return const SizedBox.shrink();
     return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: AppTheme.glassDecoration,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: AppTheme.glassDecoration,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Row(
+                Icon(Icons.lightbulb_outline, color: Colors.amber, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  'Key Points',
+                  style: AppTypography.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            ...concept.keyPoints.asMap().entries.map(
+              (entry) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.lightbulb_outline,
-                      color: Colors.amber,
-                      size: 20,
+                    Container(
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: concept.colorValue.withAlpha(30),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${entry.key + 1}',
+                          style: TextStyle(
+                            color: concept.colorValue,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Key Points',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        entry.value,
+                        style: TextStyle(
+                          color: AppTheme.textSecondary,
+                          fontSize: 14,
+                          height: 1.4,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                ...concept.keyPoints.asMap().entries.map(
-                  (entry) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).entrance(delay: 300.ms);
+  }
+
+  Widget _buildCodeSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: AppTheme.glassDecoration,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.code, color: Colors.green, size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  'Code Example',
+                  style: AppTypography.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(
+                      ClipboardData(text: concept.codeExample.trim()),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Copied!'),
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppTheme.surfaceLight,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Container(
-                          width: 24,
-                          height: 24,
-                          decoration: BoxDecoration(
-                            color: concept.colorValue.withAlpha(30),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '${entry.key + 1}',
-                              style: TextStyle(
-                                color: concept.colorValue,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            entry.value,
-                            style: TextStyle(
-                              color: AppTheme.textSecondary,
-                              fontSize: 14,
-                              height: 1.4,
-                            ),
+                        Icon(Icons.copy, size: 14, color: AppTheme.textMuted),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Copy',
+                          style: TextStyle(
+                            color: AppTheme.textMuted,
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -619,102 +664,27 @@ class ConceptDetailScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        )
-        .animate()
-        .fadeIn(delay: 300.ms, duration: 300.ms)
-        .slideY(begin: 0.05, end: 0);
-  }
-
-  Widget _buildCodeSection(BuildContext context) {
-    return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            decoration: AppTheme.glassDecoration,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.code, color: Colors.green, size: 20),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Code Example',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        Clipboard.setData(
-                          ClipboardData(text: concept.codeExample.trim()),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Copied!'),
-                            duration: Duration(seconds: 1),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppTheme.surfaceLight,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.copy,
-                              size: 14,
-                              color: AppTheme.textMuted,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              'Copy',
-                              style: TextStyle(
-                                color: AppTheme.textMuted,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF0D1117),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SelectableText(
+                concept.codeExample.trim(),
+                style: AppTypography.sourceCodePro(
+                  color: const Color(0xFFE6EDF3),
+                  fontSize: 13,
+                  height: 1.5,
                 ),
-                const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0D1117),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: SelectableText(
-                    concept.codeExample.trim(),
-                    style: GoogleFonts.sourceCodePro(
-                      color: const Color(0xFFE6EDF3),
-                      fontSize: 13,
-                      height: 1.5,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        )
-        .animate()
-        .fadeIn(delay: 400.ms, duration: 300.ms)
-        .slideY(begin: 0.05, end: 0);
+          ],
+        ),
+      ),
+    ).entrance(delay: 400.ms);
   }
 }
 

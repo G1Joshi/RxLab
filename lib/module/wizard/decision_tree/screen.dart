@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common/common.dart';
+import '../../../widget/widget.dart';
 import '../../operators/operators.dart';
 import 'decision_tree.dart';
 
@@ -72,7 +71,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
             children: [
               Text(
                 'YOUR PATH',
-                style: GoogleFonts.inter(
+                style: AppTypography.inter(
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                   color: AppTheme.textMuted,
@@ -84,7 +83,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
                 onTap: _resetDecision,
                 child: Text(
                   'RESET',
-                  style: GoogleFonts.inter(
+                  style: AppTypography.inter(
                     fontSize: 10,
                     fontWeight: FontWeight.w800,
                     color: AppTheme.primary,
@@ -117,7 +116,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
           ),
         ],
       ),
-    ).animate().fadeIn();
+    ).fadeIn();
   }
 
   Widget _buildHistoryNode(
@@ -182,18 +181,18 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
           child: Text(
             node.question,
             textAlign: TextAlign.center,
-            style: GoogleFonts.outfit(
+            style: AppTypography.outfit(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: AppTheme.textPrimary,
             ),
           ),
-        ).animate().fadeIn().scale(begin: const Offset(0.9, 0.9)),
+        ).fadeIn().scaleIn(begin: const Offset(0.9, 0.9)),
         Container(
           width: 2,
           height: 40,
           color: AppTheme.primary.withValues(alpha: 0.5),
-        ).animate().scaleY(begin: 0, end: 1, duration: 300.ms),
+        ).scaleInY(begin: 0, end: 1, duration: 300.ms),
         if (node.isResult)
           _buildResultCard(node)
         else ...[
@@ -201,7 +200,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
             height: 2,
             width: 100,
             color: AppTheme.primary.withValues(alpha: 0.3),
-          ).animate().scaleX(begin: 0, end: 1, duration: 300.ms),
+          ).scaleInX(begin: 0, end: 1, duration: 300.ms),
           const SizedBox(height: 20),
           ...?node.options?.map((opt) => _buildOptionCard(opt)),
         ],
@@ -245,7 +244,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
                     Expanded(
                       child: Text(
                         node.question,
-                        style: GoogleFonts.inter(
+                        style: AppTypography.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: AppTheme.textPrimary,
@@ -265,7 +264,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
           ),
         ],
       ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1, end: 0);
+    ).entrance(slideY: 0.1);
   }
 
   Widget _buildResultCard(DecisionTreeNode node) {
@@ -298,7 +297,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
           const SizedBox(height: 24),
           Text(
             'RECOMMENDED OPERATOR',
-            style: GoogleFonts.inter(
+            style: AppTypography.inter(
               fontSize: 12,
               fontWeight: FontWeight.w800,
               color: AppTheme.primary,
@@ -308,7 +307,7 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
           const SizedBox(height: 12),
           Text(
             node.operator!,
-            style: GoogleFonts.sourceCodePro(
+            style: AppTypography.sourceCodePro(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -352,6 +351,6 @@ class _DecisionTreeFinderState extends State<DecisionTreeFinder> {
           ),
         ],
       ),
-    ).animate().fadeIn().scale();
+    ).fadeIn().scaleIn();
   }
 }

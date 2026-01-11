@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -283,79 +281,76 @@ class _TermCardState extends State<_TermCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          decoration: BoxDecoration(
-            color: AppTheme.surface,
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: widget.term.categoryColor.withAlpha(60)),
+      ),
+      child: Column(
+        children: [
+          InkWell(
+            onTap: () => setState(() => _expanded = !_expanded),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: widget.term.categoryColor.withAlpha(60)),
-          ),
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () => setState(() => _expanded = !_expanded),
-                borderRadius: BorderRadius.circular(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: widget.term.categoryColor.withAlpha(30),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          widget.term.categoryIcon,
-                          color: widget.term.categoryColor,
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.term.term,
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                                color: AppTheme.textPrimary,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              widget.term.category,
-                              style: TextStyle(
-                                color: widget.term.categoryColor,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Icon(
-                        _expanded ? Icons.expand_less : Icons.expand_more,
-                        color: AppTheme.textMuted,
-                      ),
-                    ],
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: widget.term.categoryColor.withAlpha(30),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      widget.term.categoryIcon,
+                      color: widget.term.categoryColor,
+                      size: 20,
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.term.term,
+                          style: AppTypography.inter(
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.textPrimary,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          widget.term.category,
+                          style: TextStyle(
+                            color: widget.term.categoryColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    _expanded ? Icons.expand_less : Icons.expand_more,
+                    color: AppTheme.textMuted,
+                  ),
+                ],
               ),
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: _buildExpandedContent(),
-                crossFadeState: _expanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 200),
-              ),
-            ],
+            ),
           ),
-        )
-        .animate(delay: Duration(milliseconds: 30 * widget.index))
-        .fadeIn()
-        .slideY(begin: 0.05, end: 0);
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: _buildExpandedContent(),
+            crossFadeState: _expanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
+          ),
+        ],
+      ),
+    ).entrance(delay: (30 * widget.index).ms);
   }
 
   Widget _buildExpandedContent() {
@@ -388,7 +383,7 @@ class _TermCardState extends State<_TermCard> {
                 Expanded(
                   child: Text(
                     widget.term.example,
-                    style: GoogleFonts.sourceCodePro(
+                    style: AppTypography.sourceCodePro(
                       color: const Color(0xFFE6EDF3),
                       fontSize: 12,
                     ),

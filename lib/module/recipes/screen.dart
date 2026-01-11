@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -100,7 +98,7 @@ class _RecipeCard extends StatelessWidget {
                 children: [
                   Text(
                     recipe.title,
-                    style: GoogleFonts.outfit(
+                    style: AppTypography.outfit(
                       color: AppTheme.textPrimary,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -123,7 +121,7 @@ class _RecipeCard extends StatelessWidget {
           ],
         ),
       ),
-    ).animate(delay: Duration(milliseconds: 50 * index)).fadeIn().slideX();
+    ).entranceX(delay: (50 * index).ms);
   }
 
   void _showRecipeDetail(BuildContext context) {
@@ -184,7 +182,7 @@ class _RecipeDetailSheet extends StatelessWidget {
                 Expanded(
                   child: Text(
                     recipe.title,
-                    style: GoogleFonts.outfit(
+                    style: AppTypography.outfit(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textPrimary,
@@ -262,7 +260,7 @@ class _RecipeDetailSheet extends StatelessWidget {
                     ),
                     child: Text(
                       recipe.codeExample,
-                      style: GoogleFonts.sourceCodePro(
+                      style: AppTypography.sourceCodePro(
                         color: const Color(0xFFE6EDF3),
                         fontSize: 12,
                       ),

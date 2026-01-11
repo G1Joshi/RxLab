@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -241,7 +239,7 @@ class _QuizScreenState extends State<QuizScreen>
           ),
         ),
       ],
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+    ).entrance();
   }
 
   Widget _buildQuestion(QuizQuestion question) {
@@ -321,7 +319,7 @@ class _QuizScreenState extends State<QuizScreen>
           const SizedBox(height: 12),
           Text(
             question.question,
-            style: GoogleFonts.inter(
+            style: AppTypography.inter(
               fontSize: 17,
               color: AppTheme.textPrimary,
               height: 1.5,
@@ -343,7 +341,7 @@ class _QuizScreenState extends State<QuizScreen>
                   if (question.input != null)
                     Text(
                       'Input: ${question.input}',
-                      style: GoogleFonts.sourceCodePro(
+                      style: AppTypography.sourceCodePro(
                         color: AppTheme.success,
                         fontSize: 12,
                       ),
@@ -352,7 +350,7 @@ class _QuizScreenState extends State<QuizScreen>
                     const SizedBox(height: 4),
                     Text(
                       '.${question.operator}',
-                      style: GoogleFonts.sourceCodePro(
+                      style: AppTypography.sourceCodePro(
                         color: const Color(0xFFE6EDF3),
                         fontSize: 13,
                       ),
@@ -361,7 +359,7 @@ class _QuizScreenState extends State<QuizScreen>
                   if (question.code != null)
                     Text(
                       question.code!,
-                      style: GoogleFonts.sourceCodePro(
+                      style: AppTypography.sourceCodePro(
                         color: const Color(0xFFE6EDF3),
                         fontSize: 12,
                       ),
@@ -372,7 +370,7 @@ class _QuizScreenState extends State<QuizScreen>
           ],
         ],
       ),
-    ).animate().fadeIn(duration: 300.ms);
+    ).fadeIn();
   }
 
   Widget _buildAnswers(QuizQuestion question) {
@@ -402,68 +400,65 @@ class _QuizScreenState extends State<QuizScreen>
         }
 
         return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: GestureDetector(
-                onTap: () => _selectAnswer(index),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: borderColor, width: 2),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? (isCorrect || !_showResult
-                                    ? AppTheme.primary
-                                    : Colors.red)
-                              : AppTheme.surface,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: AppTheme.textMuted.withAlpha(80),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            String.fromCharCode(65 + index),
-                            style: TextStyle(
-                              color: isSelected
-                                  ? Colors.white
-                                  : AppTheme.textSecondary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Text(
-                          question.options[index],
-                          style: TextStyle(
-                            color: AppTheme.textPrimary,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      if (icon != null)
-                        Icon(
-                          icon,
-                          color: isCorrect ? AppTheme.success : AppTheme.error,
-                        ),
-                    ],
-                  ),
-                ),
+          padding: const EdgeInsets.only(bottom: 10),
+          child: GestureDetector(
+            onTap: () => _selectAnswer(index),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: bgColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: borderColor, width: 2),
               ),
-            )
-            .animate(delay: Duration(milliseconds: 50 * index))
-            .fadeIn()
-            .slideX(begin: 0.05, end: 0);
+              child: Row(
+                children: [
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? (isCorrect || !_showResult
+                                ? AppTheme.primary
+                                : Colors.red)
+                          : AppTheme.surface,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppTheme.textMuted.withAlpha(80),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        String.fromCharCode(65 + index),
+                        style: TextStyle(
+                          color: isSelected
+                              ? Colors.white
+                              : AppTheme.textSecondary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      question.options[index],
+                      style: TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  if (icon != null)
+                    Icon(
+                      icon,
+                      color: isCorrect ? AppTheme.success : AppTheme.error,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ).entrance(delay: (50 * index).ms);
       },
     );
   }
@@ -496,7 +491,7 @@ class _QuizScreenState extends State<QuizScreen>
               ),
             ],
           ),
-        ).animate().fadeIn(),
+        ).fadeIn(),
         const SizedBox(height: 12),
         SizedBox(
           width: double.infinity,
@@ -561,11 +556,11 @@ class _QuizScreenState extends State<QuizScreen>
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, size: 64, color: color),
-            ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+            ).scaleIn(),
             const SizedBox(height: 24),
             Text(
               title,
-              style: GoogleFonts.outfit(
+              style: AppTypography.outfit(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: AppTheme.textPrimary,
@@ -704,7 +699,7 @@ class _StatCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: GoogleFonts.outfit(
+            style: AppTypography.outfit(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: color,

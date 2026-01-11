@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../common/common.dart';
+import '../widget/widget.dart';
 import 'app.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -80,43 +79,36 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                     ),
                   )
-                  .animate()
-                  .scale(
+                  .scaleIn(
                     duration: 1000.ms,
                     curve: Curves.elasticOut,
                     begin: const Offset(0.5, 0.5),
                   )
-                  .shimmer(
-                    duration: 2000.ms,
-                    color: Colors.white.withValues(alpha: 0.2),
-                  ),
+                  .apply(AppAnimations.shimmer),
 
               const SizedBox(height: 48),
 
               Text(
-                    'RxLab',
-                    style: GoogleFonts.outfit(
-                      fontSize: 56,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.textPrimary,
-                      letterSpacing: 2,
-                    ),
-                  )
-                  .animate()
-                  .fadeIn(delay: 400.ms, duration: 800.ms)
-                  .slideY(begin: 0.2, end: 0, curve: Curves.easeOutBack),
+                'RxLab',
+                style: AppTypography.outfit(
+                  fontSize: 56,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textPrimary,
+                  letterSpacing: 2,
+                ),
+              ).entrance(delay: 400.ms, slideY: 0.2),
 
               const SizedBox(height: 32),
 
               Text(
                 'THE REACTIVE PROGRAMMING LAB',
-                style: GoogleFonts.inter(
+                style: AppTypography.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w900,
                   color: AppTheme.primary,
                   letterSpacing: 4,
                 ),
-              ).animate().fadeIn(delay: 800.ms, duration: 800.ms),
+              ).fadeIn(delay: 800.ms, duration: 800.ms),
 
               const SizedBox(height: 64),
 
@@ -129,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     AppTheme.primary.withValues(alpha: 0.5),
                   ),
                 ),
-              ).animate().fadeIn(delay: 1200.ms),
+              ).fadeIn(delay: 1200.ms),
             ],
           ),
         ),

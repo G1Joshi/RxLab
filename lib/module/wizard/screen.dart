@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -98,7 +97,7 @@ class _WizardScreenState extends State<WizardScreen> with DataLoadingMixin {
           ],
         ),
       ),
-    ).animate().fadeIn(delay: 200.ms);
+    ).entrance(delay: 200.ms);
   }
 }
 

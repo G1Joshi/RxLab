@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../common/common.dart';
+import 'widget.dart';
 
 class ModuleHeader extends StatelessWidget {
   final String title;
@@ -65,7 +64,7 @@ class ModuleHeader extends StatelessWidget {
               ],
             ),
             child: Icon(icon, color: Colors.white, size: 28),
-          ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+          ).scaleIn(begin: Offset.zero),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -73,7 +72,7 @@ class ModuleHeader extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.outfit(
+                  style: AppTypography.outfit(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.textPrimary,
@@ -89,6 +88,6 @@ class ModuleHeader extends StatelessWidget {
           if (actions != null) ...[const SizedBox(width: 12), ...actions!],
         ],
       ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+    ).entrance(slideY: -0.1);
   }
 }

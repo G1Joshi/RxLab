@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
@@ -207,26 +206,54 @@ class AppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     ),
   );
+}
 
-  static Animate shimmer(Animate animate) => animate.shimmer(
-    duration: 1500.ms,
-    color: Colors.white.withValues(alpha: 0.1),
-  );
+class AppTypography {
+  static TextStyle outfit({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    double? letterSpacing,
+    double? height,
+  }) {
+    return GoogleFonts.outfit(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      letterSpacing: letterSpacing,
+      height: height,
+    );
+  }
 
-  static Animate glow(Animate animate, Color color) => animate.custom(
-    duration: 2000.ms,
-    builder: (context, value, child) => Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: color.withValues(alpha: 0.2 * value),
-            blurRadius: 10 * value,
-            spreadRadius: 2 * value,
-          ),
-        ],
-      ),
-      child: child,
-    ),
-  );
+  static TextStyle inter({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    double? letterSpacing,
+    double? height,
+  }) {
+    return GoogleFonts.inter(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      letterSpacing: letterSpacing,
+      height: height,
+    );
+  }
+
+  static TextStyle sourceCodePro({
+    double? fontSize,
+    FontWeight? fontWeight,
+    Color? color,
+    double? letterSpacing,
+    double? height,
+  }) {
+    return GoogleFonts.sourceCodePro(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color,
+      letterSpacing: letterSpacing,
+      height: height,
+    );
+  }
 }
