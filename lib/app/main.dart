@@ -9,6 +9,7 @@ Future<void> main() async {
 
   ModuleRegistry.register(ConceptsModule());
   ModuleRegistry.register(OperatorsModule());
+  ModuleRegistry.register(RecipesModule());
 
   for (final module in ModuleRegistry.all) {
     await module.init();
