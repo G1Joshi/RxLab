@@ -1,0 +1,242 @@
+{
+  "glossary": [
+    {
+      "term": "Observable",
+      "definition": "A data source that emits items over time. The core building block of reactive programming.",
+      "category": "Core",
+      "relatedTerms": ["Observer", "Subscription", "Stream"],
+      "example": "Observable.from([1, 2, 3])"
+    },
+    {
+      "term": "Observer",
+      "definition": "An object that receives notifications from an Observable. Has handlers for next, error, and complete events.",
+      "category": "Core",
+      "relatedTerms": ["Observable", "Subscription"],
+      "example": "observer.onNext(value)"
+    },
+    {
+      "term": "Subscription",
+      "definition": "Represents the connection between an Observable and an Observer. Can be disposed to stop receiving values.",
+      "category": "Core",
+      "relatedTerms": ["Observable", "Dispose"],
+      "example": "subscription.dispose()"
+    },
+    {
+      "term": "Subject",
+      "definition": "Acts as both an Observable and an Observer. Can multicast values to multiple subscribers.",
+      "category": "Core",
+      "relatedTerms": ["PublishSubject", "BehaviorSubject", "ReplaySubject"],
+      "example": "subject.onNext(value)"
+    },
+    {
+      "term": "PublishSubject",
+      "definition": "A Subject that emits to subscribers only those items emitted after the subscription.",
+      "category": "Subjects",
+      "relatedTerms": ["Subject", "BehaviorSubject"],
+      "example": "PublishSubject()"
+    },
+    {
+      "term": "BehaviorSubject",
+      "definition": "A Subject that emits the most recent item (or seed value) to new subscribers, then continues with new items.",
+      "category": "Subjects",
+      "relatedTerms": ["Subject", "ReplaySubject"],
+      "example": "BehaviorSubject(seedValue)"
+    },
+    {
+      "term": "ReplaySubject",
+      "definition": "A Subject that buffers and replays a specified number of items to new subscribers.",
+      "category": "Subjects",
+      "relatedTerms": ["Subject", "BehaviorSubject"],
+      "example": "ReplaySubject(bufferSize: 3)"
+    },
+    {
+      "term": "Hot Observable",
+      "definition": "An Observable that emits items regardless of subscribers. Like live TV - you see what's playing now.",
+      "category": "Concepts",
+      "relatedTerms": ["Cold Observable", "Subject", "share"],
+      "example": "mouseClicks.share()"
+    },
+    {
+      "term": "Cold Observable",
+      "definition": "An Observable that starts emitting when subscribed. Each subscriber gets its own sequence. Like Netflix.",
+      "category": "Concepts",
+      "relatedTerms": ["Hot Observable"],
+      "example": "Observable.from([1, 2, 3])"
+    },
+    {
+      "term": "Backpressure",
+      "definition": "When a producer emits faster than consumer can handle. Managed with operators like buffer, sample, throttle.",
+      "category": "Concepts",
+      "relatedTerms": ["buffer", "throttle", "sample"],
+      "example": "stream.buffer(count: 100)"
+    },
+    {
+      "term": "Marble Diagram",
+      "definition": "A visual representation of Observable behavior over time. Circles are values, X is error, | is completion.",
+      "category": "Concepts",
+      "relatedTerms": ["Observable", "Timeline"],
+      "example": "--1--2--3--|"
+    },
+    {
+      "term": "Operator",
+      "definition": "A function that transforms, filters, or combines Observables. The building blocks for reactive pipelines.",
+      "category": "Core",
+      "relatedTerms": ["map", "filter", "merge"],
+      "example": "stream.map(x => x * 2)"
+    },
+    {
+      "term": "Scheduler",
+      "definition": "Controls the execution context (thread/queue) for Observable operations. Manages concurrency.",
+      "category": "Advanced",
+      "relatedTerms": ["observeOn", "subscribeOn"],
+      "example": "stream.observeOn(mainScheduler)"
+    },
+    {
+      "term": "Dispose",
+      "definition": "Canceling a subscription to stop receiving values and free resources. Critical for preventing memory leaks.",
+      "category": "Core",
+      "relatedTerms": ["Subscription", "takeUntil"],
+      "example": "subscription.dispose()"
+    },
+    {
+      "term": "CompositeDisposable",
+      "definition": "A container for multiple subscriptions that can be disposed together. Essential for cleanup.",
+      "category": "Patterns",
+      "relatedTerms": ["Dispose", "Subscription"],
+      "example": "compositeDisposable.add(sub)"
+    },
+    {
+      "term": "Pipeline",
+      "definition": "A chain of operators applied to an Observable. Data flows through each transformation step.",
+      "category": "Concepts",
+      "relatedTerms": ["Operator", "map", "filter"],
+      "example": "stream.filter().map().take()"
+    },
+    {
+      "term": "Side Effect",
+      "definition": "An operation that affects external state. Should be isolated using tap/doOnNext operators.",
+      "category": "Concepts",
+      "relatedTerms": ["tap", "doOnNext"],
+      "example": "stream.tap(x => log(x))"
+    },
+    {
+      "term": "Multicast",
+      "definition": "Sharing a single subscription among multiple observers. Converts cold to hot.",
+      "category": "Advanced",
+      "relatedTerms": ["share", "publish", "refCount"],
+      "example": "stream.share()"
+    },
+    {
+      "term": "Higher-Order Observable",
+      "definition": "An Observable that emits other Observables. Flattened with flatMap, switchMap, concatMap.",
+      "category": "Advanced",
+      "relatedTerms": ["flatMap", "switchMap", "concatMap"],
+      "example": "stream.flatMap(id => fetch(id))"
+    },
+    {
+      "term": "Race Condition",
+      "definition": "When the order of async operations causes unexpected behavior. Solved with switchMap.",
+      "category": "Problems",
+      "relatedTerms": ["switchMap", "flatMap"],
+      "example": "searchText.switchMap(query => api.search(query))"
+    },
+    {
+      "term": "Memory Leak",
+      "definition": "When subscriptions are not disposed, holding references and preventing garbage collection.",
+      "category": "Problems",
+      "relatedTerms": ["Dispose", "takeUntil", "CompositeDisposable"],
+      "example": "Always dispose subscriptions!"
+    },
+    {
+      "term": "Debounce",
+      "definition": "Wait for a pause in emissions before emitting the latest value. Perfect for search input.",
+      "category": "Operators",
+      "relatedTerms": ["throttle", "sample"],
+      "example": "textChanges.debounce(300.ms)"
+    },
+    {
+      "term": "Throttle",
+      "definition": "Emit the first value, then ignore subsequent values for a duration. Rate limiting.",
+      "category": "Operators",
+      "relatedTerms": ["debounce", "sample"],
+      "example": "scrollEvents.throttle(100.ms)"
+    },
+    {
+      "term": "FlatMap",
+      "definition": "Maps each value to an Observable and flattens. Keeps ALL inner subscriptions active.",
+      "category": "Operators",
+      "relatedTerms": ["switchMap", "concatMap", "exhaustMap"],
+      "example": "ids.flatMap(id => fetchUser(id))"
+    },
+    {
+      "term": "SwitchMap",
+      "definition": "Maps to Observable and switches - CANCELS previous inner when new value arrives. Essential for search.",
+      "category": "Operators",
+      "relatedTerms": ["flatMap", "concatMap"],
+      "example": "search.switchMap(q => api.search(q))"
+    },
+    {
+      "term": "ConcatMap",
+      "definition": "Maps to Observable and queues - processes one at a time in order. Guarantees sequence.",
+      "category": "Operators",
+      "relatedTerms": ["flatMap", "switchMap"],
+      "example": "clicks.concatMap(_ => save())"
+    },
+    {
+      "term": "Merge",
+      "definition": "Combines multiple Observables by interleaving emissions as they arrive.",
+      "category": "Operators",
+      "relatedTerms": ["concat", "zip", "combineLatest"],
+      "example": "merge(stream1, stream2)"
+    },
+    {
+      "term": "CombineLatest",
+      "definition": "Emits when ANY source emits, combining with the latest from each other source.",
+      "category": "Operators",
+      "relatedTerms": ["zip", "withLatestFrom"],
+      "example": "combineLatest(name$, age$)"
+    },
+    {
+      "term": "Zip",
+      "definition": "Pairs values by index position. Waits for all sources to have a value at each index.",
+      "category": "Operators",
+      "relatedTerms": ["combineLatest", "merge"],
+      "example": "zip(letters, numbers)"
+    },
+    {
+      "term": "Scan",
+      "definition": "Applies accumulator function and emits each intermediate result. Like reduce but emits along the way.",
+      "category": "Operators",
+      "relatedTerms": ["reduce", "map"],
+      "example": "stream.scan((acc, val) => acc + val, 0)"
+    },
+    {
+      "term": "ExhaustMap",
+      "definition": "Maps to Observable and flattens - IGNORES new values while the current inner Observable is still active. Good for submit buttons.",
+      "category": "Operators",
+      "relatedTerms": ["flatMap", "switchMap", "concatMap"],
+      "example": "click.exhaustMap(_ => api.save())"
+    },
+    {
+      "term": "Shared Subscription",
+      "definition": "A subscription that is shared among multiple observers to avoid redundant side effects (like multiple API calls).",
+      "category": "Advanced",
+      "relatedTerms": ["share", "shareReplay", "Multicast"],
+      "example": "observable.share()"
+    },
+    {
+      "term": "RefCount",
+      "definition": "Disconnects from the source when the number of observers drops to zero and reconnects when the first observer subscribes.",
+      "category": "Advanced",
+      "relatedTerms": ["share", "publish"],
+      "example": "observable.publish().refCount()"
+    },
+    {
+      "term": "Imperative vs Declarative",
+      "definition": "Rx is declarative - you describe WHAT you want (pipelines), not HOW to do it (loops/conditionals).",
+      "category": "Concepts",
+      "relatedTerms": ["Reactive Programming"],
+      "example": "stream.filter(x => x > 0)"
+    }
+  ]
+}
