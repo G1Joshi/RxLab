@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
+import '../../widget/widget.dart';
 import 'glossary.dart';
 
 class GlossaryScreen extends StatefulWidget {
@@ -77,59 +78,12 @@ class _GlossaryScreenState extends State<GlossaryScreen> with DataLoadingMixin {
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back),
-            style: IconButton.styleFrom(
-              backgroundColor: AppTheme.surfaceLight,
-              foregroundColor: AppTheme.textPrimary,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Colors.teal, Colors.cyan],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.cyan.withValues(alpha: 0.4),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: const Icon(Icons.menu_book, color: Colors.white, size: 28),
-          ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'RxLab Glossary',
-                  style: GoogleFonts.outfit(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                Text(
-                  '${_allTerms.length} terms • A-Z reference',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+    return ModuleHeader(
+      title: 'RxLab Glossary',
+      subtitle: '${_allTerms.length} terms • A-Z reference',
+      icon: Icons.menu_book,
+      gradientColors: const [Colors.teal, Colors.cyan],
+    );
   }
 
   Widget _buildSearchBar() {

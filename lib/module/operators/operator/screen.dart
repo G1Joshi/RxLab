@@ -135,68 +135,14 @@ class _OperatorDetailScreenState extends State<OperatorDetailScreen> {
   }
 
   Widget _buildAppBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.arrow_back_rounded),
-            style: IconButton.styleFrom(
-              backgroundColor: AppTheme.surfaceLight,
-              foregroundColor: AppTheme.textPrimary,
-            ),
-          ).animate().fadeIn(duration: 300.ms).slideX(begin: -0.5, end: 0),
-          const SizedBox(width: 16),
-
-          Expanded(
-            child:
-                Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.operator_.name,
-                          style: GoogleFonts.sourceCodePro(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.textPrimary,
-                          ),
-                        ),
-                        Text(
-                          widget.operator_.category.displayName,
-                          style: TextStyle(
-                            color: widget.operator_.categoryColor,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    )
-                    .animate()
-                    .fadeIn(delay: 100.ms, duration: 300.ms)
-                    .slideX(begin: -0.2, end: 0),
-          ),
-
-          Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: widget.operator_.categoryColor.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: widget.operator_.categoryColor.withValues(
-                      alpha: 0.3,
-                    ),
-                  ),
-                ),
-                child: Icon(
-                  widget.operator_.icon,
-                  color: widget.operator_.categoryColor,
-                ),
-              )
-              .animate()
-              .fadeIn(delay: 200.ms, duration: 300.ms)
-              .scale(begin: const Offset(0.8, 0.8), end: const Offset(1, 1)),
-        ],
-      ),
+    return ModuleHeader(
+      title: widget.operator_.name,
+      subtitle: widget.operator_.category.displayName,
+      icon: widget.operator_.icon,
+      gradientColors: [
+        widget.operator_.categoryColor,
+        widget.operator_.categoryColor.withAlpha(200),
+      ],
     );
   }
 

@@ -86,68 +86,29 @@ class _LabScreenState extends State<LabScreen>
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              gradient: AppTheme.primaryGradient,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.primary.withValues(alpha: 0.4),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.science_rounded,
-              color: Colors.white,
-              size: 28,
-            ),
-          ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'RxLab Stream Lab',
-                  style: GoogleFonts.outfit(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                Text(
-                  'Chain operators and visualize flow',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
-                ),
-              ],
-            ),
+    return ModuleHeader(
+      title: 'RxLab Stream Lab',
+      subtitle: 'Chain operators and visualize flow',
+      icon: Icons.science_rounded,
+      actions: [
+        IconButton(
+          onPressed: _togglePlay,
+          icon: Icon(
+            _isPlaying ? Icons.stop_rounded : Icons.play_arrow_rounded,
           ),
-          IconButton(
-            onPressed: _togglePlay,
-            icon: Icon(
-              _isPlaying ? Icons.stop_rounded : Icons.play_arrow_rounded,
-            ),
-            style: IconButton.styleFrom(
-              backgroundColor: AppTheme.surfaceLight,
-              foregroundColor: _isPlaying ? Colors.red : AppTheme.primary,
-            ),
+          style: IconButton.styleFrom(
+            backgroundColor: AppTheme.surfaceLight,
+            foregroundColor: _isPlaying ? Colors.red : AppTheme.primary,
           ),
-          const SizedBox(width: 8),
-          IconButton(
-            onPressed: _reset,
-            icon: const Icon(Icons.refresh_rounded),
-            style: IconButton.styleFrom(backgroundColor: AppTheme.surfaceLight),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          onPressed: _reset,
+          icon: const Icon(Icons.refresh_rounded),
+          style: IconButton.styleFrom(backgroundColor: AppTheme.surfaceLight),
+        ),
+      ],
+    );
   }
 
   Widget _buildEmptyState() {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../common/models.dart';
-import '../../common/theme.dart';
+import '../../common/common.dart';
 import 'widget.dart';
 
 class MarbleTimeline extends StatefulWidget {

@@ -6,6 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
+import '../../widget/widget.dart';
 import 'quiz.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -169,69 +170,15 @@ class _QuizScreenState extends State<QuizScreen>
   Widget _buildHeader(QuizQuestion question) {
     return Column(
       children: [
-        Row(
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.close),
-              style: IconButton.styleFrom(
-                backgroundColor: AppTheme.surfaceLight,
-                foregroundColor: AppTheme.textPrimary,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Colors.orange, Colors.deepOrange],
-                ),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.orange.withValues(alpha: 0.3),
-                    blurRadius: 15,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.quiz_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
-            ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'RxLab Quiz',
-                        style: GoogleFonts.outfit(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      _DifficultyBadge(difficulty: question.difficulty),
-                    ],
-                  ),
-                  Text(
-                    'Question ${_currentIndex + 1}/${_questions.length}',
-                    style: TextStyle(
-                      color: AppTheme.textSecondary,
-                      fontSize: 13,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        ModuleHeader(
+          title: 'RxLab Quiz',
+          subtitle: 'Question ${_currentIndex + 1}/${_questions.length}',
+          icon: Icons.quiz_rounded,
+          gradientColors: const [Colors.orange, Colors.deepOrange],
+          actions: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -731,29 +678,6 @@ class _QuizScreenState extends State<QuizScreen>
           ],
         ),
       ),
-    );
-  }
-}
-
-class _DifficultyBadge extends StatelessWidget {
-  final String difficulty;
-  const _DifficultyBadge({required this.difficulty});
-
-  @override
-  Widget build(BuildContext context) {
-    final (color, label) = switch (difficulty) {
-      'easy' => (Colors.green, '●'),
-      'medium' => (Colors.orange, '●●'),
-      'hard' => (Colors.red, '●●●'),
-      _ => (Colors.grey, '?'),
-    };
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withAlpha(40),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 8)),
     );
   }
 }

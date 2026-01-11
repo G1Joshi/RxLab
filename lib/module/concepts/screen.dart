@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
+import '../../widget/widget.dart';
 import 'concepts.dart';
 
 class ConceptsScreen extends StatefulWidget {
@@ -201,54 +202,13 @@ class _ConceptsScreenState extends State<ConceptsScreen> with DataLoadingMixin {
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Colors.purple, Colors.blue],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blue.withValues(alpha: 0.4),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.school_rounded,
-              color: Colors.white,
-              size: 28,
-            ),
-          ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'RxLab Concepts',
-                  style: GoogleFonts.outfit(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                Text(
-                  'Master reactive programming concepts',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+    return ModuleHeader(
+      title: 'RxLab Concepts',
+      subtitle: 'Master reactive programming concepts',
+      icon: Icons.school_rounded,
+      gradientColors: const [Colors.purple, Colors.blue],
+      showBackButton: false,
+    );
   }
 
   void _openConceptDetail(BuildContext context, ConceptData concept) {
@@ -491,50 +451,12 @@ class ConceptDetailScreen extends StatelessWidget {
   }
 
   Widget _buildAppBar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back),
-            style: IconButton.styleFrom(
-              backgroundColor: AppTheme.surfaceLight,
-              foregroundColor: AppTheme.textPrimary,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: concept.colorValue.withAlpha(30),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(concept.iconData, color: concept.colorValue, size: 24),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  concept.title,
-                  style: GoogleFonts.outfit(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                Text(
-                  concept.subtitle,
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 300.ms);
+    return ModuleHeader(
+      title: concept.title,
+      subtitle: concept.subtitle,
+      icon: concept.iconData,
+      gradientColors: [concept.colorValue, concept.colorValue.withAlpha(200)],
+    );
   }
 
   Widget _buildHeroSection(BuildContext context) {

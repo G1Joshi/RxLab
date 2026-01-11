@@ -40,7 +40,7 @@ class _CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
               color: category.colorValue.withValues(alpha: 0.23),
-            ), // 60/255 approx 0.23
+            ),
           ),
           child: ExpansionTile(
             title: Text(
@@ -86,9 +86,7 @@ class _CategoryCard extends StatelessWidget {
                         color: AppTheme.surfaceLight,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: category.colorValue.withValues(
-                            alpha: 0.15,
-                          ), // 40/255 approx 0.15
+                          color: category.colorValue.withValues(alpha: 0.15),
                         ),
                       ),
                       child: Column(
