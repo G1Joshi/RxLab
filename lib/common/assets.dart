@@ -21,6 +21,10 @@ class AppAssets {
     'assets/data/decisionTree.json',
     'decisionTree',
   );
+  static const DataAsset flashCards = DataAsset(
+    'assets/data/flashCards.json',
+    'flashCards',
+  );
   static const DataAsset glossary = DataAsset(
     'assets/data/glossary.json',
     'glossary',

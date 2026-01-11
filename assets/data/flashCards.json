@@ -1,0 +1,144 @@
+{
+  "flashCards": [
+    {
+      "question": "What is an Observable?",
+      "answer": "A representation of any set of values over any amount of time.",
+      "note": "Think of it as a push-based collection.",
+      "info": "Observables are the fundamental building blocks of Rx. They can emit multiple values synchronously or asynchronously.",
+      "tags": ["Basics", "Fundamentals"]
+    },
+    {
+      "question": "map vs flatMap",
+      "answer": "map transforms values; flatMap transforms values into observables and flattens them.",
+      "note": "flatMap is often used for nested async calls.",
+      "info": "Use 'map' for simple transformations. Use 'flatMap' when your transformation returns another Observable (like an API call).",
+      "tags": ["Operators", "Transformation"]
+    },
+    {
+      "question": "BehaviorSubject",
+      "answer": "A Subject that emits the most recent item to new subscribers.",
+      "note": "Requires an initial value.",
+      "info": "Useful for representing 'current state' (e.g., current user, current theme).",
+      "tags": ["Subjects", "State"]
+    },
+    {
+      "question": "Cold vs Hot Observables",
+      "answer": "Cold starts on subscription; Hot emits regardless of subscription.",
+      "note": "Cold is like a DVD; Hot is like a radio station.",
+      "info": "Most standard operators create Cold Observables. Subjects and connectable observables are typically Hot.",
+      "tags": ["Advanced", "Theory"]
+    },
+    {
+      "question": "switchMap",
+      "answer": "Maps to Observable, CANCELS previous when new value arrives.",
+      "note": "Essential for search-as-you-type!",
+      "info": "Unlike flatMap which keeps all subscriptions, switchMap only keeps the most recent. Perfect for preventing race conditions.",
+      "tags": ["Operators", "Transformation"]
+    },
+    {
+      "question": "debounce vs throttle",
+      "answer": "debounce waits for pause; throttle rate-limits first emission.",
+      "note": "debounce for search input, throttle for scroll events.",
+      "info": "debounce(300ms) emits only after 300ms of silence. throttle(300ms) emits immediately then ignores for 300ms.",
+      "tags": ["Operators", "Filtering"]
+    },
+    {
+      "question": "combineLatest vs zip",
+      "answer": "combineLatest emits on any change; zip pairs by index.",
+      "note": "combineLatest needs all sources to have emitted at least once.",
+      "info": "Use combineLatest for form validation (any field change triggers). Use zip when values must be paired 1:1.",
+      "tags": ["Operators", "Combination"]
+    },
+    {
+      "question": "PublishSubject",
+      "answer": "A Subject that emits only new values to subscribers.",
+      "note": "No replay of past values.",
+      "info": "Useful for event buses where you don't need history. New subscribers only see future emissions.",
+      "tags": ["Subjects"]
+    },
+    {
+      "question": "ReplaySubject",
+      "answer": "A Subject that buffers and replays N items to new subscribers.",
+      "note": "Specify buffer size: ReplaySubject(bufferSize: 3)",
+      "info": "Great for caching recent events. ReplaySubject(1) is similar to BehaviorSubject but without requiring initial value.",
+      "tags": ["Subjects"]
+    },
+    {
+      "question": "takeUntil",
+      "answer": "Takes values until a notifier Observable emits.",
+      "note": "Perfect for component lifecycle cleanup.",
+      "info": "stream.takeUntil(destroy$) automatically unsubscribes when destroy$ emits. No manual dispose needed.",
+      "tags": ["Operators", "Lifecycle"]
+    },
+    {
+      "question": "scan vs reduce",
+      "answer": "scan emits each intermediate result; reduce only the final.",
+      "note": "scan is like a running total.",
+      "info": "Use scan for accumulating state over time. Use reduce only when you need the final aggregated value.",
+      "tags": ["Operators", "Transformation"]
+    },
+    {
+      "question": "share() and shareReplay()",
+      "answer": "Multicast a Cold Observable to multiple subscribers.",
+      "note": "Prevents duplicate side effects (e.g., API calls).",
+      "info": "share() makes Cold → Hot. shareReplay(1) also caches the last value for late subscribers.",
+      "tags": ["Advanced", "Multicasting"]
+    },
+    {
+      "question": "catchError / onErrorReturn",
+      "answer": "Handle errors by providing fallback values or streams.",
+      "note": "Prevents stream termination on error.",
+      "info": "onErrorReturn(defaultValue) replaces error with value. catchError can switch to a fallback stream.",
+      "tags": ["Operators", "Error Handling"]
+    },
+    {
+      "question": "retry and retryWhen",
+      "answer": "Resubscribe to source when error occurs.",
+      "note": "retry(3) tries up to 3 times.",
+      "info": "retryWhen allows custom logic like exponential backoff: retryWhen(errors => errors.delay(1000))",
+      "tags": ["Operators", "Error Handling"]
+    },
+    {
+      "question": "concatMap",
+      "answer": "Maps to Observable, queues requests in order.",
+      "note": "Waits for each to complete before starting next.",
+      "info": "Use concatMap when order matters and you need sequential execution, like saving form steps in order.",
+      "tags": ["Operators", "Transformation"]
+    },
+    {
+      "question": "exhaustMap",
+      "answer": "Maps to Observable, IGNORES new values while busy.",
+      "note": "Perfect for preventing double-submits!",
+      "info": "When user clicks 'Save', exhaustMap ignores additional clicks until the save request completes.",
+      "tags": ["Operators", "Transformation"]
+    },
+    {
+      "question": "Backpressure",
+      "answer": "When producer emits faster than consumer can handle.",
+      "note": "Managed with buffer, throttle, sample, debounce.",
+      "info": "Common solutions: buffer (collect), throttle (rate-limit), sample (periodic), debounce (wait for pause).",
+      "tags": ["Concepts", "Advanced"]
+    },
+    {
+      "question": "Scheduler",
+      "answer": "Controls which thread/context Observable operations run on.",
+      "note": "subscribeOn = producer thread, observeOn = consumer thread.",
+      "info": "Use IO scheduler for network, main/UI scheduler for updating UI. Prevents threading issues.",
+      "tags": ["Advanced", "Threading"]
+    },
+    {
+      "question": "Memory Leak Prevention",
+      "answer": "Always dispose subscriptions when no longer needed.",
+      "note": "Use takeUntil, CompositeDisposable, or framework integrations.",
+      "info": "Undisposed subscriptions hold references, preventing garbage collection. This is the #1 Rx mistake.",
+      "tags": ["Best Practices", "Lifecycle"]
+    },
+    {
+      "question": "withLatestFrom",
+      "answer": "Combines source with latest from another stream, emits only when SOURCE emits.",
+      "note": "Different from combineLatest which emits on any change.",
+      "info": "buttonClick.withLatestFrom(formValue) emits form value only on button click, not on every form change.",
+      "tags": ["Operators", "Combination"]
+    }
+  ]
+}
