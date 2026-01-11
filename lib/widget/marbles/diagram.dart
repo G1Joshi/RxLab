@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../common/common.dart';
-import 'marbles.dart';
+import '../widget.dart';
 
 class MarbleDiagram extends StatefulWidget {
   final OperatorDefinition operator_;

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common/common.dart';
 import '../../../widget/widget.dart';
@@ -106,7 +104,7 @@ class PlaygroundTimeline extends StatelessWidget {
           color: AppTheme.textPrimary,
           borderRadius: BorderRadius.circular(2),
         ),
-      ).animate().fadeIn().scaleY();
+      ).scaleInY();
     }
 
     final marbleItem = MarbleItem(
@@ -128,10 +126,9 @@ class PlaygroundTimeline extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           _formatTime(event.time),
-          style: TextStyle(
+          style: AppTypography.sourceCodePro(
             color: AppTheme.textMuted,
             fontSize: 10,
-            fontFamily: GoogleFonts.sourceCodePro().fontFamily,
           ),
         ),
       ],

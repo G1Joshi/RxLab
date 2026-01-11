@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common/common.dart';
 import '../../../widget/widget.dart';
@@ -43,12 +41,9 @@ class _OperatorDetailScreenState extends State<OperatorDetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       MarbleDiagram(
-                            operator_: widget.operator_,
-                            isInteractive: true,
-                          )
-                          .animate()
-                          .fadeIn(duration: 400.ms)
-                          .slideY(begin: 0.1, end: 0),
+                        operator_: widget.operator_,
+                        isInteractive: true,
+                      ).entrance(),
 
                       const SizedBox(height: 32),
 
@@ -131,7 +126,7 @@ class _OperatorDetailScreenState extends State<OperatorDetailScreen> {
               .toList(),
         ),
       ],
-    ).animate().fadeIn(delay: 400.ms);
+    ).fadeIn(delay: 400.ms);
   }
 
   Widget _buildAppBar() {
@@ -148,145 +143,131 @@ class _OperatorDetailScreenState extends State<OperatorDetailScreen> {
 
   Widget _buildDescriptionSection() {
     return Container(
-          padding: const EdgeInsets.all(20),
-          decoration: AppTheme.glassDecoration,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.all(20),
+      decoration: AppTheme.glassDecoration,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.info_outline_rounded,
-                    color: AppTheme.accent,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'How it works',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppTheme.textPrimary,
-                    ),
-                  ),
-                ],
+              Icon(
+                Icons.info_outline_rounded,
+                color: AppTheme.accent,
+                size: 20,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(width: 8),
               Text(
-                widget.operator_.detailedDescription ??
-                    widget.operator_.description,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppTheme.textSecondary,
-                  height: 1.6,
-                ),
+                'How it works',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: AppTheme.textPrimary),
               ),
             ],
           ),
-        )
-        .animate()
-        .fadeIn(delay: 200.ms, duration: 400.ms)
-        .slideY(begin: 0.1, end: 0);
+          const SizedBox(height: 12),
+          Text(
+            widget.operator_.detailedDescription ??
+                widget.operator_.description,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: AppTheme.textSecondary,
+              height: 1.6,
+            ),
+          ),
+        ],
+      ),
+    ).entrance(delay: 200.ms);
   }
 
   Widget _buildCodeSection() {
     return Container(
-          decoration: AppTheme.glassDecoration,
-          clipBehavior: Clip.antiAlias,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              InkWell(
-                onTap: () => setState(() => _showCode = !_showCode),
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppTheme.surfaceLight.withValues(alpha: 0.5),
+      decoration: AppTheme.glassDecoration,
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          InkWell(
+            onTap: () => setState(() => _showCode = !_showCode),
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppTheme.surfaceLight.withValues(alpha: 0.5),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.code_rounded, color: AppTheme.accent, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Universal Rx Pseudocode',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppTheme.textPrimary,
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.code_rounded,
-                        color: AppTheme.accent,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Universal Rx Pseudocode',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(color: AppTheme.textPrimary),
-                      ),
-                      const Spacer(),
-                      AnimatedRotation(
-                        turns: _showCode ? 0.5 : 0,
-                        duration: const Duration(milliseconds: 200),
-                        child: Icon(
-                          Icons.expand_more,
-                          color: AppTheme.textMuted,
-                        ),
-                      ),
-                    ],
+                  const Spacer(),
+                  AnimatedRotation(
+                    turns: _showCode ? 0.5 : 0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(Icons.expand_more, color: AppTheme.textMuted),
                   ),
+                ],
+              ),
+            ),
+          ),
+
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFF0D1117),
+                border: Border(
+                  top: BorderSide(color: Colors.white.withValues(alpha: 0.05)),
                 ),
               ),
-
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0D1117),
-                    border: Border(
-                      top: BorderSide(
-                        color: Colors.white.withValues(alpha: 0.05),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: TextButton.icon(
+                      onPressed: _copyCode,
+                      icon: Icon(
+                        _codeCopied ? Icons.check : Icons.copy,
+                        size: 16,
+                      ),
+                      label: Text(_codeCopied ? 'Copied!' : 'Copy'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: _codeCopied
+                            ? Colors.green
+                            : AppTheme.textMuted,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                       ),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: TextButton.icon(
-                          onPressed: _copyCode,
-                          icon: Icon(
-                            _codeCopied ? Icons.check : Icons.copy,
-                            size: 16,
-                          ),
-                          label: Text(_codeCopied ? 'Copied!' : 'Copy'),
-                          style: TextButton.styleFrom(
-                            foregroundColor: _codeCopied
-                                ? Colors.green
-                                : AppTheme.textMuted,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
+                  const SizedBox(height: 8),
 
-                      SelectableText(
-                        widget.operator_.codeExample.trim(),
-                        style: GoogleFonts.sourceCodePro(
-                          fontSize: 14,
-                          color: const Color(0xFFE6EDF3),
-                          height: 1.5,
-                        ),
-                      ),
-                    ],
+                  SelectableText(
+                    widget.operator_.codeExample.trim(),
+                    style: AppTypography.sourceCodePro(
+                      fontSize: 14,
+                      color: const Color(0xFFE6EDF3),
+                      height: 1.5,
+                    ),
                   ),
-                ),
-                crossFadeState: _showCode
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 200),
+                ],
               ),
-            ],
+            ),
+            crossFadeState: _showCode
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
           ),
-        )
-        .animate()
-        .fadeIn(delay: 300.ms, duration: 400.ms)
-        .slideY(begin: 0.1, end: 0);
+        ],
+      ),
+    ).entrance(delay: 300.ms);
   }
 
   void _copyCode() async {

@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -276,7 +275,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen>
                         ),
                         child: Text(
                           title,
-                          style: GoogleFonts.inter(
+                          style: AppTypography.inter(
                             color: color,
                             fontWeight: FontWeight.w800,
                             fontSize: 10,
@@ -298,7 +297,7 @@ class _FlashcardsScreenState extends State<FlashcardsScreen>
                   Text(
                     content,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.outfit(
+                    style: AppTypography.outfit(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textPrimary,

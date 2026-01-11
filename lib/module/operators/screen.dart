@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -111,75 +109,68 @@ class _OperatorsScreenState extends State<OperatorsScreen>
   Widget _buildSearchBar() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child:
-          Container(
-                decoration: AppTheme.glassDecoration,
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (value) => setState(() => _searchQuery = value),
-                  style: const TextStyle(color: AppTheme.textPrimary),
-                  decoration: InputDecoration(
-                    hintText: 'Search operators...',
-                    prefixIcon: Icon(Icons.search, color: AppTheme.textMuted),
-                    suffixIcon: _searchQuery.isNotEmpty
-                        ? IconButton(
-                            icon: Icon(Icons.clear, color: AppTheme.textMuted),
-                            onPressed: () {
-                              _searchController.clear();
-                              setState(() => _searchQuery = '');
-                            },
-                          )
-                        : null,
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
-                    ),
-                  ),
-                ),
-              )
-              .animate()
-              .fadeIn(delay: 300.ms, duration: 400.ms)
-              .slideY(begin: -0.2, end: 0),
+      child: Container(
+        decoration: AppTheme.glassDecoration,
+        child: TextField(
+          controller: _searchController,
+          onChanged: (value) => setState(() => _searchQuery = value),
+          style: const TextStyle(color: AppTheme.textPrimary),
+          decoration: InputDecoration(
+            hintText: 'Search operators...',
+            prefixIcon: Icon(Icons.search, color: AppTheme.textMuted),
+            suffixIcon: _searchQuery.isNotEmpty
+                ? IconButton(
+                    icon: Icon(Icons.clear, color: AppTheme.textMuted),
+                    onPressed: () {
+                      _searchController.clear();
+                      setState(() => _searchQuery = '');
+                    },
+                  )
+                : null,
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 16,
+            ),
+          ),
+        ),
+      ).fadeIn().slideInY(begin: -0.2, end: 0),
     );
   }
 
   Widget _buildCategoryTabs() {
     return Container(
-          height: 50,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: TabBar(
-            controller: _tabController,
-            isScrollable: true,
-            labelColor: AppTheme.textPrimary,
-            unselectedLabelColor: AppTheme.textMuted,
-            indicatorSize: TabBarIndicatorSize.tab,
-            dividerColor: Colors.transparent,
-            indicator: BoxDecoration(
-              gradient: AppTheme.primaryGradient,
-              borderRadius: BorderRadius.circular(25),
+      height: 50,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: TabBar(
+        controller: _tabController,
+        isScrollable: true,
+        labelColor: AppTheme.textPrimary,
+        unselectedLabelColor: AppTheme.textMuted,
+        indicatorSize: TabBarIndicatorSize.tab,
+        dividerColor: Colors.transparent,
+        indicator: BoxDecoration(
+          gradient: AppTheme.primaryGradient,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        labelStyle: AppTypography.inter(
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
+        unselectedLabelStyle: AppTypography.inter(
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+        ),
+        tabs: _tabs.map((tab) {
+          return Tab(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(tab.label),
             ),
-            labelStyle: GoogleFonts.inter(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-            ),
-            unselectedLabelStyle: GoogleFonts.inter(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-            ),
-            tabs: _tabs.map((tab) {
-              return Tab(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(tab.label),
-                ),
-              );
-            }).toList(),
-          ),
-        )
-        .animate()
-        .fadeIn(delay: 400.ms, duration: 400.ms)
-        .slideY(begin: -0.2, end: 0);
+          );
+        }).toList(),
+      ),
+    ).fadeIn().slideInY(begin: -0.2, end: 0);
   }
 
   Widget _buildOperatorsGrid() {
@@ -275,119 +266,104 @@ class _OperatorCardState extends State<_OperatorCard> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-          onEnter: (_) => setState(() => _isHovered = true),
-          onExit: (_) => setState(() => _isHovered = false),
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: widget.onTap,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              transform: Matrix4.diagonal3Values(
-                _isHovered ? 1.02 : 1.0,
-                _isHovered ? 1.02 : 1.0,
-                1.0,
-              ),
-              decoration: BoxDecoration(
-                color: AppTheme.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: _isHovered
-                      ? widget.operator_.categoryColor.withValues(alpha: 0.5)
-                      : Colors.white.withValues(alpha: 0.05),
-                  width: _isHovered ? 2 : 1,
-                ),
-                boxShadow: _isHovered
-                    ? [
-                        BoxShadow(
-                          color: widget.operator_.categoryColor.withValues(
-                            alpha: 0.2,
-                          ),
-                          blurRadius: 20,
-                          spreadRadius: 2,
-                        ),
-                      ]
-                    : [],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          transform: Matrix4.diagonal3Values(
+            _isHovered ? 1.02 : 1.0,
+            _isHovered ? 1.02 : 1.0,
+            1.0,
+          ),
+          decoration: BoxDecoration(
+            color: AppTheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: _isHovered
+                  ? widget.operator_.categoryColor.withValues(alpha: 0.5)
+                  : Colors.white.withValues(alpha: 0.05),
+              width: _isHovered ? 2 : 1,
+            ),
+            boxShadow: _isHovered
+                ? [
+                    BoxShadow(
+                      color: widget.operator_.categoryColor.withValues(
+                        alpha: 0.2,
+                      ),
+                      blurRadius: 20,
+                      spreadRadius: 2,
+                    ),
+                  ]
+                : [],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: widget.operator_.categoryColor.withValues(
-                              alpha: 0.15,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(
-                            widget.operator_.icon,
-                            color: widget.operator_.categoryColor,
-                            size: 20,
-                          ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: widget.operator_.categoryColor.withValues(
+                          alpha: 0.15,
                         ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: AppTheme.surfaceLight,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            widget.operator_.category.displayName,
-                            style: TextStyle(
-                              color: AppTheme.textMuted,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        widget.operator_.icon,
+                        color: widget.operator_.categoryColor,
+                        size: 20,
+                      ),
                     ),
                     const Spacer(),
-
-                    Text(
-                      widget.operator_.name,
-                      style: GoogleFonts.sourceCodePro(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textPrimary,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-
-                    Text(
-                      widget.operator_.description,
-                      style: TextStyle(
-                        color: AppTheme.textSecondary,
-                        fontSize: 12,
+                      decoration: BoxDecoration(
+                        color: AppTheme.surfaceLight,
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      child: Text(
+                        widget.operator_.category.displayName,
+                        style: TextStyle(
+                          color: AppTheme.textMuted,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
+                const Spacer(),
+
+                Text(
+                  widget.operator_.name,
+                  style: AppTypography.sourceCodePro(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+
+                Text(
+                  widget.operator_.description,
+                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
             ),
           ),
-        )
-        .animate()
-        .fadeIn(
-          delay: Duration(milliseconds: 50 * widget.index),
-          duration: 300.ms,
-        )
-        .slideY(
-          begin: 0.1,
-          end: 0,
-          delay: Duration(milliseconds: 50 * widget.index),
-          duration: 300.ms,
-          curve: Curves.easeOutCubic,
-        );
+        ),
+      ),
+    ).entrance(delay: (50 * widget.index).ms);
   }
 }

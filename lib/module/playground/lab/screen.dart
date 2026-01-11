@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../common/common.dart';
 import '../../../widget/widget.dart';
@@ -124,7 +122,7 @@ class _LabScreenState extends State<LabScreen>
           const SizedBox(height: 24),
           Text(
             'Your lab is empty',
-            style: GoogleFonts.outfit(
+            style: AppTypography.outfit(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppTheme.textPrimary,
@@ -137,7 +135,7 @@ class _LabScreenState extends State<LabScreen>
           ),
         ],
       ),
-    ).animate().fadeIn();
+    ).fadeIn();
   }
 
   Widget _buildWorkspace() {
@@ -262,7 +260,7 @@ class _LabScreenState extends State<LabScreen>
         children: [
           Text(
             'ADD OPERATOR',
-            style: GoogleFonts.inter(
+            style: AppTypography.inter(
               fontSize: 10,
               fontWeight: FontWeight.w900,
               color: AppTheme.textMuted,

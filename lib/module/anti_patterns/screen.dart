@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
@@ -154,87 +152,84 @@ class _AntiPatternCardState extends State<_AntiPatternCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-          margin: const EdgeInsets.only(bottom: 16),
-          decoration: BoxDecoration(
-            color: AppTheme.surface,
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: AppTheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: widget.pattern.colorValue.withAlpha(50)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          InkWell(
+            onTap: () => setState(() => _expanded = !_expanded),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: widget.pattern.colorValue.withAlpha(50)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              InkWell(
-                onTap: () => setState(() => _expanded = !_expanded),
-                borderRadius: BorderRadius.circular(16),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: widget.pattern.colorValue.withAlpha(30),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          widget.pattern.iconData,
-                          color: widget.pattern.colorValue,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: widget.pattern.colorValue.withAlpha(30),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      widget.pattern.iconData,
+                      color: widget.pattern.colorValue,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    widget.pattern.title,
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppTheme.textPrimary,
-                                      fontSize: 15,
-                                    ),
-                                  ),
+                            Expanded(
+                              child: Text(
+                                widget.pattern.title,
+                                style: AppTypography.inter(
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.textPrimary,
+                                  fontSize: 15,
                                 ),
-                                _SeverityDots(count: widget.pattern.severity),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              widget.pattern.description,
-                              style: TextStyle(
-                                color: AppTheme.textSecondary,
-                                fontSize: 12,
                               ),
                             ),
+                            _SeverityDots(count: widget.pattern.severity),
                           ],
                         ),
-                      ),
-                      Icon(
-                        _expanded ? Icons.expand_less : Icons.expand_more,
-                        color: AppTheme.textMuted,
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          widget.pattern.description,
+                          style: TextStyle(
+                            color: AppTheme.textSecondary,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  Icon(
+                    _expanded ? Icons.expand_less : Icons.expand_more,
+                    color: AppTheme.textMuted,
+                  ),
+                ],
               ),
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: _buildExpanded(),
-                crossFadeState: _expanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 200),
-              ),
-            ],
+            ),
           ),
-        )
-        .animate(delay: Duration(milliseconds: widget.index * 50))
-        .fadeIn()
-        .slideX(begin: 0.03, end: 0);
+          AnimatedCrossFade(
+            firstChild: const SizedBox.shrink(),
+            secondChild: _buildExpanded(),
+            crossFadeState: _expanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: const Duration(milliseconds: 200),
+          ),
+        ],
+      ),
+    ).entrance(delay: (widget.index * 50).ms);
   }
 
   Widget _buildExpanded() {
@@ -420,7 +415,7 @@ class _CodeBlock extends StatelessWidget {
           ),
           child: SelectableText(
             code.trim(),
-            style: GoogleFonts.sourceCodePro(
+            style: AppTypography.sourceCodePro(
               color: const Color(0xFFE6EDF3),
               fontSize: 11,
               height: 1.4,
