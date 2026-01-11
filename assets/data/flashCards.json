@@ -2,143 +2,248 @@
   "flashCards": [
     {
       "question": "What is an Observable?",
-      "answer": "A representation of any set of values over any amount of time.",
-      "note": "Think of it as a push-based collection.",
-      "info": "Observables are the fundamental building blocks of Rx. They can emit multiple values synchronously or asynchronously.",
-      "tags": ["Basics", "Fundamentals"]
+      "answer": "A push-based, lazy collection that emits values over time",
+      "note": "Unlike arrays which are pull-based, Observables push values to subscribers when they're ready",
+      "info": "Observables can emit 0 to infinite values, and can complete or error",
+      "tags": ["core", "basics"]
     },
     {
-      "question": "map vs flatMap",
-      "answer": "map transforms values; flatMap transforms values into observables and flattens them.",
-      "note": "flatMap is often used for nested async calls.",
-      "info": "Use 'map' for simple transformations. Use 'flatMap' when your transformation returns another Observable (like an API call).",
-      "tags": ["Operators", "Transformation"]
+      "question": "What's the difference between Hot and Cold Observables?",
+      "answer": "Cold: starts fresh for each subscriber. Hot: shared, emissions happen regardless of subscribers",
+      "note": "API calls are typically cold; mouse events are hot",
+      "info": "Use Publish() + RefCount() to convert cold to hot",
+      "tags": ["core", "advanced"]
     },
     {
-      "question": "BehaviorSubject",
-      "answer": "A Subject that emits the most recent item to new subscribers.",
-      "note": "Requires an initial value.",
-      "info": "Useful for representing 'current state' (e.g., current user, current theme).",
-      "tags": ["Subjects", "State"]
+      "question": "What does Map do?",
+      "answer": "Transforms each emitted value by applying a function",
+      "note": "Input: 1,2,3 with Map(x => x*10) → Output: 10,20,30",
+      "info": "Map is synchronous and 1-to-1 (each input produces exactly one output)",
+      "tags": ["transformation", "Map"]
     },
     {
-      "question": "Cold vs Hot Observables",
-      "answer": "Cold starts on subscription; Hot emits regardless of subscription.",
-      "note": "Cold is like a DVD; Hot is like a radio station.",
-      "info": "Most standard operators create Cold Observables. Subjects and connectable observables are typically Hot.",
-      "tags": ["Advanced", "Theory"]
+      "question": "What does FlatMap do?",
+      "answer": "Maps each value to an Observable and merges all outputs",
+      "note": "Use for async operations like API calls",
+      "info": "Keeps ALL inner subscriptions active concurrently",
+      "tags": ["transformation", "FlatMap"]
     },
     {
-      "question": "switchMap",
-      "answer": "Maps to Observable, CANCELS previous when new value arrives.",
-      "note": "Essential for search-as-you-type!",
-      "info": "Unlike flatMap which keeps all subscriptions, switchMap only keeps the most recent. Perfect for preventing race conditions.",
-      "tags": ["Operators", "Transformation"]
+      "question": "When should you use Switch instead of FlatMap?",
+      "answer": "When you only care about the latest result (e.g., search)",
+      "note": "Switch cancels the previous inner Observable when new value arrives",
+      "info": "Perfect for search-as-you-type, navigation, autocomplete",
+      "tags": ["transformation", "Switch", "FlatMap"]
     },
     {
-      "question": "debounce vs throttle",
-      "answer": "debounce waits for pause; throttle rate-limits first emission.",
-      "note": "debounce for search input, throttle for scroll events.",
-      "info": "debounce(300ms) emits only after 300ms of silence. throttle(300ms) emits immediately then ignores for 300ms.",
-      "tags": ["Operators", "Filtering"]
+      "question": "What does Filter do?",
+      "answer": "Only emits values that pass a predicate test",
+      "note": "Input: 1,2,3,4,5 with Filter(x => x > 3) → Output: 4,5",
+      "info": "Values that fail the predicate are silently dropped",
+      "tags": ["filtering", "Filter"]
     },
     {
-      "question": "combineLatest vs zip",
-      "answer": "combineLatest emits on any change; zip pairs by index.",
-      "note": "combineLatest needs all sources to have emitted at least once.",
-      "info": "Use combineLatest for form validation (any field change triggers). Use zip when values must be paired 1:1.",
-      "tags": ["Operators", "Combination"]
+      "question": "What does Take do?",
+      "answer": "Emits only the first N items, then completes",
+      "note": "Take(3) on stream 1,2,3,4,5 → 1,2,3 then complete",
+      "info": "Useful for limiting infinite streams or getting first N results",
+      "tags": ["filtering", "Take"]
     },
     {
-      "question": "PublishSubject",
-      "answer": "A Subject that emits only new values to subscribers.",
-      "note": "No replay of past values.",
-      "info": "Useful for event buses where you don't need history. New subscribers only see future emissions.",
-      "tags": ["Subjects"]
+      "question": "What does TakeUntil do?",
+      "answer": "Emits values until a notifier Observable emits",
+      "note": "Perfect for cleanup: stream.takeUntil(destroy$)",
+      "info": "Completes when notifier emits, disposing inner subscription",
+      "tags": ["filtering", "TakeUntil", "cleanup"]
     },
     {
-      "question": "ReplaySubject",
-      "answer": "A Subject that buffers and replays N items to new subscribers.",
-      "note": "Specify buffer size: ReplaySubject(bufferSize: 3)",
-      "info": "Great for caching recent events. ReplaySubject(1) is similar to BehaviorSubject but without requiring initial value.",
-      "tags": ["Subjects"]
+      "question": "What does Debounce do?",
+      "answer": "Emits only after a quiet period with no new emissions",
+      "note": "debounce(300ms) waits 300ms after last keystroke",
+      "info": "Essential for search-as-you-type inputs",
+      "tags": ["filtering", "Debounce", "timing"]
     },
     {
-      "question": "takeUntil",
-      "answer": "Takes values until a notifier Observable emits.",
-      "note": "Perfect for component lifecycle cleanup.",
-      "info": "stream.takeUntil(destroy$) automatically unsubscribes when destroy$ emits. No manual dispose needed.",
-      "tags": ["Operators", "Lifecycle"]
+      "question": "What does Distinct do?",
+      "answer": "Suppresses duplicate items",
+      "note": "Input: 1,1,2,2,3,1 → Output: 1,2,3 (first 1 only)",
+      "info": "Remembers ALL previous values",
+      "tags": ["filtering", "Distinct"]
     },
     {
-      "question": "scan vs reduce",
-      "answer": "scan emits each intermediate result; reduce only the final.",
-      "note": "scan is like a running total.",
-      "info": "Use scan for accumulating state over time. Use reduce only when you need the final aggregated value.",
-      "tags": ["Operators", "Transformation"]
+      "question": "What does Merge do?",
+      "answer": "Combines multiple Observables by interleaving emissions",
+      "note": "Emissions arrive as they happen from any source",
+      "info": "All sources run concurrently",
+      "tags": ["combination", "Merge"]
     },
     {
-      "question": "share() and shareReplay()",
-      "answer": "Multicast a Cold Observable to multiple subscribers.",
-      "note": "Prevents duplicate side effects (e.g., API calls).",
-      "info": "share() makes Cold → Hot. shareReplay(1) also caches the last value for late subscribers.",
-      "tags": ["Advanced", "Multicasting"]
+      "question": "What does Concat do?",
+      "answer": "Emits from streams sequentially (waits for complete)",
+      "note": "Second stream only starts after first completes",
+      "info": "Preserves order, queues streams",
+      "tags": ["combination", "Concat"]
     },
     {
-      "question": "catchError / onErrorReturn",
-      "answer": "Handle errors by providing fallback values or streams.",
-      "note": "Prevents stream termination on error.",
-      "info": "onErrorReturn(defaultValue) replaces error with value. catchError can switch to a fallback stream.",
-      "tags": ["Operators", "Error Handling"]
+      "question": "What does CombineLatest do?",
+      "answer": "Combines latest values from multiple sources when any emits",
+      "note": "Requires all sources to emit at least once before first output",
+      "info": "Great for form validation, derived state",
+      "tags": ["combination", "CombineLatest"]
     },
     {
-      "question": "retry and retryWhen",
-      "answer": "Resubscribe to source when error occurs.",
-      "note": "retry(3) tries up to 3 times.",
-      "info": "retryWhen allows custom logic like exponential backoff: retryWhen(errors => errors.delay(1000))",
-      "tags": ["Operators", "Error Handling"]
+      "question": "What does Zip do?",
+      "answer": "Pairs values from sources by index (1-to-1)",
+      "note": "Zip([A,B,C], [1,2,3]) → [A,1], [B,2], [C,3]",
+      "info": "Waits for matching pair from each source",
+      "tags": ["combination", "Zip"]
     },
     {
-      "question": "concatMap",
-      "answer": "Maps to Observable, queues requests in order.",
-      "note": "Waits for each to complete before starting next.",
-      "info": "Use concatMap when order matters and you need sequential execution, like saving form steps in order.",
-      "tags": ["Operators", "Transformation"]
+      "question": "What does Catch do?",
+      "answer": "Recovers from errors by returning fallback",
+      "note": "Can return default value or switch to fallback stream",
+      "info": "Stream continues instead of terminating on error",
+      "tags": ["error_handling", "Catch"]
     },
     {
-      "question": "exhaustMap",
-      "answer": "Maps to Observable, IGNORES new values while busy.",
-      "note": "Perfect for preventing double-submits!",
-      "info": "When user clicks 'Save', exhaustMap ignores additional clicks until the save request completes.",
-      "tags": ["Operators", "Transformation"]
+      "question": "What does Retry do?",
+      "answer": "Resubscribes to source on error",
+      "note": "Retry(3) attempts up to 3 times before propagating error",
+      "info": "Useful for transient network failures",
+      "tags": ["error_handling", "Retry"]
     },
     {
-      "question": "Backpressure",
-      "answer": "When producer emits faster than consumer can handle.",
-      "note": "Managed with buffer, throttle, sample, debounce.",
-      "info": "Common solutions: buffer (collect), throttle (rate-limit), sample (periodic), debounce (wait for pause).",
-      "tags": ["Concepts", "Advanced"]
+      "question": "What does Scan do?",
+      "answer": "Like Reduce but emits each intermediate accumulation",
+      "note": "Input: 1,2,3 with Scan(sum) → Output: 1,3,6",
+      "info": "Perfect for running totals, state management",
+      "tags": ["transformation", "Scan"]
     },
     {
-      "question": "Scheduler",
-      "answer": "Controls which thread/context Observable operations run on.",
-      "note": "subscribeOn = producer thread, observeOn = consumer thread.",
-      "info": "Use IO scheduler for network, main/UI scheduler for updating UI. Prevents threading issues.",
-      "tags": ["Advanced", "Threading"]
+      "question": "What does Reduce do?",
+      "answer": "Accumulates all values and emits only the final result",
+      "note": "Input: 1,2,3 with Reduce(sum) → Output: 6 (on complete)",
+      "info": "Only emits when source completes",
+      "tags": ["aggregate", "Reduce"]
     },
     {
-      "question": "Memory Leak Prevention",
-      "answer": "Always dispose subscriptions when no longer needed.",
-      "note": "Use takeUntil, CompositeDisposable, or framework integrations.",
-      "info": "Undisposed subscriptions hold references, preventing garbage collection. This is the #1 Rx mistake.",
-      "tags": ["Best Practices", "Lifecycle"]
+      "question": "What does Buffer do?",
+      "answer": "Collects emissions into arrays/bundles",
+      "note": "Buffer(3) collects into arrays of 3 items",
+      "info": "Can buffer by count, time, or boundary signal",
+      "tags": ["transformation", "Buffer"]
     },
     {
-      "question": "withLatestFrom",
-      "answer": "Combines source with latest from another stream, emits only when SOURCE emits.",
-      "note": "Different from combineLatest which emits on any change.",
-      "info": "buttonClick.withLatestFrom(formValue) emits form value only on button click, not on every form change.",
-      "tags": ["Operators", "Combination"]
+      "question": "What does Delay do?",
+      "answer": "Shifts all emissions forward in time",
+      "note": "Delay(500ms) delays each emission by 500ms",
+      "info": "Preserves relative timing between emissions",
+      "tags": ["utility", "Delay", "timing"]
+    },
+    {
+      "question": "What does Publish do?",
+      "answer": "Converts to ConnectableObservable for multicasting",
+      "note": "Must call Connect() to start emissions",
+      "info": "Allows multiple subscribers to share one subscription",
+      "tags": ["connectable", "Publish"]
+    },
+    {
+      "question": "What does RefCount do?",
+      "answer": "Auto-connects on first subscriber, disconnects on last",
+      "note": "Makes ConnectableObservable behave like regular Observable",
+      "info": "Common pattern: Publish().RefCount()",
+      "tags": ["connectable", "RefCount"]
+    },
+    {
+      "question": "What does Replay do?",
+      "answer": "Caches emissions and replays to late subscribers",
+      "note": "Replay(1) caches last value for new subscribers",
+      "info": "Useful for caching API responses",
+      "tags": ["connectable", "Replay"]
+    },
+    {
+      "question": "What does Just do?",
+      "answer": "Creates Observable that emits a single value and completes",
+      "note": "Just(42) emits 42 then completes",
+      "info": "Useful for wrapping synchronous values",
+      "tags": ["creation", "Just"]
+    },
+    {
+      "question": "What does From do?",
+      "answer": "Converts array/iterable to Observable",
+      "note": "From([1,2,3]) emits 1, 2, 3 then completes",
+      "info": "Each item is emitted separately",
+      "tags": ["creation", "From"]
+    },
+    {
+      "question": "What does Interval do?",
+      "answer": "Emits sequential integers at time intervals",
+      "note": "Interval(1s) emits 0, 1, 2, 3... every second",
+      "info": "Useful for polling, heartbeats, timers",
+      "tags": ["creation", "Interval"]
+    },
+    {
+      "question": "What does Timer do?",
+      "answer": "Emits single value after delay, then completes",
+      "note": "Timer(2s) waits 2 seconds, emits 0, completes",
+      "info": "Can also create infinite sequence after delay",
+      "tags": ["creation", "Timer"]
+    },
+    {
+      "question": "What does Defer do?",
+      "answer": "Creates fresh Observable for each subscriber",
+      "note": "Factory function called on each subscribe",
+      "info": "Useful for lazy initialization with fresh state",
+      "tags": ["creation", "Defer"]
+    },
+    {
+      "question": "What does Empty do?",
+      "answer": "Emits no items and completes immediately",
+      "note": "Empty() → complete (no values)",
+      "info": "Useful as fallback or for completion signals",
+      "tags": ["creation", "Empty"]
+    },
+    {
+      "question": "What does Timeout do?",
+      "answer": "Errors if no emission within specified time",
+      "note": "Timeout(5s) throws if silent for 5 seconds",
+      "info": "Useful for detecting stalled/frozen sources",
+      "tags": ["utility", "Timeout"]
+    },
+    {
+      "question": "What does All do?",
+      "answer": "Checks if all items satisfy a condition",
+      "note": "Emits true if ALL items pass, false on first failure",
+      "info": "Short-circuits on first false",
+      "tags": ["conditional", "All"]
+    },
+    {
+      "question": "What does Contains do?",
+      "answer": "Checks if Observable emits a specific value",
+      "note": "Emits true when value found, false on complete",
+      "info": "Short-circuits on first match",
+      "tags": ["conditional", "Contains"]
+    },
+    {
+      "question": "What does DefaultIfEmpty do?",
+      "answer": "Emits default value if source completes empty",
+      "note": "Only emits default if NO values emitted",
+      "info": "Guarantees at least one emission",
+      "tags": ["conditional", "DefaultIfEmpty"]
+    },
+    {
+      "question": "What does Amb do?",
+      "answer": "Mirrors the first Observable to emit",
+      "note": "All others are unsubscribed",
+      "info": "Useful for racing multiple sources",
+      "tags": ["conditional", "Amb"]
+    },
+    {
+      "question": "What's the cleanup pattern with TakeUntil?",
+      "answer": "stream.takeUntil(destroy$) + destroy$.next() on cleanup",
+      "note": "Create destroy$ Subject, emit on component destroy",
+      "info": "Auto-cancels subscription without manual tracking",
+      "tags": ["patterns", "TakeUntil", "cleanup"]
     }
   ]
 }

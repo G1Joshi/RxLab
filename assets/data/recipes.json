@@ -1,84 +1,204 @@
 {
   "recipes": [
     {
-      "title": "Search Autocomplete",
-      "description": "Debounced search with loading state",
+      "title": "Search As You Type",
+      "description": "Debounced search with cancel-previous behavior",
       "icon": "search",
       "color": "indigo",
-      "problem": "You want to search as the user types, but not on every keystroke which would overload your API.",
-      "solution": "Use debounce to wait for a pause in typing, switchMap to cancel previous requests, and distinct to avoid duplicate searches.",
-      "operatorsUsed": ["debounce", "distinct", "switchMap", "filter"],
-      "codeExample": "searchResults = searchText\n  .debounce(300.ms)\n  .filter(query => query.length >= 2)\n  .distinct()\n  .switchMap(query => searchApi(query)\n    .startWith(Loading())\n    .catchError(SearchError()))\n  .share()\n\n// Effect:\n// - Waits 300ms after typing stops\n// - Ignores queries < 2 chars\n// - Cancels previous search on new query\n// - Shows loading state"
+      "problem": "Sending a request for every keystroke is wasteful. Old slow requests might override newer results.",
+      "solution": "Use Debounce to wait for pause, Distinct to skip duplicates, Switch to cancel previous requests.",
+      "operatorsUsed": ["Debounce", "Distinct", "Switch", "Filter", "Catch"],
+      "codeExample": "search$ = searchInput$\n  .debounce(300.ms)\n  .distinct()\n  .filter(q => q.length >= 2)\n  .switch(q => api.search(q))\n  .catch(e => empty())"
     },
     {
       "title": "Form Validation",
-      "description": "Real-time validation with multiple fields",
+      "description": "Combine multiple form fields for validation",
       "icon": "check_circle",
       "color": "green",
-      "problem": "You need to validate multiple form fields and only enable submit when all are valid.",
-      "solution": "Use combineLatest to get latest values from all fields, then map to validation result.",
-      "operatorsUsed": ["combineLatest", "map", "startWith", "distinct"],
-      "codeExample": "isFormValid = combineLatest(\n  email.map(isValidEmail),\n  password.map(isStrongPassword),\n  age.map(isValidAge)\n).map((e, p, a) => e && p && a)\n .distinct()\n\n// Enable button only when valid\nisFormValid.subscribe(valid => {\n  submitButton.enabled = valid\n})"
+      "problem": "You need to validate a form with multiple fields and control submit button state.",
+      "solution": "Use CombineLatest to combine all field values, then Map to derive validity.",
+      "operatorsUsed": ["CombineLatest", "Map", "Distinct"],
+      "codeExample": "isFormValid$ = CombineLatest(\n  email$, password$, confirmPassword$,\n  (e, p, c) => isValidEmail(e) && p.length >= 8 && p == c\n).distinct()"
     },
     {
-      "title": "Retry with Exponential Backoff",
-      "description": "Smart retry for network failures",
+      "title": "Polling / Auto-Refresh",
+      "description": "Periodically fetch fresh data",
       "icon": "refresh",
       "color": "orange",
-      "problem": "Network requests can fail temporarily. You want to retry with increasing delays.",
-      "solution": "Use retryWhen with a delay that increases exponentially on each failure.",
-      "operatorsUsed": ["retryWhen", "delay", "take", "scan"],
-      "codeExample": "fetchFromApi()\n  .retryWhen(errors => errors\n    .scan((delay, _) => delay * 2, 1000)  // 1s, 2s, 4s...\n    .take(3)  // Max 3 retries\n    .flatMap(delay => {\n      print(\"Retrying in \" + delay + \"ms...\")\n      return timer(delay)\n    }))\n  .subscribe(handleData)\n\n// Retry delays: 1s → 2s → 4s → give up"
+      "problem": "You need to poll an API at regular intervals with error recovery.",
+      "solution": "Use Interval for ticks, FlatMap for API calls, Retry for resilience.",
+      "operatorsUsed": ["Interval", "FlatMap", "Retry", "StartWith"],
+      "codeExample": "refresh$ = Interval(30.seconds)\n  .startWith(0)\n  .flatMap(_ => api.getData())\n  .retry(3)"
     },
     {
       "title": "Infinite Scroll / Pagination",
       "description": "Load more data as user scrolls",
       "icon": "view_list",
-      "color": "purple",
-      "problem": "You need to load more items when the user reaches the bottom of the list.",
-      "solution": "Combine scroll events with page state, throttle to avoid rapid calls, and accumulate results.",
-      "operatorsUsed": ["scan", "switchMap", "startWith", "throttle"],
-      "codeExample": "items = loadMoreTrigger\n  .throttle(500.ms)\n  .scan((page, _) => page + 1, 0)\n  .startWith(0)\n  .switchMap(page => fetchPage(page)\n    .map(items => Success(page, items))\n    .startWith(Loading())\n    .catchError(Error()))\n  .scan((allItems, result) => {\n    if (result is Success)\n      return allItems + result.items\n    return allItems\n  }, [])"
-    },
-    {
-      "title": "Smart Polling",
-      "description": "Poll API with pause on error/background",
-      "icon": "sync",
       "color": "teal",
-      "problem": "You need to poll an API periodically but pause when app is in background or on error.",
-      "solution": "Use switchMap with timer, pause on lifecycle events, and handle errors without killing the poll.",
-      "operatorsUsed": ["switchMap", "interval", "takeUntil", "catchError"],
-      "codeExample": "appActive = appLifecycle\n  .map(state => state == Resumed)\n\npollData = appActive\n  .switchMap(active => active\n    ? interval(30.seconds)\n        .startWith(Unit)\n        .switchMap(_ => fetchData()\n          .catchError(cachedData))\n    : empty())\n  .shareReplay(1)\n\n// Polls every 30s when active\n// Pauses in background\n// Uses cache on error"
+      "problem": "Load more items when user scrolls near bottom, accumulating pages.",
+      "solution": "Use Filter to detect scroll, Scan to track page, FlatMap to fetch.",
+      "operatorsUsed": ["Filter", "Scan", "FlatMap", "Concat"],
+      "codeExample": "allItems$ = scrollNearBottom$\n  .scan((page, _) => page + 1, 0)\n  .flatMap(page => api.getItems(page))\n  .scan((all, page) => [...all, ...page], [])"
     },
     {
-      "title": "Cached Network Request",
-      "description": "Cache with stale-while-revalidate",
-      "icon": "cached",
+      "title": "Auto-Complete Cleanup",
+      "description": "Cancel subscriptions when component unmounts",
+      "icon": "sync",
       "color": "blue",
-      "problem": "Show cached data immediately, then update with fresh data when available.",
-      "solution": "Use concat to emit cached first, then fresh. Or merge for parallel.",
-      "operatorsUsed": ["concat", "merge", "shareReplay", "distinct"],
-      "codeExample": "getCachedThenFresh(id) {\n  cached = getFromCache(id)\n  fresh = fetchFromApi(id)\n    .doOnNext(data => saveToCache(id, data))\n  \n  return concat(cached, fresh)\n    .distinct()  // Skip if fresh == cached\n    .shareReplay(1)\n}\n\n// Emits: cached → fresh (if different)"
+      "problem": "Cancel all subscriptions when component is destroyed to prevent memory leaks.",
+      "solution": "Use TakeUntil with a destroy signal to auto-cancel all subscriptions.",
+      "operatorsUsed": ["TakeUntil", "Do"],
+      "codeExample": "class MyComponent {\n  destroy$ = Subject()\n  \n  onInit() {\n    stream$.takeUntil(destroy$).subscribe(...)\n  }\n  \n  onDestroy() {\n    destroy$.next()\n    destroy$.complete()\n  }\n}"
     },
     {
-      "title": "Undo/Redo Stack",
-      "description": "Implement undo/redo with streams",
-      "icon": "undo",
+      "title": "Caching API Responses",
+      "description": "Cache data and share among subscribers",
+      "icon": "cached",
+      "color": "purple",
+      "problem": "Multiple components need same API data. Each subscription triggers new request.",
+      "solution": "Use Replay with RefCount to cache and share.",
+      "operatorsUsed": ["Replay", "RefCount", "FlatMap"],
+      "codeExample": "userData$ = userId$\n  .flatMap(id => api.getUser(id))\n  .replay(1)\n  .refCount()"
+    },
+    {
+      "title": "Optimistic Updates",
+      "description": "Update UI immediately, rollback on error",
+      "icon": "bolt",
+      "color": "orange",
+      "problem": "You want responsive UI by updating immediately, but handle failures gracefully.",
+      "solution": "Emit optimistic update first, merge with API result, use Catch for rollback.",
+      "operatorsUsed": ["Merge", "Catch", "StartWith", "FlatMap"],
+      "codeExample": "save$ = saveButton$\n  .flatMap(item => {\n    optimistic$ = Just(Saved(item))\n    actual$ = api.save(item)\n      .map(_ => Confirmed(item))\n      .catch(e => Just(Rollback(item, e)))\n    return Merge(optimistic$, actual$)\n  })"
+    },
+    {
+      "title": "Rate Limiting",
+      "description": "Limit how often an action can be performed",
+      "icon": "timer",
+      "color": "purple",
+      "problem": "Users can spam a button or trigger too many events rapidly.",
+      "solution": "Use Sample or Debounce to limit action frequency.",
+      "operatorsUsed": ["Sample", "Debounce", "FlatMap"],
+      "codeExample": "submit$ = submitButton$\n  .sample(2.seconds)\n  .flatMap(_ => api.submit())"
+    },
+    {
+      "title": "Parallel API Calls",
+      "description": "Execute multiple calls and wait for all",
+      "icon": "cloud_download",
+      "color": "green",
+      "problem": "Fetch data from multiple APIs and combine results.",
+      "solution": "Use Zip or CombineLatest to wait for all and combine.",
+      "operatorsUsed": ["Zip", "CombineLatest", "Map"],
+      "codeExample": "userData$ = Zip(\n  api.getUser(id),\n  api.getPosts(id),\n  api.getFollowers(id),\n  (u, p, f) => UserProfile(u, p, f)\n)"
+    },
+    {
+      "title": "Sequential Dependent Calls",
+      "description": "Chain API calls where each depends on previous",
+      "icon": "view_list",
       "color": "deepPurple",
-      "problem": "You need to maintain a history of state changes for undo/redo functionality.",
-      "solution": "Use scan to build history stack, with commands for undo, redo, and new edits.",
-      "operatorsUsed": ["scan", "map", "startWith", "distinct"],
-      "codeExample": "history = commands\n  .scan((state, command) => {\n    switch (command) {\n      case Undo: return state.undo()\n      case Redo: return state.redo()\n      case Edit(value): return state.push(value)\n    }\n  }, HistoryState.empty)\n\ncurrentValue = history.map(h => h.current)\ncanUndo = history.map(h => h.canUndo)\ncanRedo = history.map(h => h.canRedo)"
+      "problem": "Make API calls in sequence, each using data from the previous.",
+      "solution": "Use FlatMap to chain calls, passing data through.",
+      "operatorsUsed": ["FlatMap", "Map", "Catch"],
+      "codeExample": "orderDetails$ = getUser(userId)\n  .flatMap(user => getOrders(user.id)\n    .map(orders => ({ user, orders })))\n  .flatMap(data => getProducts(data.orders)\n    .map(products => ({ ...data, products })))"
+    },
+    {
+      "title": "Toggle State",
+      "description": "Toggle between states with a button",
+      "icon": "sync",
+      "color": "indigo",
+      "problem": "Toggle a feature on/off and react to state changes.",
+      "solution": "Use Scan to flip boolean state on each emission.",
+      "operatorsUsed": ["Scan", "StartWith", "Distinct"],
+      "codeExample": "isEnabled$ = toggleButton$\n  .scan((enabled, _) => !enabled, false)\n  .startWith(false)\n  .distinct()"
+    },
+    {
+      "title": "Debounced Auto-Save",
+      "description": "Auto-save after user stops editing",
+      "icon": "cached",
+      "color": "green",
+      "problem": "Auto-save content but not on every keystroke.",
+      "solution": "Debounce changes, show saving indicator, handle errors.",
+      "operatorsUsed": ["Debounce", "FlatMap", "StartWith", "Catch"],
+      "codeExample": "saveStatus$ = contentChanges$\n  .debounce(2.seconds)\n  .distinct()\n  .flatMap(content => api.save(content)\n    .map(_ => 'Saved')\n    .startWith('Saving...')\n    .catch(e => Just('Error')))\n  .startWith('Idle')"
+    },
+    {
+      "title": "Countdown Timer",
+      "description": "Countdown from N seconds with pause/resume",
+      "icon": "timer",
+      "color": "indigo",
+      "problem": "Create a countdown timer that can be paused and resumed.",
+      "solution": "Use Interval with Scan to decrement, Switch to pause/resume.",
+      "operatorsUsed": ["Interval", "Scan", "Switch", "TakeWhile"],
+      "codeExample": "countdown$ = isPaused$\n  .switch(paused => paused\n    ? Never()\n    : Interval(1.second))\n  .scan((remaining, _) => remaining - 1, 60)\n  .takeWhile(remaining => remaining >= 0)"
     },
     {
       "title": "Drag and Drop",
-      "description": "Handle drag events with streams",
+      "description": "Track mouse drag gestures",
       "icon": "pan_tool",
+      "color": "teal",
+      "problem": "Track drag position from mousedown through mousemove until mouseup.",
+      "solution": "Start on mousedown, track mousemove, takeUntil mouseup.",
+      "operatorsUsed": ["Switch", "TakeUntil", "Map", "StartWith"],
+      "codeExample": "drags$ = mouseDown$\n  .switch(start => mouseMove$\n    .map(move => DragEvent(start, move))\n    .takeUntil(mouseUp$))"
+    },
+    {
+      "title": "Double Click Detection",
+      "description": "Distinguish single from double clicks",
+      "icon": "pan_tool",
+      "color": "orange",
+      "problem": "Handle both single and double clicks without false triggers.",
+      "solution": "Use Buffer with Debounce to collect clicks, filter by count.",
+      "operatorsUsed": ["Buffer", "Debounce", "Filter", "Map"],
+      "codeExample": "clicks$ = element.clicks$\n  .buffer(element.clicks$.debounce(250.ms))\n\nsingleClicks$ = clicks$.filter(batch => batch.length == 1)\ndoubleClicks$ = clicks$.filter(batch => batch.length >= 2)"
+    },
+    {
+      "title": "Long Press Detection",
+      "description": "Detect when user holds down for a duration",
+      "icon": "pan_tool",
+      "color": "purple",
+      "problem": "Trigger action when user holds down for X seconds.",
+      "solution": "Start timer on mousedown, cancel if mouseup before timer completes.",
+      "operatorsUsed": ["Switch", "Timer", "TakeUntil", "Map"],
+      "codeExample": "longPress$ = mouseDown$\n  .switch(start => Timer(1.second)\n    .map(_ => LongPress(start))\n    .takeUntil(mouseUp$))"
+    },
+    {
+      "title": "WebSocket Reconnection",
+      "description": "Auto-reconnecting websocket stream",
+      "icon": "sync",
+      "color": "blue",
+      "problem": "WebSocket can disconnect. Need automatic reconnection with backoff.",
+      "solution": "Wrap WebSocket in Observable, use Retry for reconnection.",
+      "operatorsUsed": ["Create", "Retry", "Delay", "Publish", "RefCount"],
+      "codeExample": "messages$ = Create(observer => {\n  ws = WebSocket(url)\n  ws.onMessage = msg => observer.next(msg)\n  ws.onError = e => observer.error(e)\n  return () => ws.close()\n})\n  .retry()\n  .publish()\n  .refCount()"
+    },
+    {
+      "title": "Authentication State",
+      "description": "Track auth state and redirect accordingly",
+      "icon": "check_circle",
+      "color": "purple",
+      "problem": "Track login state and redirect users based on auth status.",
+      "solution": "Use Replay Subject for state, combine with navigation.",
+      "operatorsUsed": ["Replay", "Filter", "Do", "Switch"],
+      "codeExample": "authState$ = authEvents$\n  .scan((state, event) => handleAuth(state, event), initial)\n  .replay(1)\n  .refCount()\n\nauthState$\n  .filter(state => !state.loggedIn)\n  .subscribe(_ => navigateToLogin())"
+    },
+    {
+      "title": "Retry with Exponential Backoff",
+      "description": "Retry failed requests with increasing delays",
+      "icon": "refresh",
       "color": "pink",
-      "problem": "You need to track mouse/touch from start to end of a drag gesture.",
-      "solution": "Use takeUntil to capture events between mousedown and mouseup.",
-      "operatorsUsed": ["switchMap", "takeUntil", "map", "startWith"],
-      "codeExample": "drags = mouseDown\n  .switchMap(start => mouseMove\n    .map(move => DragEvent(\n      start: start.position,\n      current: move.position,\n      delta: move.position - start.position\n    ))\n    .takeUntil(mouseUp))\n\ndrags.subscribe(drag => {\n  element.transform = translate(drag.delta.x, drag.delta.y)\n})"
+      "problem": "Simple retry hammers server. Need increasing delay between retries.",
+      "solution": "Use Retry with scan to calculate backoff delay.",
+      "operatorsUsed": ["Retry", "Delay", "Scan", "FlatMap", "Take"],
+      "codeExample": "withBackoff$ = source$\n  .catch((error, caught) => {\n    return caught\n      .delay(retryDelay)\n      .take(maxRetries)\n  })"
+    },
+    {
+      "title": "Typeahead with Loading State",
+      "description": "Search with loading indicator",
+      "icon": "search",
+      "color": "blue",
+      "problem": "Show loading state during search, clear when done or cancelled.",
+      "solution": "Merge loading states before and after API call.",
+      "operatorsUsed": ["Debounce", "Switch", "StartWith", "Map", "Catch"],
+      "codeExample": "state$ = searchInput$\n  .debounce(300.ms)\n  .distinct()\n  .switch(query => api.search(query)\n    .map(results => { loading: false, results })\n    .startWith({ loading: true })\n    .catch(e => Just({ loading: false, error: e })))"
     }
   ]
 }

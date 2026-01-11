@@ -4,7 +4,7 @@
       "id": "observable",
       "title": "Observable",
       "subtitle": "The data stream",
-      "icon": "stream",
+      "icon": "observable",
       "color": "blue",
       "description": "An Observable is a collection that arrives over time. Unlike arrays where all data is available immediately, Observables emit values asynchronously.",
       "keyPoints": [
@@ -19,7 +19,7 @@
       "id": "observer",
       "title": "Observer",
       "subtitle": "The listener",
-      "icon": "visibility",
+      "icon": "observer",
       "color": "green",
       "description": "An Observer is the consumer of values delivered by an Observable. It consists of three callbacks: onNext, onError, and onComplete.",
       "keyPoints": [
@@ -34,7 +34,7 @@
       "id": "subscription",
       "title": "Subscription",
       "subtitle": "The connection",
-      "icon": "link",
+      "icon": "subscription",
       "color": "purple",
       "description": "A Subscription represents the execution of an Observable and is primarily used for cancellation. Always dispose subscriptions to prevent memory leaks.",
       "keyPoints": [
@@ -49,7 +49,7 @@
       "id": "hot_cold",
       "title": "Hot vs Cold",
       "subtitle": "Sharing behavior",
-      "icon": "whatshot",
+      "icon": "hot",
       "color": "orange",
       "description": "Cold Observables create a new producer for each subscriber. Hot Observables share a single producer among all subscribers.",
       "keyPoints": [
@@ -64,7 +64,7 @@
       "id": "subjects",
       "title": "Subjects",
       "subtitle": "Observable + Observer",
-      "icon": "swap_horiz",
+      "icon": "subject",
       "color": "teal",
       "description": "A Subject acts as both an Observable and an Observer. It can multicast values to multiple subscribers and allows manual value emission.",
       "keyPoints": [
@@ -79,7 +79,7 @@
       "id": "operators",
       "title": "Operators",
       "subtitle": "Transform streams",
-      "icon": "build",
+      "icon": "operator",
       "color": "indigo",
       "description": "Operators are methods on Observables that transform, filter, or combine streams. They always return new Observables without modifying the source.",
       "keyPoints": [
@@ -109,7 +109,7 @@
       "id": "schedulers",
       "title": "Schedulers",
       "subtitle": "Thread control",
-      "icon": "schedule",
+      "icon": "scheduler",
       "color": "cyan",
       "description": "Schedulers control the execution context (thread) for Observable operations. Use subscribeOn and observeOn to manage threading.",
       "keyPoints": [
@@ -124,7 +124,7 @@
       "id": "backpressure",
       "title": "Backpressure",
       "subtitle": "Flow control",
-      "icon": "compress",
+      "icon": "backpressure",
       "color": "amber",
       "description": "Backpressure occurs when an Observable produces values faster than the Observer can consume them. Strategies include buffering, dropping, or sampling.",
       "keyPoints": [
@@ -151,20 +151,124 @@
       "codeExample": "class MyComponent {\n  disposeSignal = PublishSubject()\n  \n  onInit() {\n    stream\n      .takeUntil(disposeSignal)  // Auto-cancel\n      .subscribe(handleData)\n  }\n  \n  onDestroy() {\n    disposeSignal.onNext(Unit)  // Trigger cleanup\n    disposeSignal.dispose()\n  }\n}"
     },
     {
-      "id": "marble_diagrams",
-      "title": "Marble Diagrams",
-      "subtitle": "Visualizing Rx",
-      "icon": "auto_graph",
-      "color": "pink",
-      "description": "Marble diagrams are visual representations of how Rx operators work. They show input streams, the transformation process, and the resulting output stream over time.",
+      "id": "higher_order_observables",
+      "title": "Higher-Order Observables",
+      "subtitle": "Streams of streams",
+      "icon": "build",
+      "color": "purple",
+      "description": "A Higher-Order Observable is an Observable that emits other Observables. They require flattening strategies to convert back to a first-order Observable.",
       "keyPoints": [
-        "Horizontal line: Time flowing from left to right",
-        "Circles (Marbles): Emitted data values",
-        "Vertical line: Successful completion",
-        "X symbol: Stream error",
-        "Box: The operator being applied"
+        "flatMap - keeps all inner subscriptions active",
+        "switchMap - cancels previous on new emission",
+        "concatMap - queues and processes in order",
+        "exhaustMap - ignores new while current is active"
       ],
-      "codeExample": "---(1)---(2)---(3)---|--> (Input)\n\n[      map(x => x*10)    ]\n\n---(10)--(20)--(30)--|--> (Output)"
+      "codeExample": "// Each click creates a new inner stream\nclicks\n  .map(click => fetchData(click.id))  // Higher-order!\n  // Returns Observable<Observable<Data>>\n  \n// Flatten with switchMap\nclicks\n  .switchMap(click => fetchData(click.id))\n  // Returns Observable<Data>"
+    },
+    {
+      "id": "multicasting",
+      "title": "Multicasting",
+      "subtitle": "Share subscriptions",
+      "icon": "multicast",
+      "color": "cyan",
+      "description": "Multicasting allows multiple subscribers to share a single subscription to the source Observable, preventing duplicate side effects like multiple API calls.",
+      "keyPoints": [
+        "share() - automatic connect/disconnect",
+        "shareReplay(n) - cache last n values",
+        "publish() - manual control with connect()",
+        "refCount() - auto-connect when first subscriber"
+      ],
+      "codeExample": "// Without sharing - 3 API calls!\napiCall = fetchData()\napiCall.subscribe(a)\napiCall.subscribe(b)\napiCall.subscribe(c)\n\n// With sharing - 1 API call!\nshared = fetchData().share()\nshared.subscribe(a)\nshared.subscribe(b)\nshared.subscribe(c)"
+    },
+    {
+      "id": "reactive_streams",
+      "title": "Reactive Streams",
+      "subtitle": "The specification",
+      "icon": "observable",
+      "color": "teal",
+      "description": "Reactive Streams is a specification for asynchronous stream processing with non-blocking backpressure. It defines Publisher, Subscriber, Subscription, and Processor interfaces.",
+      "keyPoints": [
+        "Publisher - emits sequence of elements",
+        "Subscriber - consumes the elements",
+        "Subscription - controls demand via request(n)",
+        "Processor - both Publisher and Subscriber"
+      ],
+      "codeExample": "// Request-based backpressure\nsubscriber.onSubscribe(subscription);\nsubscription.request(10);  // Request 10 items\n\n// Publisher respects demand\npublisher.subscribe(subscriber);\n// Only emits as many as requested"
+    },
+    {
+      "id": "side_effects",
+      "title": "Side Effects",
+      "subtitle": "Controlled impurity",
+      "icon": "hot",
+      "color": "amber",
+      "description": "Side effects are operations that affect external state (logging, API calls, DOM updates). In Rx, they should be isolated and managed properly.",
+      "keyPoints": [
+        "Use tap/doOnNext for side effects",
+        "Keep operators pure when possible",
+        "Side effects in subscribe are acceptable",
+        "Testing is easier with minimal side effects"
+      ],
+      "codeExample": "stream\n  .tap(x => console.log('Processing:', x))  // Side effect\n  .map(x => x * 2)                          // Pure\n  .tap(x => analytics.track(x))             // Side effect\n  .subscribe(x => updateUI(x))              // Side effect OK"
+    },
+    {
+      "id": "testing_rx",
+      "title": "Testing Rx",
+      "subtitle": "Virtual time",
+      "icon": "scheduler",
+      "color": "green",
+      "description": "Testing reactive code requires special tools like TestSchedulers that allow you to control virtual time and make assertions about emissions.",
+      "keyPoints": [
+        "TestScheduler controls virtual time",
+        "TestObserver records all emissions",
+        "Advance time without real waiting",
+        "Assert emission values and timing"
+      ],
+      "codeExample": "testScheduler.run(({ cold, expectObservable }) => {\n  const source = cold('--a--b--c|');\n  const expected =    '--A--B--C|';\n  \n  const result = source.pipe(\n    map(x => x.toUpperCase())\n  );\n  \n  expectObservable(result).toBe(expected);\n});"
+    },
+    {
+      "id": "memory_management",
+      "title": "Memory Management",
+      "subtitle": "Avoid leaks",
+      "icon": "healing",
+      "color": "orange",
+      "description": "Memory leaks are the most common Rx mistake. They occur when subscriptions outlive their intended scope, holding references and preventing garbage collection.",
+      "keyPoints": [
+        "Always dispose subscriptions",
+        "Use takeUntil for component lifecycle",
+        "CompositeDisposable for batch cleanup",
+        "Be careful with closures capturing 'this'"
+      ],
+      "codeExample": "// LEAK: subscription lives forever\nstream.subscribe(x => this.data = x)\n\n// SAFE: automatic cleanup\nstream\n  .takeUntil(this.destroy$)\n  .subscribe(x => this.data = x)\n\nonDestroy() {\n  this.destroy$.next()\n  this.destroy$.complete()\n}"
+    },
+    {
+      "id": "reactive_patterns",
+      "title": "Reactive Patterns",
+      "subtitle": "Common solutions",
+      "icon": "build",
+      "color": "indigo",
+      "description": "Reactive patterns are reusable solutions to common problems. They leverage the composability of Rx operators to solve complex async scenarios elegantly.",
+      "keyPoints": [
+        "Search: debounce + switchMap",
+        "Polling: interval + switchMap + retry",
+        "Pagination: scan + switchMap",
+        "Caching: shareReplay + concat"
+      ],
+      "codeExample": "// Search pattern\nsearch$ = searchInput$\n  .debounceTime(300)\n  .distinctUntilChanged()\n  .filter(query => query.length >= 2)\n  .switchMap(query => api.search(query))\n  .shareReplay(1)"
+    },
+    {
+      "id": "stream_composition",
+      "title": "Stream Composition",
+      "subtitle": "Building complex flows",
+      "icon": "stream",
+      "color": "teal",
+      "description": "Stream composition is the art of combining multiple streams and operators to build complex reactive data flows from simple building blocks.",
+      "keyPoints": [
+        "Split complex logic into smaller streams",
+        "Combine with merge, combineLatest, etc.",
+        "Reuse common patterns as functions",
+        "Think in terms of data flow, not control flow"
+      ],
+      "codeExample": "// Compose multiple concerns\nvisibleItems$ = combineLatest([\n  allItems$,\n  filterTerm$,\n  sortOrder$\n]).pipe(\n  map(([items, term, order]) => \n    items\n      .filter(item => matches(item, term))\n      .sort(comparator(order))\n  ),\n  shareReplay(1)\n);"
     }
   ]
 }

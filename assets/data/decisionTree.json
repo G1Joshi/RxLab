@@ -3,92 +3,477 @@
     "question": "What do you want to do?",
     "options": [
       {
-        "question": "Create a new stream",
+        "question": "I want to create a new Observable",
         "options": [
           {
-            "question": "From a single value",
-            "operator": "just / Stream.value",
-            "description": "Emits a single value and completes."
+            "question": "that emits a particular item",
+            "operator": "Just",
+            "description": "Emit a single value and complete."
           },
           {
-            "question": "From a collection",
-            "operator": "fromIterable",
-            "description": "Converts an Iterable to a Stream."
+            "question": "that was returned from a function called at subscribe-time",
+            "operator": "Start",
+            "description": "Emit the return value of a function."
           },
           {
-            "question": "From a Future",
-            "operator": "fromFuture",
-            "description": "Converts a Future to a Stream."
+            "question": "after a specified delay",
+            "operator": "Timer",
+            "description": "Emit value after a delay."
           },
           {
-            "question": "That never ends",
-            "operator": "periodic",
-            "description": "Emits items at regular intervals."
+            "question": "that pulls its emissions from an Array or Iterable",
+            "operator": "From",
+            "description": "Convert array/iterable to Observable."
+          },
+          {
+            "question": "by retrieving it from a Future",
+            "operator": "Start",
+            "description": "Emit Future result."
+          },
+          {
+            "question": "that emits a sequence of items repeatedly",
+            "operator": "Repeat",
+            "description": "Repeat value or sequence."
+          },
+          {
+            "question": "from scratch, with custom logic",
+            "operator": "Create",
+            "description": "Build Observable programmatically."
+          },
+          {
+            "question": "for each observer that subscribes",
+            "operator": "Defer",
+            "description": "Fresh Observable per subscriber."
+          },
+          {
+            "question": "that emits a sequence of integers",
+            "operator": "Range",
+            "description": "Emit range of integers."
+          },
+          {
+            "question": "at particular intervals of time",
+            "operator": "Interval",
+            "description": "Emit at regular intervals."
+          },
+          {
+            "question": "that completes without emitting items",
+            "operator": "Empty",
+            "description": "Complete immediately."
+          },
+          {
+            "question": "that does nothing at all",
+            "operator": "Never",
+            "description": "Never emit, never complete."
           }
         ]
       },
       {
-        "question": "Transform values",
+        "question": "I want to create an Observable by combining other Observables",
         "options": [
           {
-            "question": "One by one",
-            "operator": "map",
-            "description": "Applies a function to each item."
+            "question": "emitting all items in whatever order received",
+            "operator": "Merge",
+            "description": "Interleave emissions from sources."
           },
           {
-            "question": "Into a new stream",
-            "operator": "flatMap",
-            "description": "Maps to a new stream and flattens."
+            "question": "emitting all items, one Observable at a time",
+            "operator": "Concat",
+            "description": "Emit sequentially."
           },
           {
-            "question": "Accumulate values",
-            "operator": "scan",
-            "description": "Combines values with a seed."
+            "question": "combining items when each Observable has emitted",
+            "operator": "Zip",
+            "description": "Pair by index."
+          },
+          {
+            "question": "combining whenever any Observable has emitted",
+            "operator": "CombineLatest",
+            "description": "Combine latest from each."
+          },
+          {
+            "question": "in a window defined by another Observable",
+            "operator": "Join",
+            "description": "Time-window join."
+          },
+          {
+            "question": "by means of Pattern and Plan intermediaries",
+            "operator": "And/Then/When",
+            "description": "Pattern-based combination."
+          },
+          {
+            "question": "emitting only from most-recently emitted Observable",
+            "operator": "Switch",
+            "description": "Switch to latest."
           }
         ]
       },
       {
-        "question": "Filter values",
+        "question": "I want to emit items after transforming them",
         "options": [
           {
-            "question": "By a condition",
-            "operator": "where",
-            "description": "Only emits items that satisfy a predicate."
+            "question": "one at a time with a function",
+            "operator": "Map",
+            "description": "Transform each item."
           },
           {
-            "question": "Taking N items",
-            "operator": "take",
-            "description": "Emits first N items then completes."
+            "question": "by emitting all items from corresponding Observables",
+            "operator": "FlatMap",
+            "description": "Map and flatten."
           },
           {
-            "question": "Skipping N items",
-            "operator": "skip",
-            "description": "Suppresses first N items."
+            "question": "one Observable at a time, in order",
+            "operator": "ConcatMap",
+            "description": "Map and queue."
+          },
+          {
+            "question": "based on all items that preceded them",
+            "operator": "Scan",
+            "description": "Running accumulation."
+          },
+          {
+            "question": "by attaching a timestamp to them",
+            "operator": "Timestamp",
+            "description": "Add timestamps."
+          },
+          {
+            "question": "into time elapsed since previous emission",
+            "operator": "TimeInterval",
+            "description": "Time between emissions."
           }
         ]
       },
       {
-        "question": "Combine streams",
+        "question": "I want to shift items forward in time",
+        "operator": "Delay",
+        "description": "Delay all emissions."
+      },
+      {
+        "question": "I want to transform items and notifications",
         "options": [
           {
-            "question": "One after another",
-            "operator": "concat",
-            "description": "Subscribes to streams sequentially."
+            "question": "by wrapping them in Notification objects",
+            "operator": "Materialize",
+            "description": "Wrap as notifications."
           },
           {
-            "question": "Simultaneously",
-            "operator": "merge",
-            "description": "Emits items from multiple streams as they arrive."
+            "question": "by unwrapping Notification objects",
+            "operator": "Dematerialize",
+            "description": "Unwrap notifications."
+          }
+        ]
+      },
+      {
+        "question": "I want to ignore all items and only pass completion/error",
+        "operator": "IgnoreElements",
+        "description": "Only termination notification."
+      },
+      {
+        "question": "I want to mirror an Observable but prefix items",
+        "options": [
+          {
+            "question": "prepend specific items",
+            "operator": "StartWith",
+            "description": "Prepend values."
           },
           {
-            "question": "Latest from each",
-            "operator": "combineLatest",
-            "description": "Combines latest emissions using a function."
+            "question": "only if sequence is empty",
+            "operator": "DefaultIfEmpty",
+            "description": "Default if empty."
+          }
+        ]
+      },
+      {
+        "question": "I want to collect items and reemit as buffers",
+        "options": [
+          {
+            "question": "into arrays/lists",
+            "operator": "Buffer",
+            "description": "Collect into bundles."
           },
           {
-            "question": "Pairwise",
-            "operator": "zip",
-            "description": "Combines emissions 1-to-1."
+            "question": "containing only the last items",
+            "operator": "TakeLast",
+            "description": "Buffer last N."
+          }
+        ]
+      },
+      {
+        "question": "I want to split one Observable into multiple",
+        "options": [
+          {
+            "question": "into windowed sub-Observables",
+            "operator": "Window",
+            "description": "Split into sub-streams."
+          },
+          {
+            "question": "so similar items end up on same Observable",
+            "operator": "GroupBy",
+            "description": "Group by key."
+          }
+        ]
+      },
+      {
+        "question": "I want to retrieve a particular item",
+        "options": [
+          {
+            "question": "the last item before completion",
+            "operator": "Last",
+            "description": "Last item only."
+          },
+          {
+            "question": "the sole item emitted",
+            "operator": "Single",
+            "description": "Exactly one item."
+          },
+          {
+            "question": "the first item",
+            "operator": "First",
+            "description": "First item only."
+          },
+          {
+            "question": "item at specific index",
+            "operator": "ElementAt",
+            "description": "Item at index N."
+          }
+        ]
+      },
+      {
+        "question": "I want to reemit only certain items",
+        "options": [
+          {
+            "question": "by filtering out non-matching",
+            "operator": "Filter",
+            "description": "Keep matching items."
+          },
+          {
+            "question": "only the first item",
+            "operator": "First",
+            "description": "First item only."
+          },
+          {
+            "question": "only the first N items",
+            "operator": "Take",
+            "description": "Take first N."
+          },
+          {
+            "question": "only the last item",
+            "operator": "Last",
+            "description": "Last item only."
+          },
+          {
+            "question": "only item at index N",
+            "operator": "ElementAt",
+            "description": "Item at index."
+          },
+          {
+            "question": "after the first N items",
+            "operator": "Skip",
+            "description": "Skip first N."
+          },
+          {
+            "question": "until one matches a predicate",
+            "operator": "SkipWhile",
+            "description": "Skip while true."
+          },
+          {
+            "question": "after an initial time period",
+            "operator": "Skip",
+            "description": "Skip by time."
+          },
+          {
+            "question": "after a second Observable emits",
+            "operator": "SkipUntil",
+            "description": "Skip until signal."
+          },
+          {
+            "question": "except the last N items",
+            "operator": "SkipLast",
+            "description": "Skip last N."
+          },
+          {
+            "question": "while condition is true",
+            "operator": "TakeWhile",
+            "description": "Take while true."
+          },
+          {
+            "question": "until a second Observable emits",
+            "operator": "TakeUntil",
+            "description": "Take until signal."
+          },
+          {
+            "question": "by sampling periodically",
+            "operator": "Sample",
+            "description": "Sample at intervals."
+          },
+          {
+            "question": "not followed by other items within duration",
+            "operator": "Debounce",
+            "description": "Wait for pause."
+          },
+          {
+            "question": "by suppressing duplicates",
+            "operator": "Distinct",
+            "description": "Remove duplicates."
+          },
+          {
+            "question": "by delaying subscription",
+            "operator": "DelaySubscription",
+            "description": "Delay subscribing."
+          }
+        ]
+      },
+      {
+        "question": "I want to reemit items only if first to emit from collection",
+        "operator": "Amb",
+        "description": "First Observable wins."
+      },
+      {
+        "question": "I want to evaluate the entire sequence",
+        "options": [
+          {
+            "question": "emit boolean if all items pass test",
+            "operator": "All",
+            "description": "All match?"
+          },
+          {
+            "question": "emit boolean if any item passes test",
+            "operator": "Contains",
+            "description": "Contains value?"
+          },
+          {
+            "question": "emit boolean if no items emitted",
+            "operator": "IsEmpty",
+            "description": "Is empty?"
+          },
+          {
+            "question": "emit boolean if sequence matches another",
+            "operator": "SequenceEqual",
+            "description": "Same sequences?"
+          },
+          {
+            "question": "emit the average of all values",
+            "operator": "Average",
+            "description": "Calculate average."
+          },
+          {
+            "question": "emit the sum of all values",
+            "operator": "Sum",
+            "description": "Calculate sum."
+          },
+          {
+            "question": "emit the count of items",
+            "operator": "Count",
+            "description": "Count items."
+          },
+          {
+            "question": "emit the maximum value",
+            "operator": "Max",
+            "description": "Maximum value."
+          },
+          {
+            "question": "emit the minimum value",
+            "operator": "Min",
+            "description": "Minimum value."
+          },
+          {
+            "question": "apply aggregation and emit result",
+            "operator": "Scan",
+            "description": "Running aggregation."
+          }
+        ]
+      },
+      {
+        "question": "I want to convert sequence to another data structure",
+        "operator": "To",
+        "description": "Convert to List/Set/Map."
+      },
+      {
+        "question": "I want an operator on a particular Scheduler",
+        "options": [
+          {
+            "question": "specify subscription scheduler",
+            "operator": "SubscribeOn",
+            "description": "Subscribe on scheduler."
+          },
+          {
+            "question": "specify observation scheduler",
+            "operator": "ObserveOn",
+            "description": "Observe on scheduler."
+          }
+        ]
+      },
+      {
+        "question": "I want to invoke action on certain events",
+        "operator": "Do",
+        "description": "Side effects per event."
+      },
+      {
+        "question": "I want an Observable that will notify of an error",
+        "options": [
+          {
+            "question": "emit error immediately",
+            "operator": "Throw",
+            "description": "Error immediately."
+          },
+          {
+            "question": "if timeout elapses without emission",
+            "operator": "Timeout",
+            "description": "Timeout error."
+          }
+        ]
+      },
+      {
+        "question": "I want an Observable to recover gracefully",
+        "options": [
+          {
+            "question": "from a timeout by switching to backup",
+            "operator": "Timeout",
+            "description": "Timeout with fallback."
+          },
+          {
+            "question": "from an error notification",
+            "operator": "Catch",
+            "description": "Recover from error."
+          },
+          {
+            "question": "by resubscribing to upstream",
+            "operator": "Retry",
+            "description": "Retry on error."
+          }
+        ]
+      },
+      {
+        "question": "I want to create a resource with same lifespan as Observable",
+        "operator": "Using",
+        "description": "Disposable resource."
+      },
+      {
+        "question": "I want an Observable that doesn't start until asked",
+        "options": [
+          {
+            "question": "make it connectable",
+            "operator": "Publish",
+            "description": "Make connectable."
+          },
+          {
+            "question": "emit only last item when connected",
+            "operator": "PublishLast",
+            "description": "Publish last only."
+          },
+          {
+            "question": "replay complete sequence to late subscribers",
+            "operator": "Replay",
+            "description": "Replay sequence."
+          },
+          {
+            "question": "auto-disconnect when subscribers leave",
+            "operator": "RefCount",
+            "description": "Auto connect/disconnect."
+          },
+          {
+            "question": "manually start emitting",
+            "operator": "Connect",
+            "description": "Start emitting."
           }
         ]
       }

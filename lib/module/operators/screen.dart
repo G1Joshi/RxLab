@@ -24,8 +24,12 @@ class _OperatorsScreenState extends State<OperatorsScreen>
     (label: 'Transform', category: OperatorCategory.transformation),
     (label: 'Filter', category: OperatorCategory.filtering),
     (label: 'Combine', category: OperatorCategory.combination),
+    (label: 'Conditional', category: OperatorCategory.conditional),
+    (label: 'Aggregate', category: OperatorCategory.aggregate),
     (label: 'Error', category: OperatorCategory.errorHandling),
     (label: 'Utility', category: OperatorCategory.utility),
+    (label: 'Connectable', category: OperatorCategory.connectable),
+    (label: 'Convert', category: OperatorCategory.conversion),
   ];
 
   @override
