@@ -1,0 +1,100 @@
+{
+  "antiPatterns": [
+    {
+      "title": "Forgetting to Dispose",
+      "description": "Not canceling subscriptions causes memory leaks",
+      "icon": "memory",
+      "color": "red",
+      "severity": 5,
+      "relatedOperators": ["takeUntil", "take"],
+      "tip": "Use takeUntil(disposeSignal) pattern for automatic cleanup",
+      "wrongCode": "// ❌ WRONG\nclass MyComponent {\n  onInit() {\n    stream.subscribe(data => {\n      this.data = data\n    })\n    // Subscription never cancelled!\n  }\n}",
+      "rightCode": "// ✅ RIGHT\nclass MyComponent {\n  subscription = null\n  \n  onInit() {\n    subscription = stream.subscribe(data => {\n      this.data = data\n    })\n  }\n  \n  onDestroy() {\n    subscription?.dispose()\n  }\n}",
+      "explanation": "Uncancelled subscriptions hold references to your component, preventing garbage collection and causing memory leaks. Always dispose in cleanup."
+    },
+    {
+      "title": "Nested Subscriptions",
+      "description": "Creating subscriptions inside subscribe callbacks",
+      "icon": "layers",
+      "color": "orange",
+      "severity": 4,
+      "relatedOperators": ["flatMap", "switchMap", "concatMap"],
+      "tip": "Use flatMap family to chain dependent streams",
+      "wrongCode": "// ❌ WRONG - Hard to manage!\nuserStream.subscribe(user => {\n  ordersStream(user.id).subscribe(orders => {\n    productsStream(orders).subscribe(products => {\n      // 3 nested subscriptions!\n    })\n  })\n})",
+      "rightCode": "// ✅ RIGHT - Single subscription\nuserStream\n  .switchMap(user => ordersStream(user.id))\n  .switchMap(orders => productsStream(orders))\n  .subscribe(products => {\n    // Clean and manageable\n  })",
+      "explanation": "Nested subscriptions create a pyramid of doom. Each inner subscription must be manually tracked. Use flatMap/switchMap to flatten the chain."
+    },
+    {
+      "title": "flatMap vs switchMap Confusion",
+      "description": "Using flatMap when switchMap is needed for search",
+      "icon": "search",
+      "color": "blue",
+      "severity": 5,
+      "relatedOperators": ["switchMap", "flatMap", "exhaustMap"],
+      "tip": "switchMap for search, flatMap for parallel, exhaustMap for ignore-new",
+      "wrongCode": "// ❌ WRONG - Race condition!\nsearchText\n  .flatMap(q => searchApi(q))\n  .subscribe(results => {\n    // Old slow request may override new fast one!\n  })",
+      "rightCode": "// ✅ RIGHT - Previous cancelled\nsearchText\n  .debounce(300.ms)\n  .switchMap(q => searchApi(q))\n  .subscribe(results => {\n    // Always shows latest query results\n  })",
+      "explanation": "flatMap keeps ALL inner subscriptions active. switchMap CANCELS previous on new emission. For search, you only want results for the latest query."
+    },
+    {
+      "title": "Ignoring Errors",
+      "description": "Not handling errors kills the subscription",
+      "icon": "error_outline",
+      "color": "red",
+      "severity": 5,
+      "relatedOperators": ["catchError", "onErrorReturn", "retry", "retryWhen"],
+      "tip": "Always add error handling - streams die on unhandled errors",
+      "wrongCode": "// ❌ WRONG - Stream dies on first error\napiStream.subscribe(data => {\n  updateUI(data)\n})\n// After error, NOTHING works!",
+      "rightCode": "// ✅ RIGHT - Handle gracefully\napiStream\n  .retry(3)\n  .onErrorReturn(defaultValue)\n  .subscribe(\n    data => updateUI(data),\n    error => showError(error)\n  )",
+      "explanation": "Unhandled errors terminate the stream permanently. Use retry for transient failures, onErrorReturn for fallbacks, and always add onError callback."
+    },
+    {
+      "title": "Hot/Cold Confusion",
+      "description": "Not understanding value sharing behavior",
+      "icon": "whatshot",
+      "color": "deepOrange",
+      "severity": 3,
+      "relatedOperators": ["share", "shareReplay", "publish", "refCount"],
+      "tip": "Use shareReplay(1) for API calls you want to cache",
+      "wrongCode": "// ❌ WRONG - API called twice!\napi = fetchFromApi()  // Cold\n\napi.subscribe(handleA)  // Call 1\napi.subscribe(handleB)  // Call 2 - wasteful!",
+      "rightCode": "// ✅ RIGHT - Shared result\napi = fetchFromApi()\n  .shareReplay(1)\n\napi.subscribe(handleA)  // Call 1\napi.subscribe(handleB)  // Gets cached result",
+      "explanation": "Cold Observables create NEW producer per subscriber. shareReplay makes it Hot and caches results for late subscribers."
+    },
+    {
+      "title": "Blocking the Main Thread",
+      "description": "Heavy computation freezes UI",
+      "icon": "hourglass_empty",
+      "color": "purple",
+      "severity": 4,
+      "relatedOperators": ["observeOn", "subscribeOn"],
+      "tip": "Use subscribeOn(backgroundScheduler) for heavy work",
+      "wrongCode": "// ❌ WRONG - UI freezes!\nstream\n  .map(data => heavyComputation(data))\n  .subscribe(updateUI)",
+      "rightCode": "// ✅ RIGHT - Background compute\nstream\n  .observeOn(Schedulers.computation)\n  .map(data => heavyComputation(data))\n  .observeOn(Schedulers.main)\n  .subscribe(updateUI)",
+      "explanation": "map runs synchronously on the current thread. Use Schedulers to move CPU-intensive work to background while keeping UI responsive."
+    },
+    {
+      "title": "Subject Overuse",
+      "description": "Using Subjects when operators would work better",
+      "icon": "psychology",
+      "color": "teal",
+      "severity": 3,
+      "relatedOperators": ["combineLatest", "withLatestFrom", "map"],
+      "tip": "Subjects are for sources. Derive state with operators instead.",
+      "wrongCode": "// ❌ WRONG - Manual state management\nfiltered = BehaviorSubject([])\n\nfilter(query) {\n  orig = items.value\n  filtered.onNext(orig.filter(...))\n  // Now you have 2 subjects to sync!\n}",
+      "rightCode": "// ✅ RIGHT - Derived state\nquery = BehaviorSubject(\"\")\nitems = api.getItems().shareReplay(1)\n\nfiltered = combineLatest(items, query)\n  .map((list, q) => list.filter(...))",
+      "explanation": "Subjects should be sources (user input, events). Derived state should be computed with operators to stay in sync automatically."
+    },
+    {
+      "title": "Missing Debounce on Input",
+      "description": "Processing every keystroke wastes resources",
+      "icon": "speed",
+      "color": "amber",
+      "severity": 4,
+      "relatedOperators": ["debounce", "throttle", "distinct"],
+      "tip": "debounce(300ms) + distinct() + filter(length > 2) for search",
+      "wrongCode": "// ❌ WRONG - API hammered!\ntextChanges.subscribe(text => {\n  api.search(text)  // Every character!\n})",
+      "rightCode": "// ✅ RIGHT - Optimized\ntextChanges\n  .debounce(300.ms)\n  .distinct()\n  .filter(t => t.length >= 2)\n  .switchMap(t => api.search(t))\n  .subscribe(showResults)",
+      "explanation": "debounce waits for typing pause. distinct prevents duplicate searches. filter ignores short queries. switchMap cancels stale results."
+    }
+  ]
+}

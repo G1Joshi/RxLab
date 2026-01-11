@@ -5,6 +5,10 @@ class DataAsset {
 }
 
 class AppAssets {
+  static const DataAsset antiPatterns = DataAsset(
+    'assets/data/antiPatterns.json',
+    'antiPatterns',
+  );
   static const DataAsset cheatSheet = DataAsset(
     'assets/data/cheatSheet.json',
     'cheatSheet',
