@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../common/common.dart';
 import '../../widget/widget.dart';
+import '../power_set/power_set.dart';
 import 'operators.dart';
 
 class OperatorsScreen extends StatefulWidget {
@@ -107,6 +108,21 @@ class _OperatorsScreenState extends State<OperatorsScreen>
       icon: Icons.timeline_rounded,
       gradientColors: const [AppTheme.primary, AppTheme.secondary],
       showBackButton: false,
+      actions: [
+        ElevatedButton.icon(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const PowerSetScreen()),
+          ),
+          icon: const Icon(Icons.list_alt_rounded, size: 18),
+          label: const Text('Power Set'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppTheme.surfaceLight,
+            foregroundColor: AppTheme.textPrimary,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+          ),
+        ),
+      ],
     );
   }
 

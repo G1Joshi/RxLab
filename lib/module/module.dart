@@ -5,6 +5,7 @@ export 'glossary/glossary.dart';
 export 'operators/operators.dart';
 export 'playground/lab/lab.dart';
 export 'playground/playground.dart';
+export 'power_set/power_set.dart';
 export 'quiz/quiz.dart';
 export 'recipes/recipes.dart';
 export 'wizard/wizard.dart';
