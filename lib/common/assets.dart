@@ -13,4 +13,8 @@ class AppAssets {
     'assets/data/operators.json',
     'operators',
   );
+  static const DataAsset recipes = DataAsset(
+    'assets/data/recipes.json',
+    'recipes',
+  );
 }
