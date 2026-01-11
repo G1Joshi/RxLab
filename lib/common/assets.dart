@@ -5,6 +5,10 @@ class DataAsset {
 }
 
 class AppAssets {
+  static const DataAsset concepts = DataAsset(
+    'assets/data/concepts.json',
+    'concepts',
+  );
   static const DataAsset operators = DataAsset(
     'assets/data/operators.json',
     'operators',
