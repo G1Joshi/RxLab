@@ -9,6 +9,7 @@ Future<void> main() async {
 
   ModuleRegistry.register(AntiPatternsModule());
   ModuleRegistry.register(ConceptsModule());
+  ModuleRegistry.register(GlossaryModule());
   ModuleRegistry.register(OperatorsModule());
   ModuleRegistry.register(RecipesModule());
   ModuleRegistry.register(QuizModule());
