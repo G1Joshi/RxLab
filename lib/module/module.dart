@@ -3,6 +3,8 @@ export 'concepts/concepts.dart';
 export 'flash_cards/flash_cards.dart';
 export 'glossary/glossary.dart';
 export 'operators/operators.dart';
+export 'playground/lab/lab.dart';
+export 'playground/playground.dart';
 export 'quiz/quiz.dart';
 export 'recipes/recipes.dart';
 export 'wizard/wizard.dart';
