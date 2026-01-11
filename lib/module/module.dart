@@ -1,3 +1,4 @@
+export 'anti_patterns/anti_patterns.dart';
 export 'concepts/concepts.dart';
 export 'operators/operators.dart';
 export 'quiz/quiz.dart';
