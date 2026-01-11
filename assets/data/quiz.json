@@ -2,358 +2,578 @@
   "quiz": [
     {
       "type": "multiple_choice",
-      "category": "Basics",
+      "category": "Operators",
       "difficulty": "easy",
       "points": 10,
-      "question": "Which operator transforms each emitted value?",
-      "options": ["filter", "map", "take", "merge"],
+      "question": "Which operator transforms each emitted value by applying a function?",
+      "options": ["Filter", "Map", "FlatMap", "Scan"],
       "correctIndex": 1,
-      "explanation": "map applies a function to each value, transforming it into something new."
+      "explanation": "Map applies a function to each emitted value, transforming it. Filter selects, FlatMap flattens, Scan accumulates."
     },
     {
       "type": "multiple_choice",
-      "category": "Basics",
-      "difficulty": "easy",
-      "points": 10,
-      "question": "What does filter do?",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator should you use for search-as-you-type to cancel previous requests?",
+      "options": ["FlatMap", "ConcatMap", "Switch", "Merge"],
+      "correctIndex": 2,
+      "explanation": "Switch cancels the previous inner Observable when a new value arrives. Perfect for search where you only want latest results."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Combination",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What's the difference between Merge and Concat?",
       "options": [
-        "Transforms values",
-        "Removes values that don't match condition",
-        "Combines streams",
-        "Delays values"
+        "Merge is sequential, Concat is parallel",
+        "Merge interleaves by time, Concat waits for each to complete",
+        "They are the same",
+        "Concat interleaves, Merge is sequential"
       ],
       "correctIndex": 1,
-      "explanation": "filter (or where) keeps only values that pass the predicate test."
+      "explanation": "Merge interleaves emissions as they arrive. Concat waits for each Observable to complete before subscribing to the next."
     },
     {
       "type": "multiple_choice",
-      "category": "Basics",
+      "category": "Operators",
       "difficulty": "easy",
       "points": 10,
-      "question": "take(3) will:",
-      "options": [
-        "Skip 3 items",
-        "Emit first 3 items then complete",
-        "Take every 3rd item",
-        "Wait 3 seconds"
-      ],
+      "question": "Which operator waits for a pause in emissions before emitting?",
+      "options": ["Sample", "Debounce", "Filter", "Distinct"],
       "correctIndex": 1,
-      "explanation": "take(n) emits the first n items and then completes the stream."
+      "explanation": "Debounce waits for a specified quiet period. Sample emits most recent at intervals."
     },
     {
       "type": "multiple_choice",
-      "category": "Basics",
-      "difficulty": "easy",
-      "points": 10,
+      "category": "Practical",
+      "difficulty": "medium",
+      "points": 15,
       "question": "What happens if you don't dispose a subscription?",
       "options": [
-        "Nothing",
-        "Memory leak",
-        "Faster performance",
-        "Automatic cleanup"
+        "Nothing, it cleans itself up",
+        "Memory leak and continued emissions",
+        "The app crashes",
+        "It automatically stops after 30 seconds"
       ],
       "correctIndex": 1,
-      "explanation": "Undisposed subscriptions hold references and cause memory leaks."
+      "explanation": "Undisposed subscriptions cause memory leaks by holding references and continue receiving emissions."
     },
     {
       "type": "multiple_choice",
-      "category": "Basics",
+      "category": "Combination",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator combines latest values from multiple sources when any emits?",
+      "options": ["Zip", "Merge", "CombineLatest", "Concat"],
+      "correctIndex": 2,
+      "explanation": "CombineLatest emits whenever any source emits, combining with latest from others. Zip pairs by index."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does Scan do?",
+      "options": [
+        "Filters values",
+        "Emits running accumulation after each value",
+        "Emits only final accumulated value",
+        "Finds items matching criteria"
+      ],
+      "correctIndex": 1,
+      "explanation": "Scan emits each intermediate accumulation. Reduce only emits the final value on complete."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Concepts",
+      "difficulty": "hard",
+      "points": 20,
+      "question": "How do you share a cold Observable among multiple subscribers?",
+      "options": [
+        "Use Map",
+        "Use Publish().RefCount()",
+        "Use Filter",
+        "Subscribe multiple times"
+      ],
+      "correctIndex": 1,
+      "explanation": "Publish().RefCount() converts cold to hot, sharing one subscription among all subscribers."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator creates a fresh Observable for each subscriber?",
+      "options": ["Just", "From", "Defer", "Interval"],
+      "correctIndex": 2,
+      "explanation": "Defer calls its factory function for each subscriber, creating a fresh Observable."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
       "difficulty": "easy",
       "points": 10,
-      "question": "merge() combines streams by:",
+      "question": "What does TakeUntil do?",
       "options": [
-        "Pairing by index",
-        "Interleaving emissions as they arrive",
-        "Sequential order",
-        "Taking latest only"
-      ],
-      "correctIndex": 1,
-      "explanation": "merge interleaves emissions from all streams as they arrive."
-    },
-    {
-      "type": "multiple_choice",
-      "category": "Operators",
-      "difficulty": "medium",
-      "points": 15,
-      "question": "Which operator waits for a pause in emissions?",
-      "options": ["throttle", "debounce", "delay", "sample"],
-      "correctIndex": 1,
-      "explanation": "debounce waits for quiet period. throttle rate-limits. delay shifts all."
-    },
-    {
-      "type": "multiple_choice",
-      "category": "Operators",
-      "difficulty": "medium",
-      "points": 15,
-      "question": "combineLatest vs zip - the key difference is:",
-      "options": [
-        "combineLatest is faster",
-        "zip emits on any source, combineLatest pairs by index",
-        "combineLatest emits on any source, zip pairs by index",
-        "They are identical"
+        "Takes first N items",
+        "Takes items until condition is false",
+        "Takes items until notifier Observable emits",
+        "Takes last N items"
       ],
       "correctIndex": 2,
-      "explanation": "combineLatest emits when ANY stream emits. zip pairs values by index position."
+      "explanation": "TakeUntil emits values until a notifier Observable emits, then completes. Perfect for cleanup."
     },
     {
-      "type": "multiple_choice",
-      "category": "Subjects",
-      "difficulty": "medium",
-      "points": 15,
-      "question": "BehaviorSubject differs from PublishSubject by:",
-      "options": [
-        "Being slower",
-        "Replaying the latest value to new subscribers",
-        "Not allowing errors",
-        "Buffering all values"
-      ],
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).map(x => x * 2)",
+      "options": ["1, 2, 3", "2, 4, 6", "[2, 4, 6]", "6"],
       "correctIndex": 1,
-      "explanation": "BehaviorSubject replays its current/latest value to new subscribers."
+      "explanation": "From emits each item, Map transforms: 1*2=2, 2*2=4, 3*2=6."
     },
     {
-      "type": "multiple_choice",
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3, 4, 5]).filter(x => x > 3)",
+      "options": ["1, 2, 3", "4, 5", "true, true", "3, 4, 5"],
+      "correctIndex": 1,
+      "explanation": "Filter keeps only values where predicate returns true: 4 and 5 are > 3."
+    },
+    {
+      "type": "predict_output",
       "category": "Operators",
       "difficulty": "medium",
       "points": 15,
-      "question": "scan differs from reduce by:",
-      "options": [
-        "scan is faster",
-        "scan emits each intermediate value, reduce only final",
-        "reduce is for numbers only",
-        "They are identical"
-      ],
+      "question": "What does this emit?\nFrom([1, 2, 3]).scan((acc, x) => acc + x, 0)",
+      "options": ["6", "1, 3, 6", "0, 1, 2, 3", "1, 2, 3"],
       "correctIndex": 1,
-      "explanation": "scan emits after each value. reduce waits for completion."
+      "explanation": "Scan emits running totals: 0+1=1, 1+2=3, 3+3=6."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).take(2)",
+      "options": ["1, 2, 3", "1, 2", "2, 3", "3"],
+      "correctIndex": 1,
+      "explanation": "Take(2) emits only the first 2 items: 1, 2, then completes."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).skip(1)",
+      "options": ["1", "2, 3", "1, 2", "3"],
+      "correctIndex": 1,
+      "explanation": "Skip(1) skips the first item: emits 2, 3."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Error Handling",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator recovers from errors?",
+      "options": ["Throw", "Retry", "Catch", "Both Retry and Catch"],
+      "correctIndex": 3,
+      "explanation": "Retry resubscribes on error, Catch provides a fallback. Both help recover from errors."
     },
     {
       "type": "multiple_choice",
       "category": "Concepts",
       "difficulty": "medium",
       "points": 15,
-      "question": "A 'Cold' Observable:",
+      "question": "What's the difference between Hot and Cold Observables?",
       "options": [
-        "Shares values between subscribers",
-        "Creates new producer per subscriber",
-        "Is faster than Hot",
-        "Never completes"
+        "Hot starts fresh per subscriber, Cold shares",
+        "Cold starts fresh per subscriber, Hot shares/runs regardless of subscribers",
+        "They are the same",
+        "Hot is faster"
       ],
       "correctIndex": 1,
-      "explanation": "Cold creates new producer per subscription (like Netflix). Hot shares (like live TV)."
+      "explanation": "Cold Observables start fresh for each subscriber. Hot Observables emit regardless of subscribers."
     },
     {
-      "type": "predict_output",
-      "category": "Operators",
-      "difficulty": "easy",
-      "points": 15,
-      "question": "What is the output?",
-      "input": "[1, 2, 3]",
-      "operator": "map(x => x * 2)",
-      "options": ["[2, 4, 6]", "[1, 2, 3, 1, 2, 3]", "[1, 4, 9]", "[3, 6, 9]"],
-      "correctIndex": 0,
-      "explanation": "map transforms each value: 1*2=2, 2*2=4, 3*2=6"
-    },
-    {
-      "type": "predict_output",
-      "category": "Operators",
-      "difficulty": "easy",
-      "points": 15,
-      "question": "What values pass through?",
-      "input": "[1, 2, 3, 4, 5]",
-      "operator": "filter(x => x > 2)",
-      "options": ["[3, 4, 5]", "[1, 2]", "[2, 3, 4, 5]", "[1, 2, 3]"],
-      "correctIndex": 0,
-      "explanation": "filter keeps values where predicate is true: 3>2, 4>2, 5>2"
-    },
-    {
-      "type": "predict_output",
-      "category": "Operators",
-      "difficulty": "medium",
-      "points": 20,
-      "question": "What does scan emit?",
-      "input": "[1, 2, 3]",
-      "operator": "scan((acc, x) => acc + x, 0)",
-      "options": ["[1, 3, 6]", "[6]", "[0, 1, 3, 6]", "[1, 2, 3]"],
-      "correctIndex": 0,
-      "explanation": "scan emits running totals: 0+1=1, 1+2=3, 3+3=6"
-    },
-    {
-      "type": "predict_output",
+      "type": "multiple_choice",
       "category": "Combination",
       "difficulty": "medium",
-      "points": 20,
-      "question": "What does zip produce?",
-      "input": "A:[1,2,3] B:[X,Y]",
-      "operator": "zip(A, B)",
-      "options": [
-        "[(1,X), (2,Y)]",
-        "[(1,X), (2,Y), (3,?)]",
-        "[1,2,3,X,Y]",
-        "[(1,X,Y), (2,X,Y)]"
-      ],
-      "correctIndex": 0,
-      "explanation": "zip pairs by index. Only 2 pairs since B has 2 values."
-    },
-    {
-      "type": "predict_output",
-      "category": "Combination",
-      "difficulty": "hard",
-      "points": 25,
-      "question": "A emits 1, B emits X, A emits 2. Output?",
-      "input": "A:1, B:X, A:2",
-      "operator": "combineLatest(A, B)",
-      "options": ["(1,X), (2,X)", "(1,X)", "(2,X)", "(1,X), (1,X), (2,X)"],
-      "correctIndex": 0,
-      "explanation": "combineLatest emits when ANY source emits (once all have value)."
-    },
-    {
-      "type": "predict_output",
-      "category": "Operators",
-      "difficulty": "hard",
-      "points": 25,
-      "question": "User types H-e-l-l-o rapidly, pauses 500ms. What emits?",
-      "input": "H, e, l, l, o (rapid), [pause 500ms]",
-      "operator": "debounce(300ms)",
-      "options": [
-        "Hello (after pause)",
-        "H, e, l, l, o",
-        "H, Hello",
-        "Nothing"
-      ],
-      "correctIndex": 0,
-      "explanation": "debounce waits for quiet period. Emits 'Hello' after 300ms silence."
-    },
-    {
-      "type": "find_bug",
-      "category": "Practical",
-      "difficulty": "hard",
-      "points": 25,
-      "question": "This search has a bug. Why might results be wrong?",
-      "code": "searchText\n  .flatMap(q => searchApi(q))\n  .subscribe(showResults)",
-      "options": [
-        "flatMap doesn't cancel previous searches",
-        "Missing debounce",
-        "searchApi is wrong",
-        "No error handling"
-      ],
-      "correctIndex": 0,
-      "explanation": "flatMap keeps ALL subscriptions. Old slow searches may override new. Use switchMap!"
-    },
-    {
-      "type": "find_bug",
-      "category": "Practical",
-      "difficulty": "hard",
-      "points": 25,
-      "question": "This component has a memory leak. What's the bug?",
-      "code": "class MyComponent {\n  init() {\n    stream.subscribe(data => {\n      this.updateUI(data)\n    })\n  }\n}",
-      "options": [
-        "Subscription never disposed",
-        "stream is null",
-        "updateUI is wrong",
-        "Missing error handler"
-      ],
-      "correctIndex": 0,
-      "explanation": "Subscriptions must be disposed when component is destroyed!"
-    },
-    {
-      "type": "multiple_choice",
-      "category": "Practical",
-      "difficulty": "hard",
-      "points": 20,
-      "question": "For search-as-you-type, the best combination is:",
-      "options": [
-        "map + filter",
-        "debounce + switchMap",
-        "take + merge",
-        "delay + concat"
-      ],
-      "correctIndex": 1,
-      "explanation": "debounce waits for typing pause, switchMap cancels previous search."
-    },
-    {
-      "type": "multiple_choice",
-      "category": "Practical",
-      "difficulty": "hard",
-      "points": 20,
-      "question": "share() transforms a Cold Observable by:",
-      "options": [
-        "Making it faster",
-        "Multicasting to share emissions",
-        "Adding error handling",
-        "Buffering values"
-      ],
-      "correctIndex": 1,
-      "explanation": "share makes Cold Observable Hot, sharing subscription among observers."
-    },
-    {
-      "type": "multiple_choice",
-      "category": "Practical",
-      "difficulty": "hard",
-      "points": 25,
-      "question": "Which operator is best for a 'Save' button to prevent double-submits while a request is pending?",
-      "options": ["flatMap", "switchMap", "exhaustMap", "concatMap"],
+      "points": 15,
+      "question": "Which operator pairs values from sources by index (1-to-1)?",
+      "options": ["Merge", "CombineLatest", "Zip", "Concat"],
       "correctIndex": 2,
-      "explanation": "exhaustMap ignores new values while the inner observable is active, perfect for preventing rapid double-clicks."
+      "explanation": "Zip pairs values by index: first with first, second with second."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Practical",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What's the recommended cleanup pattern for subscriptions?",
+      "options": [
+        "Let garbage collector handle it",
+        "Use TakeUntil with destroy signal",
+        "Use setTimeout",
+        "Call subscribe again"
+      ],
+      "correctIndex": 1,
+      "explanation": "TakeUntil(destroy$) auto-cancels when destroy signal emits. Clean and reliable."
     },
     {
       "type": "predict_output",
       "category": "Combination",
-      "difficulty": "hard",
-      "points": 25,
-      "question": "A emits [1, 2], B emits [A, B]. What does A.withLatestFrom(B) produce if A emits 1, then B emits A, then B emits B, then A emits 2?",
-      "options": [
-        "[ (2, B) ]",
-        "[ (1, A), (2, B) ]",
-        "[ (1, B), (2, B) ]",
-        "[ (2, A) ]"
-      ],
-      "correctIndex": 0,
-      "explanation": "withLatestFrom only emits when the SOURCE (A) emits. At t=1, A emits but B has no value yet. At t=4, A emits 2 and B's latest is B."
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nMerge(Just(1), Just(2))",
+      "options": ["[1, 2]", "1, 2", "2", "1"],
+      "correctIndex": 1,
+      "explanation": "Merge combines emissions from both sources: 1 and 2."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 1, 2, 2, 3]).distinct()",
+      "options": ["1, 1, 2, 2, 3", "1, 2, 3", "3", "1, 2, 3, 2, 1"],
+      "correctIndex": 1,
+      "explanation": "Distinct removes duplicates: 1, 2, 3."
     },
     {
       "type": "multiple_choice",
-      "category": "Theory",
-      "difficulty": "hard",
-      "points": 30,
-      "question": "In Rx, 'Lifting' refers to:",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "When should you use FlatMap vs Switch?",
       "options": [
-        "Increasing performance",
-        "The process of creating a new Observable that wraps another",
-        "Converting Hot to Cold",
-        "Handling errors at the root"
+        "FlatMap for search, Switch for parallel",
+        "FlatMap keeps all inner streams, Switch cancels previous",
+        "They are the same",
+        "Neither works with Observables"
       ],
       "correctIndex": 1,
-      "explanation": "Lifting is the fundamental mechanism where an operator 'lifts' the Observer of the new Observable into the source Observable."
+      "explanation": "FlatMap keeps all inner subscriptions (parallel). Switch cancels previous (use for search)."
     },
     {
-      "type": "find_bug",
-      "category": "Advanced",
-      "difficulty": "hard",
-      "points": 30,
-      "question": "Why is this retry logic potentially dangerous?",
-      "code": "observable.retryWhen(errors => errors.delay(100ms))",
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does Replay do?",
       "options": [
-        "It might retry forever if the error persists",
-        "Delay is too short",
-        "Errors stream will complete",
-        "Missing take(5)"
+        "Repeats the source",
+        "Caches and replays last N values to late subscribers",
+        "Plays audio/video",
+        "Restarts the stream"
       ],
+      "correctIndex": 1,
+      "explanation": "Replay caches emissions and replays them to new subscribers."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does this emit?\nFrom([1, 2, 3]).reduce((acc, x) => acc + x, 0)",
+      "options": ["1, 3, 6", "6", "0", "1, 2, 3"],
+      "correctIndex": 1,
+      "explanation": "Reduce emits only final value on complete: 0+1+2+3 = 6."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Practical",
+      "difficulty": "hard",
+      "points": 20,
+      "question": "Which operator should you use to limit parallel API calls?",
+      "options": ["Filter", "FlatMap with maxConcurrency", "Take", "Debounce"],
+      "correctIndex": 1,
+      "explanation": "FlatMap accepts maxConcurrency parameter to limit parallel inner subscriptions."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nEmpty()",
+      "options": ["null", "undefined", "Nothing, just completes", "Error"],
+      "correctIndex": 2,
+      "explanation": "Empty emits no items and completes immediately."
+    },
+    {
+      "type": "predict_output",
+      "category": "Combination",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).startWith(0)",
+      "options": ["0, 1, 2, 3", "1, 2, 3, 0", "0", "1, 2, 3"],
       "correctIndex": 0,
-      "explanation": "Without a limit (like take(n) or scan to count attempts), retryWhen will create an infinite loop of retries if the error is permanent."
+      "explanation": "StartWith prepends values: 0 first, then 1, 2, 3."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Error Handling",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What happens when an error occurs in an unhandled stream?",
+      "options": [
+        "Stream continues normally",
+        "Stream terminates, no more emissions",
+        "Error is logged and ignored",
+        "Stream retries automatically"
+      ],
+      "correctIndex": 1,
+      "explanation": "Unhandled errors terminate the stream permanently. Always add error handling."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "Which operator creates an Observable from an array?",
+      "options": ["Just", "From", "Create", "Range"],
+      "correctIndex": 1,
+      "explanation": "From converts arrays/iterables to Observables. Just emits single value."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nRange(1, 3)",
+      "options": ["1", "1, 2, 3", "3", "[1, 2, 3]"],
+      "correctIndex": 1,
+      "explanation": "Range(1, 3) emits integers 1, 2, 3."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does Buffer do?",
+      "options": [
+        "Filters values",
+        "Collects emissions into arrays",
+        "Delays emissions",
+        "Cancels previous"
+      ],
+      "correctIndex": 1,
+      "explanation": "Buffer collects emissions into arrays/bundles and emits them periodically or by count."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator errors if no emission within specified time?",
+      "options": ["Delay", "Debounce", "Timeout", "Sample"],
+      "correctIndex": 2,
+      "explanation": "Timeout errors if source is silent for too long."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([5, 3, 8, 1]).min()",
+      "options": ["5", "1", "8", "5, 3, 8, 1"],
+      "correctIndex": 1,
+      "explanation": "Min emits the minimum value: 1."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([5, 3, 8, 1]).max()",
+      "options": ["5", "1", "8", "17"],
+      "correctIndex": 2,
+      "explanation": "Max emits the maximum value: 8."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Concepts",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What's the purpose of SubscribeOn?",
+      "options": [
+        "Schedule where results are observed",
+        "Schedule where subscription/work happens",
+        "Subscribe multiple times",
+        "Cancel subscription"
+      ],
+      "correctIndex": 1,
+      "explanation": "SubscribeOn controls where subscription/work happens. ObserveOn controls where results are observed."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).count()",
+      "options": ["1, 2, 3", "3", "6", "1"],
+      "correctIndex": 1,
+      "explanation": "Count emits the number of items: 3."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator divides source into grouped Observables by key?",
+      "options": ["Buffer", "Window", "GroupBy", "Filter"],
+      "correctIndex": 2,
+      "explanation": "GroupBy divides into grouped Observables organized by key function."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).first",
+      "options": ["1", "3", "1, 2, 3", "null"],
+      "correctIndex": 0,
+      "explanation": "First emits only the first item: 1."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What does this emit?\nFrom([1, 2, 3]).last",
+      "options": ["1", "3", "1, 2, 3", "null"],
+      "correctIndex": 1,
+      "explanation": "Last emits only the last item: 3."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "hard",
+      "points": 20,
+      "question": "What does Materialize do?",
+      "options": [
+        "Creates physical objects",
+        "Wraps emissions as Notification objects",
+        "Filters notifications",
+        "Dematerializes data"
+      ],
+      "correctIndex": 1,
+      "explanation": "Materialize wraps next/error/complete events as Notification objects."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Practical",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator is best for form validation combining multiple fields?",
+      "options": ["Merge", "Concat", "CombineLatest", "Zip"],
+      "correctIndex": 2,
+      "explanation": "CombineLatest combines latest values whenever any field changes. Perfect for form validation."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does this emit?\nFrom([1, 2, 3]).elementAt(1)",
+      "options": ["1", "2", "3", "1, 2"],
+      "correctIndex": 1,
+      "explanation": "ElementAt(1) emits item at index 1: 2 (0-indexed)."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which operator mirrors the first Observable to emit?",
+      "options": ["Merge", "Concat", "Amb", "Zip"],
+      "correctIndex": 2,
+      "explanation": "Amb (race) mirrors whichever Observable emits first, ignoring others."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does this emit?\nFrom([1, 2, 3, 4, 5]).takeLast(2)",
+      "options": ["1, 2", "4, 5", "3, 4, 5", "5"],
+      "correctIndex": 1,
+      "explanation": "TakeLast(2) emits only the last 2 items: 4, 5."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does this emit?\nFrom([1, 2, 3, 4, 5]).skipLast(2)",
+      "options": ["1, 2, 3", "4, 5", "3, 4, 5", "1, 2"],
+      "correctIndex": 0,
+      "explanation": "SkipLast(2) skips the last 2 items: emits 1, 2, 3."
     },
     {
       "type": "multiple_choice",
       "category": "Concepts",
       "difficulty": "hard",
-      "points": 25,
-      "question": "The main advantage of 'shareReplay(1)' over 'share()' is:",
+      "points": 20,
+      "question": "What's the purpose of RefCount?",
       "options": [
-        "It's faster",
-        "It caches the last value for late subscribers",
-        "It handles errors better",
-        "It works with Cold observables"
+        "Count references in stream",
+        "Auto-connect when first subscriber arrives, disconnect when last leaves",
+        "Reference another stream",
+        "Count emissions"
       ],
       "correctIndex": 1,
-      "explanation": "shareReplay(1) not only shares the subscription but also replays the last value so late subscribers don't have to wait for the next emission."
+      "explanation": "RefCount makes ConnectableObservable auto-connect on first subscriber and disconnect when all unsubscribe."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does this emit?\nFrom([1, 2, 3]).all(x => x > 0)",
+      "options": ["true", "false", "1, 2, 3", "Error"],
+      "correctIndex": 0,
+      "explanation": "All checks if all items satisfy predicate. All are > 0, so true."
+    },
+    {
+      "type": "predict_output",
+      "category": "Operators",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "What does this emit?\nFrom([1, 2, 3]).contains(2)",
+      "options": ["true", "false", "2", "1, 2, 3"],
+      "correctIndex": 0,
+      "explanation": "Contains checks if value is emitted. 2 is in sequence, so true."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Practical",
+      "difficulty": "medium",
+      "points": 15,
+      "question": "Which pattern is best for auto-save functionality?",
+      "options": [
+        "Save on every keystroke",
+        "Debounce + Distinct + FlatMap",
+        "Save on component destroy only",
+        "Use setTimeout"
+      ],
+      "correctIndex": 1,
+      "explanation": "Debounce waits for pause, Distinct skips unchanged, FlatMap saves. Prevents excessive saves."
+    },
+    {
+      "type": "multiple_choice",
+      "category": "Practical",
+      "difficulty": "easy",
+      "points": 10,
+      "question": "What operator should you always use before expensive operations?",
+      "options": ["Map", "Filter", "Distinct", "StartWith"],
+      "correctIndex": 2,
+      "explanation": "Distinct prevents processing duplicate values, avoiding unnecessary expensive operations."
     }
   ]
 }
