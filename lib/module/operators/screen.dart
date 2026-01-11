@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
+import '../../widget/widget.dart';
 import 'operators.dart';
 
 class OperatorsScreen extends StatefulWidget {
@@ -42,9 +43,7 @@ class _OperatorsScreenState extends State<OperatorsScreen>
   }
 
   Future<void> _initData() async {
-    loadData(() async {
-      // Data is preloaded in OperatorsModule.init()
-    });
+    loadData(() async {});
   }
 
   @override
@@ -100,52 +99,13 @@ class _OperatorsScreenState extends State<OperatorsScreen>
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              gradient: AppTheme.primaryGradient,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppTheme.primary.withValues(alpha: 0.4),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.timeline_rounded,
-              color: Colors.white,
-              size: 28,
-            ),
-          ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'RxLab Operators',
-                  style: GoogleFonts.outfit(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                Text(
-                  'Universal Reactive Extensions Reference',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 14),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+    return ModuleHeader(
+      title: 'RxLab Operators',
+      subtitle: 'Universal Reactive Extensions Reference',
+      icon: Icons.timeline_rounded,
+      gradientColors: const [AppTheme.primary, AppTheme.secondary],
+      showBackButton: false,
+    );
   }
 
   Widget _buildSearchBar() {

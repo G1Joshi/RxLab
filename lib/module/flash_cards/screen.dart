@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../common/common.dart';
+import '../../widget/widget.dart';
 import 'flash_cards.dart';
 
 class FlashcardsScreen extends StatefulWidget {
@@ -119,60 +119,12 @@ class _FlashcardsScreenState extends State<FlashcardsScreen>
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 16, 24, 8),
-      child: Row(
-        children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
-            color: AppTheme.textPrimary,
-          ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Colors.indigo, Colors.blueAccent],
-              ),
-              borderRadius: BorderRadius.circular(14),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blueAccent.withValues(alpha: 0.3),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.style_rounded,
-              color: Colors.white,
-              size: 24,
-            ),
-          ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'RxLab Flashcards',
-                  style: GoogleFonts.outfit(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppTheme.textPrimary,
-                  ),
-                ),
-                Text(
-                  'Quick memory training',
-                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 400.ms).slideY(begin: -0.1, end: 0);
+    return ModuleHeader(
+      title: 'RxLab Flashcards',
+      subtitle: 'Quick memory training',
+      icon: Icons.style_rounded,
+      gradientColors: const [Colors.indigo, Colors.blueAccent],
+    );
   }
 
   Widget _buildFlipCard() {
@@ -289,16 +241,6 @@ class _FlashcardsScreenState extends State<FlashcardsScreen>
         borderRadius: BorderRadius.circular(24),
         child: Stack(
           children: [
-            Positioned.fill(
-              child: Opacity(
-                opacity: 0.03,
-                child: Image.network(
-                  'https://www.transparenttextures.com/patterns/paper-fibers.png',
-                  repeat: ImageRepeat.repeat,
-                ),
-              ),
-            ),
-
             Positioned(
               top: 0,
               right: 0,

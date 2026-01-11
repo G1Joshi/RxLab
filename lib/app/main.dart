@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../common/common.dart';
 import '../module/module.dart';
-import 'splash.dart';
+import 'app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
