@@ -1,0 +1,108 @@
+{
+  "cheatSheet": [
+    {
+      "title": "I want to create a stream",
+      "icon": "add_circle",
+      "color": "green",
+      "operators": [
+        { "name": "just", "oneLiner": "Emit single value" },
+        { "name": "from", "oneLiner": "Emit from array/iterable" },
+        { "name": "interval", "oneLiner": "Emit at time intervals" },
+        { "name": "timer", "oneLiner": "Emit after delay" },
+        { "name": "range", "oneLiner": "Emit range of integers" },
+        { "name": "empty", "oneLiner": "Emit nothing, then complete" },
+        { "name": "error", "oneLiner": "Emit error immediately" }
+      ]
+    },
+    {
+      "title": "I want to transform values",
+      "icon": "transform",
+      "color": "blue",
+      "operators": [
+        { "name": "map", "oneLiner": "Transform each value" },
+        { "name": "scan", "oneLiner": "Accumulate over time" },
+        { "name": "buffer", "oneLiner": "Collect into arrays" },
+        { "name": "flatMap", "oneLiner": "Map + flatten (keep all)" },
+        { "name": "switchMap", "oneLiner": "Map + switch (cancel prev)" },
+        { "name": "concatMap", "oneLiner": "Map + queue (in order)" },
+        { "name": "groupBy", "oneLiner": "Group into sub-streams" },
+        { "name": "window", "oneLiner": "Sub-streams by time/count" }
+      ]
+    },
+    {
+      "title": "I want to filter values",
+      "icon": "filter_list",
+      "color": "purple",
+      "operators": [
+        { "name": "filter", "oneLiner": "Keep matching values" },
+        { "name": "take", "oneLiner": "Take first N" },
+        { "name": "skip", "oneLiner": "Skip first N" },
+        { "name": "distinct", "oneLiner": "Remove duplicates" },
+        { "name": "takeUntil", "oneLiner": "Take until signal" },
+        { "name": "takeWhile", "oneLiner": "Take while true" },
+        { "name": "skipWhile", "oneLiner": "Skip while true" },
+        { "name": "elementAt", "oneLiner": "Emits only the Nth item" },
+        { "name": "ignoreElements", "oneLiner": "Discard all emissions" }
+      ]
+    },
+    {
+      "title": "I want to rate-limit",
+      "icon": "speed",
+      "color": "orange",
+      "operators": [
+        { "name": "debounce", "oneLiner": "Wait for pause (search)" },
+        { "name": "throttle", "oneLiner": "Rate limit emissions" },
+        { "name": "sample", "oneLiner": "Most recent at intervals" }
+      ]
+    },
+    {
+      "title": "I want to combine streams",
+      "icon": "merge_type",
+      "color": "teal",
+      "operators": [
+        { "name": "merge", "oneLiner": "Interleave as they arrive" },
+        { "name": "combineLatest", "oneLiner": "Latest from each on any emit" },
+        { "name": "zip", "oneLiner": "Pair by index position" },
+        { "name": "concat", "oneLiner": "Sequential (wait complete)" },
+        { "name": "startWith", "oneLiner": "Prepend initial value" },
+        { "name": "withLatestFrom", "oneLiner": "Combine on source emit only" }
+      ]
+    },
+    {
+      "title": "I want to handle errors",
+      "icon": "healing",
+      "color": "red",
+      "operators": [
+        { "name": "catchError", "oneLiner": "Switch to fallback stream" },
+        { "name": "retry", "oneLiner": "Retry N times" },
+        { "name": "retryWhen", "oneLiner": "Retry with backoff" },
+        { "name": "onErrorReturn", "oneLiner": "Emit default on error" }
+      ]
+    },
+    {
+      "title": "I want to debug/utility",
+      "icon": "build",
+      "color": "grey",
+      "operators": [
+        { "name": "tap", "oneLiner": "Side effect without modify" },
+        { "name": "delay", "oneLiner": "Delay all emissions" },
+        { "name": "share", "oneLiner": "Multicast to subscribers" },
+        { "name": "shareReplay", "oneLiner": "Share + cache last N" },
+        { "name": "materialize", "oneLiner": "Convert to Notifications" },
+        { "name": "timestamp", "oneLiner": "Attach arrival time" }
+      ]
+    },
+    {
+      "title": "I want to wait/sync",
+      "icon": "hourglass_empty",
+      "color": "indigo",
+      "operators": [
+        { "name": "reduce", "oneLiner": "Accumulate to final value" },
+        { "name": "count", "oneLiner": "Count total items" },
+        { "name": "sum", "oneLiner": "Sum all items" },
+        { "name": "first", "oneLiner": "Only first value" },
+        { "name": "last", "oneLiner": "Only last value" }
+      ]
+    }
+  ]
+}

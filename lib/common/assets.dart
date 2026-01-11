@@ -5,9 +5,17 @@ class DataAsset {
 }
 
 class AppAssets {
+  static const DataAsset cheatSheet = DataAsset(
+    'assets/data/cheatSheet.json',
+    'cheatSheet',
+  );
   static const DataAsset concepts = DataAsset(
     'assets/data/concepts.json',
     'concepts',
+  );
+  static const DataAsset decisionTree = DataAsset(
+    'assets/data/decisionTree.json',
+    'decisionTree',
   );
   static const DataAsset operators = DataAsset(
     'assets/data/operators.json',
