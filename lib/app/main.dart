@@ -10,6 +10,7 @@ Future<void> main() async {
   ModuleRegistry.register(ConceptsModule());
   ModuleRegistry.register(OperatorsModule());
   ModuleRegistry.register(RecipesModule());
+  ModuleRegistry.register(QuizModule());
   ModuleRegistry.register(WizardModule());
 
   for (final module in ModuleRegistry.all) {

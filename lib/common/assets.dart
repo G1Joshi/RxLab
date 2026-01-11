@@ -21,6 +21,7 @@ class AppAssets {
     'assets/data/operators.json',
     'operators',
   );
+  static const DataAsset quiz = DataAsset('assets/data/quiz.json', 'quiz');
   static const DataAsset recipes = DataAsset(
     'assets/data/recipes.json',
     'recipes',
