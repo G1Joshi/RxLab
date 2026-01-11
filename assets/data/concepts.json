@@ -1,0 +1,170 @@
+{
+  "concepts": [
+    {
+      "id": "observable",
+      "title": "Observable",
+      "subtitle": "The data stream",
+      "icon": "stream",
+      "color": "blue",
+      "description": "An Observable is a collection that arrives over time. Unlike arrays where all data is available immediately, Observables emit values asynchronously.",
+      "keyPoints": [
+        "Represents a stream of data over time",
+        "Can emit zero or more values",
+        "Can complete successfully or with an error",
+        "Lazy - doesn't start until subscribed"
+      ],
+      "codeExample": "// Create an Observable\nobservable = Observable.from([1, 2, 3])\n\n// From events\nclicks = button.clicks()\n\n// Periodic timer\ntimer = Observable.interval(1.second)"
+    },
+    {
+      "id": "observer",
+      "title": "Observer",
+      "subtitle": "The listener",
+      "icon": "visibility",
+      "color": "green",
+      "description": "An Observer is the consumer of values delivered by an Observable. It consists of three callbacks: onNext, onError, and onComplete.",
+      "keyPoints": [
+        "onNext - called for each emitted value",
+        "onError - called if an error occurs",
+        "onComplete - called when stream finishes",
+        "Subscribing connects Observer to Observable"
+      ],
+      "codeExample": "observable.subscribe(\n  onNext: value => print(\"Value: \" + value),\n  onError: error => print(\"Error: \" + error),\n  onComplete: () => print(\"Done!\")\n)"
+    },
+    {
+      "id": "subscription",
+      "title": "Subscription",
+      "subtitle": "The connection",
+      "icon": "link",
+      "color": "purple",
+      "description": "A Subscription represents the execution of an Observable and is primarily used for cancellation. Always dispose subscriptions to prevent memory leaks.",
+      "keyPoints": [
+        "Represents an active Observable execution",
+        "Can be cancelled with dispose() or cancel()",
+        "Prevents memory leaks when disposed properly",
+        "Use CompositeDisposable for multiple subscriptions"
+      ],
+      "codeExample": "subscription = observable.subscribe(handleValue)\n\n// Later, clean up\nsubscription.dispose()\n\n// Or use takeUntil for auto-cleanup\nobservable\n  .takeUntil(disposeSignal)\n  .subscribe(handleValue)"
+    },
+    {
+      "id": "hot_cold",
+      "title": "Hot vs Cold",
+      "subtitle": "Sharing behavior",
+      "icon": "whatshot",
+      "color": "orange",
+      "description": "Cold Observables create a new producer for each subscriber. Hot Observables share a single producer among all subscribers.",
+      "keyPoints": [
+        "Cold: New producer per subscriber (like Netflix)",
+        "Hot: Shared producer (like live TV)",
+        "HTTP requests are typically Cold",
+        "Use share() or replay() to make Cold → Hot"
+      ],
+      "codeExample": "// Cold - each subscriber triggers new API call\ncold = fetchFromApi()\ncold.subscribe(a)  // API call 1\ncold.subscribe(b)  // API call 2\n\n// Hot - shared execution\nhot = fetchFromApi().shareReplay(1)\nhot.subscribe(a)   // API call 1\nhot.subscribe(b)   // Gets cached result"
+    },
+    {
+      "id": "subjects",
+      "title": "Subjects",
+      "subtitle": "Observable + Observer",
+      "icon": "swap_horiz",
+      "color": "teal",
+      "description": "A Subject acts as both an Observable and an Observer. It can multicast values to multiple subscribers and allows manual value emission.",
+      "keyPoints": [
+        "PublishSubject - no replay, only new values",
+        "BehaviorSubject - replays latest value",
+        "ReplaySubject - replays N values",
+        "AsyncSubject - emits only final value on complete"
+      ],
+      "codeExample": "// BehaviorSubject with initial value\ncounter = BehaviorSubject.create(0)\n\ncounter.subscribe(print)  // Prints 0 immediately\n\ncounter.onNext(1)  // Prints 1\ncounter.onNext(2)  // Prints 2\n\ncounter.value      // Returns 2"
+    },
+    {
+      "id": "operators",
+      "title": "Operators",
+      "subtitle": "Transform streams",
+      "icon": "build",
+      "color": "indigo",
+      "description": "Operators are methods on Observables that transform, filter, or combine streams. They always return new Observables without modifying the source.",
+      "keyPoints": [
+        "Transform: map, scan, buffer",
+        "Filter: filter, take, skip, distinct",
+        "Combine: merge, zip, combineLatest",
+        "Operators are chainable"
+      ],
+      "codeExample": "userStream\n  .map(user => user.name)         // Transform\n  .filter(name => name.length > 0) // Filter\n  .distinct()                      // No duplicates\n  .debounce(300.ms)                // Rate limit\n  .subscribe(print)"
+    },
+    {
+      "id": "error_handling",
+      "title": "Error Handling",
+      "subtitle": "Graceful failures",
+      "icon": "healing",
+      "color": "red",
+      "description": "Errors in streams terminate the Observable by default. Use error handling operators to recover gracefully or retry failed operations.",
+      "keyPoints": [
+        "onErrorReturn - replace with fallback value",
+        "retry - resubscribe on error",
+        "retryWhen - custom retry logic",
+        "catch/catchError - handle and transform errors"
+      ],
+      "codeExample": "apiStream\n  .retry(3)                     // Retry up to 3 times\n  .onErrorReturn(defaultValue)  // Fallback value\n  .subscribe(\n    value => handleSuccess(value),\n    error => logError(error)\n  )"
+    },
+    {
+      "id": "schedulers",
+      "title": "Schedulers",
+      "subtitle": "Thread control",
+      "icon": "schedule",
+      "color": "cyan",
+      "description": "Schedulers control the execution context (thread) for Observable operations. Use subscribeOn and observeOn to manage threading.",
+      "keyPoints": [
+        "subscribeOn - where subscription/producer runs",
+        "observeOn - where emissions are received",
+        "Use background threads for heavy work",
+        "Always observe on main thread for UI"
+      ],
+      "codeExample": "fetchData()\n  .subscribeOn(Schedulers.io)     // Run on IO thread\n  .observeOn(Schedulers.main)     // Receive on main\n  .subscribe(updateUI)            // Safe for UI"
+    },
+    {
+      "id": "backpressure",
+      "title": "Backpressure",
+      "subtitle": "Flow control",
+      "icon": "compress",
+      "color": "amber",
+      "description": "Backpressure occurs when an Observable produces values faster than the Observer can consume them. Strategies include buffering, dropping, or sampling.",
+      "keyPoints": [
+        "buffer - collect & emit in batches",
+        "throttle - emit first, ignore rest for duration",
+        "debounce - emit after quiet period",
+        "sample - emit most recent at intervals"
+      ],
+      "codeExample": "// Throttle scroll events\nscrollEvents\n  .throttle(100.ms)\n  .subscribe(handleScroll)\n\n// Buffer rapid clicks\nclicks\n  .buffer(clicks.debounce(300.ms))\n  .subscribe(batch => print(batch.count + \" clicks\"))"
+    },
+    {
+      "id": "lifecycle",
+      "title": "Lifecycle",
+      "subtitle": "Dispose properly",
+      "icon": "autorenew",
+      "color": "brown",
+      "description": "Managing the lifecycle of subscriptions is crucial to prevent memory leaks. Always cancel subscriptions when they're no longer needed.",
+      "keyPoints": [
+        "Cancel in component dispose/cleanup",
+        "Use takeUntil for automatic cleanup",
+        "CompositeDisposable for multiple streams",
+        "Framework integrations handle cleanup"
+      ],
+      "codeExample": "class MyComponent {\n  disposeSignal = PublishSubject()\n  \n  onInit() {\n    stream\n      .takeUntil(disposeSignal)  // Auto-cancel\n      .subscribe(handleData)\n  }\n  \n  onDestroy() {\n    disposeSignal.onNext(Unit)  // Trigger cleanup\n    disposeSignal.dispose()\n  }\n}"
+    },
+    {
+      "id": "marble_diagrams",
+      "title": "Marble Diagrams",
+      "subtitle": "Visualizing Rx",
+      "icon": "auto_graph",
+      "color": "pink",
+      "description": "Marble diagrams are visual representations of how Rx operators work. They show input streams, the transformation process, and the resulting output stream over time.",
+      "keyPoints": [
+        "Horizontal line: Time flowing from left to right",
+        "Circles (Marbles): Emitted data values",
+        "Vertical line: Successful completion",
+        "X symbol: Stream error",
+        "Box: The operator being applied"
+      ],
+      "codeExample": "---(1)---(2)---(3)---|--> (Input)\n\n[      map(x => x*10)    ]\n\n---(10)--(20)--(30)--|--> (Output)"
+    }
+  ]
+}
