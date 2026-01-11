@@ -1,0 +1,97 @@
+{
+  "decisionTree": {
+    "question": "What do you want to do?",
+    "options": [
+      {
+        "question": "Create a new stream",
+        "options": [
+          {
+            "question": "From a single value",
+            "operator": "just / Stream.value",
+            "description": "Emits a single value and completes."
+          },
+          {
+            "question": "From a collection",
+            "operator": "fromIterable",
+            "description": "Converts an Iterable to a Stream."
+          },
+          {
+            "question": "From a Future",
+            "operator": "fromFuture",
+            "description": "Converts a Future to a Stream."
+          },
+          {
+            "question": "That never ends",
+            "operator": "periodic",
+            "description": "Emits items at regular intervals."
+          }
+        ]
+      },
+      {
+        "question": "Transform values",
+        "options": [
+          {
+            "question": "One by one",
+            "operator": "map",
+            "description": "Applies a function to each item."
+          },
+          {
+            "question": "Into a new stream",
+            "operator": "flatMap",
+            "description": "Maps to a new stream and flattens."
+          },
+          {
+            "question": "Accumulate values",
+            "operator": "scan",
+            "description": "Combines values with a seed."
+          }
+        ]
+      },
+      {
+        "question": "Filter values",
+        "options": [
+          {
+            "question": "By a condition",
+            "operator": "where",
+            "description": "Only emits items that satisfy a predicate."
+          },
+          {
+            "question": "Taking N items",
+            "operator": "take",
+            "description": "Emits first N items then completes."
+          },
+          {
+            "question": "Skipping N items",
+            "operator": "skip",
+            "description": "Suppresses first N items."
+          }
+        ]
+      },
+      {
+        "question": "Combine streams",
+        "options": [
+          {
+            "question": "One after another",
+            "operator": "concat",
+            "description": "Subscribes to streams sequentially."
+          },
+          {
+            "question": "Simultaneously",
+            "operator": "merge",
+            "description": "Emits items from multiple streams as they arrive."
+          },
+          {
+            "question": "Latest from each",
+            "operator": "combineLatest",
+            "description": "Combines latest emissions using a function."
+          },
+          {
+            "question": "Pairwise",
+            "operator": "zip",
+            "description": "Combines emissions 1-to-1."
+          }
+        ]
+      }
+    ]
+  }
+}
