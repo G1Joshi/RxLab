@@ -1,0 +1,347 @@
+{
+  "operators": [
+    {
+      "name": "just",
+      "description": "Emit a single value immediately",
+      "category": "creation",
+      "codeExample": "Observable.just(42)\n\n// Output: 42 → complete",
+      "detailedDescription": "Creates an Observable that emits a single value and then completes. Useful for wrapping a synchronous value in a stream."
+    },
+    {
+      "name": "from",
+      "description": "Create stream from array/iterable",
+      "category": "creation",
+      "codeExample": "Observable.from([1, 2, 3, 4, 5])\n\n// Output: 1, 2, 3, 4, 5 → complete",
+      "detailedDescription": "Creates an Observable from an array or iterable, emitting each item in sequence."
+    },
+    {
+      "name": "interval",
+      "description": "Emit sequential numbers at intervals",
+      "category": "creation",
+      "codeExample": "Observable.interval(Duration(seconds: 1))\n\n// Output: 0, 1, 2, 3... (one per second)",
+      "detailedDescription": "Creates an Observable that emits sequential integers at specified time intervals."
+    },
+    {
+      "name": "timer",
+      "description": "Emit value after a delay",
+      "category": "creation",
+      "codeExample": "Observable.timer(0, Duration(seconds: 2))\n\n// Output: (wait 2s) 0 → complete",
+      "detailedDescription": "Creates an Observable that waits for a specified duration before emitting a value and completing."
+    },
+    {
+      "name": "range",
+      "description": "Emit a range of integers",
+      "category": "creation",
+      "codeExample": "Rx.range(1, 5)\n\n// Output: 1, 2, 3, 4, 5 → complete",
+      "detailedDescription": "Creates an Observable that emits a sequence of integers in a specified range."
+    },
+    {
+      "name": "empty",
+      "description": "Emit nothing and complete",
+      "category": "creation",
+      "codeExample": "Stream.empty()",
+      "detailedDescription": "Creates an Observable that emits no items but terminates normally."
+    },
+    {
+      "name": "error",
+      "description": "Emit nothing and throw error",
+      "category": "creation",
+      "codeExample": "Stream.error(Exception(\"Oops\"))",
+      "detailedDescription": "Creates an Observable that emits no items and terminates with an error."
+    },
+    {
+      "name": "map",
+      "description": "Transform each emitted value",
+      "category": "transformation",
+      "codeExample": "stream.map((x) => x * 10)\n\n// Input:  1, 2, 3\n// Output: 10, 20, 30",
+      "detailedDescription": "Applies a function to each emitted value, transforming it. The most fundamental transformation operator."
+    },
+    {
+      "name": "scan",
+      "description": "Accumulate values over time",
+      "category": "transformation",
+      "codeExample": "stream.scan((acc, val) => acc + val, 0)\n\n// Input:  1, 2, 3\n// Output: 1, 3, 6 (running total)",
+      "detailedDescription": "Applies an accumulator function, emitting each intermediate result. Unlike reduce, scan emits after every value."
+    },
+    {
+      "name": "buffer",
+      "description": "Collect emissions into arrays",
+      "category": "transformation",
+      "codeExample": "stream.bufferCount(3)\n\n// Input:  1, 2, 3, 4, 5, 6\n// Output: [1,2,3], [4,5,6]",
+      "detailedDescription": "Collects values into buffers and emits them as arrays based on a boundary signal or count."
+    },
+    {
+      "name": "flatMap",
+      "description": "Map and flatten inner observables",
+      "category": "transformation",
+      "codeExample": "stream.flatMap((id) => fetchUser(id))\n\n// Input:  1, 2, 3\n// Output: User1, User2, User3 (concurrently)",
+      "detailedDescription": "Projects each value to an Observable and flattens all emissions. Keeps ALL inner subscriptions active concurrently."
+    },
+    {
+      "name": "switchMap",
+      "description": "Map and switch to latest inner observable",
+      "category": "transformation",
+      "codeExample": "searchText.switchMap((q) => searchApi(q))\n\n// Cancels previous API call when new text arrives",
+      "detailedDescription": "Projects each value to an Observable, but CANCELS the previous inner subscription when new value arrives. Essential for search."
+    },
+    {
+      "name": "concatMap",
+      "description": "Map and queue inner observables",
+      "category": "transformation",
+      "codeExample": "clicks.concatMap(_ => save())\n\n// Each save completes before next starts",
+      "detailedDescription": "Projects each value to an Observable and queues them, processing one at a time in order. Guarantees sequential execution."
+    },
+    {
+      "name": "exhaustMap",
+      "description": "Map and ignore while busy",
+      "category": "transformation",
+      "codeExample": "saveBtn.exhaustMap(_ => api.save())\n\n// Ignores clicks while save is pending",
+      "detailedDescription": "Projects each value to an Observable but IGNORES new values while the current inner Observable is still active. Perfect for preventing double-submits."
+    },
+    {
+      "name": "groupBy",
+      "description": "Group emissions by key",
+      "category": "transformation",
+      "codeExample": "stream.groupBy((x) => x % 2 == 0 ? 'even' : 'odd')",
+      "detailedDescription": "Groups emissions by a key function, creating separate grouped Observables for each unique key."
+    },
+    {
+      "name": "window",
+      "description": "Subdivide into window observables",
+      "category": "transformation",
+      "codeExample": "stream.windowCount(3)\n\n// Emits observables for each count window",
+      "detailedDescription": "Periodically subdivides items into Observable windows, similar to buffer but emits Observables instead of arrays."
+    },
+    {
+      "name": "reduce",
+      "description": "Reduce to single final value",
+      "category": "transformation",
+      "codeExample": "stream.reduce((acc, val) => acc + val)\n\n// Input:  1, 2, 3\n// Output: 6 (only on complete)",
+      "detailedDescription": "Applies an accumulator and emits only the final result when the source completes."
+    },
+    {
+      "name": "count",
+      "description": "Emit the number of items",
+      "category": "transformation",
+      "codeExample": "stream.count()",
+      "detailedDescription": "Emits the number of items emitted by the source Observable upon completion."
+    },
+    {
+      "name": "sum",
+      "description": "Emit the sum of all values",
+      "category": "transformation",
+      "codeExample": "stream.reduce((a, b) => a + b)",
+      "detailedDescription": "Calculates the sum of all numerical values in the stream upon completion."
+    },
+    {
+      "name": "filter",
+      "description": "Only emit values that match condition",
+      "category": "filtering",
+      "codeExample": "stream.filter((x) => x > 3)\n\n// Input:  1, 2, 3, 4, 5\n// Output: 4, 5",
+      "detailedDescription": "Filters emissions based on a predicate, only emitting values that return true."
+    },
+    {
+      "name": "take",
+      "description": "Take first N values then complete",
+      "category": "filtering",
+      "codeExample": "stream.take(3)\n\n// Input:  1, 2, 3, 4, 5\n// Output: 1, 2, 3 → complete",
+      "detailedDescription": "Emits only the first N values, then completes. Useful for limiting streams."
+    },
+    {
+      "name": "skip",
+      "description": "Skip first N values",
+      "category": "filtering",
+      "codeExample": "stream.skip(2)\n\n// Input:  1, 2, 3, 4, 5\n// Output: 3, 4, 5",
+      "detailedDescription": "Skips the first N values and emits the rest."
+    },
+    {
+      "name": "distinct",
+      "description": "Remove consecutive duplicates",
+      "category": "filtering",
+      "codeExample": "stream.distinct()\n\n// Input:  1, 1, 2, 2, 3\n// Output: 1, 2, 3",
+      "detailedDescription": "Filters out consecutive duplicate values. For non-consecutive, use distinctUnique."
+    },
+    {
+      "name": "debounce",
+      "description": "Wait for pause in emissions",
+      "category": "filtering",
+      "codeExample": "textChanges.debounceTime(Duration(milliseconds: 300))",
+      "detailedDescription": "Emits only after a specified quiet period. Ideal for search-as-you-type inputs."
+    },
+    {
+      "name": "throttle",
+      "description": "Rate limit emissions",
+      "category": "filtering",
+      "codeExample": "scrollEvents.throttleTime(Duration(milliseconds: 100))",
+      "detailedDescription": "Emits a value, then ignores subsequent values for a duration."
+    },
+    {
+      "name": "first",
+      "description": "Emit only the first value",
+      "category": "filtering",
+      "codeExample": "stream.first\n\n// Input:  1, 2, 3\n// Output: 1 → complete",
+      "detailedDescription": "Emits only the first item from the stream and then completes."
+    },
+    {
+      "name": "last",
+      "description": "Emit only the last value",
+      "category": "filtering",
+      "codeExample": "stream.last\n\n// Input:  1, 2, 3 → complete\n// Output: 3",
+      "detailedDescription": "Waits for completion, then emits only the last value emitted by the source."
+    },
+    {
+      "name": "sample",
+      "description": "Emit most recent at intervals",
+      "category": "filtering",
+      "codeExample": "stream.sampleTime(Duration(seconds: 1))",
+      "detailedDescription": "Periodically samples the source, emitting the most recent value within each period."
+    },
+    {
+      "name": "takeUntil",
+      "description": "Take values until notifier emits",
+      "category": "filtering",
+      "codeExample": "stream.takeUntil(stopSignal)",
+      "detailedDescription": "Emits until a notifier Observable emits. Perfect for cleanup patterns in UI."
+    },
+    {
+      "name": "takeWhile",
+      "description": "Emit while condition is true",
+      "category": "filtering",
+      "codeExample": "stream.takeWhile((x) => x <= 4)",
+      "detailedDescription": "Emits items as long as a specified condition is true, then completes."
+    },
+    {
+      "name": "skipWhile",
+      "description": "Skip while condition is true",
+      "category": "filtering",
+      "codeExample": "stream.skipWhile((x) => x < 4)",
+      "detailedDescription": "Skips items as long as a specified condition is true, then emits the rest."
+    },
+    {
+      "name": "elementAt",
+      "description": "Emit only the nth element",
+      "category": "filtering",
+      "codeExample": "stream.elementAt(2)\n\n// Input:  1, 2, 3, 4, 5\n// Output: 3 (element at index 2)",
+      "detailedDescription": "Emits only the item at the specified index position."
+    },
+    {
+      "name": "ignoreElements",
+      "description": "Ignore all items, only pass completion",
+      "category": "filtering",
+      "codeExample": "stream.ignoreElements()",
+      "detailedDescription": "Suppresses all emitted items, but passes completion or error notifications."
+    },
+    {
+      "name": "merge",
+      "description": "Combine multiple streams into one",
+      "category": "combination",
+      "codeExample": "Rx.merge([stream1, stream2])\n\n// Interleaves emissions by time",
+      "detailedDescription": "Combines multiple Observables into one by merging their emissions as they arrive."
+    },
+    {
+      "name": "combineLatest",
+      "description": "Combine latest values from streams",
+      "category": "combination",
+      "codeExample": "Rx.combineLatest2(s1, s2, (a, b) => '$a$b')",
+      "detailedDescription": "Combines latest values from multiple Observables whenever any of them emits."
+    },
+    {
+      "name": "zip",
+      "description": "Pair values by index from streams",
+      "category": "combination",
+      "codeExample": "Rx.zip2(s1, s2, (a, b) => '$a$b')",
+      "detailedDescription": "Combines values from multiple Observables by pairing them by index."
+    },
+    {
+      "name": "concat",
+      "description": "Emit streams sequentially",
+      "category": "combination",
+      "codeExample": "Rx.concat([stream1, stream2])",
+      "detailedDescription": "Emits all items from the first stream before subscribing to subsequent streams."
+    },
+    {
+      "name": "startWith",
+      "description": "Prepend a value to stream",
+      "category": "combination",
+      "codeExample": "stream.startWith(0)",
+      "detailedDescription": "Prepends a specified value to the beginning of the source stream."
+    },
+    {
+      "name": "withLatestFrom",
+      "description": "Combine with latest from another stream",
+      "category": "combination",
+      "codeExample": "source.withLatestFrom(other, (a, b) => '$a$b')",
+      "detailedDescription": "Combines source Observable with latest value from another Observable when source emits."
+    },
+    {
+      "name": "catchError",
+      "description": "Handle errors by returning fallback",
+      "category": "error_handling",
+      "codeExample": "stream.handleError((e) => log(e)).onErrorReturn(0)",
+      "detailedDescription": "Intercepts errors and handles them by returning a fallback Observable or value."
+    },
+    {
+      "name": "retry",
+      "description": "Retry on error N times",
+      "category": "error_handling",
+      "codeExample": "stream.retry(3)",
+      "detailedDescription": "Resubscribes to the source Observable when it encounters an error, up to N times."
+    },
+    {
+      "name": "onErrorReturn",
+      "description": "Replace error with default value",
+      "category": "error_handling",
+      "codeExample": "stream.onErrorReturn(-1)",
+      "detailedDescription": "Replaces an error with a specified default value and completes normally."
+    },
+    {
+      "name": "retryWhen",
+      "description": "Retry with custom logic",
+      "category": "error_handling",
+      "codeExample": "stream.retryWhen((errors) => ...)",
+      "detailedDescription": "Allows custom retry logic, such as exponential backoff, via a notifier stream."
+    },
+    {
+      "name": "delay",
+      "description": "Delay all emissions by duration",
+      "category": "utility",
+      "codeExample": "stream.delay(Duration(milliseconds: 500))",
+      "detailedDescription": "Shifts all emissions forward in time by a specified duration."
+    },
+    {
+      "name": "tap",
+      "description": "Perform side effects per emission",
+      "category": "utility",
+      "codeExample": "stream.doOnData((x) => print(x))",
+      "detailedDescription": "Performs side effects for each emission without modifying the stream itself."
+    },
+    {
+      "name": "materialize",
+      "description": "Wrap emissions in notifications",
+      "category": "utility",
+      "codeExample": "stream.materialize()",
+      "detailedDescription": "Wraps all emissions (next, error, complete) into Notification objects."
+    },
+    {
+      "name": "timestamp",
+      "description": "Attach timestamp to each value",
+      "category": "utility",
+      "codeExample": "stream.timestamp()",
+      "detailedDescription": "Attaches a timestamp to each item emitted by the source Observable."
+    },
+    {
+      "name": "share",
+      "description": "Multicast to multiple subscribers",
+      "category": "utility",
+      "codeExample": "stream.share()",
+      "detailedDescription": "Shares a single subscription to the source stream among multiple subscribers."
+    },
+    {
+      "name": "shareReplay",
+      "description": "Share and cache last N values",
+      "category": "utility",
+      "codeExample": "stream.shareReplay(1)",
+      "detailedDescription": "Shares subscription and replays the last N values to new subscribers."
+    }
+  ]
+}
