@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../common/utils.dart';
+
 class RecipeData {
   final String title;
   final String description;
@@ -41,30 +43,10 @@ class RecipeData {
   }
 
   IconData get iconData {
-    return switch (icon) {
-      'search' => Icons.search,
-      'check_circle' => Icons.check_circle,
-      'refresh' => Icons.refresh,
-      'view_list' => Icons.view_list,
-      'sync' => Icons.sync,
-      'cached' => Icons.cached,
-      'undo' => Icons.undo,
-      'pan_tool' => Icons.pan_tool,
-      _ => Icons.restaurant_menu,
-    };
+    return Utils.getIcon(icon, fallback: Icons.restaurant_menu);
   }
 
   Color get colorValue {
-    return switch (color) {
-      'indigo' => Colors.indigo,
-      'green' => Colors.green,
-      'orange' => Colors.orange,
-      'teal' => Colors.teal,
-      'blue' => Colors.blue,
-      'purple' => Colors.purple,
-      'deepPurple' => Colors.deepPurple,
-      'pink' => Colors.pink,
-      _ => Colors.grey,
-    };
+    return Utils.getColor(color);
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/common.dart';
+
 class QuizQuestion {
   final String type;
   final String category;
@@ -52,32 +54,14 @@ class QuizQuestion {
   }
 
   Color get categoryColor {
-    return switch (category) {
-      'Basics' => Colors.blue,
-      'Operators' => Colors.purple,
-      'Subjects' => Colors.green,
-      'Concepts' => Colors.teal,
-      'Combination' => Colors.indigo,
-      'Practical' => Colors.orange,
-      'Error Handling' => Colors.red,
-      _ => Colors.grey,
-    };
+    return Utils.getCategoryColor(category);
   }
 
   Color get difficultyColor {
-    return switch (difficulty) {
-      'easy' => Colors.green,
-      'medium' => Colors.orange,
-      'hard' => Colors.red,
-      _ => Colors.grey,
-    };
+    return Utils.getCategoryColor(difficulty);
   }
 
   IconData get typeIcon {
-    return switch (type) {
-      'predict_output' => Icons.psychology,
-      'find_bug' => Icons.bug_report,
-      _ => Icons.quiz,
-    };
+    return Utils.getCategoryIcon(type);
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../common/common.dart';
+
 class GlossaryTerm {
   final String term;
   final String definition;
@@ -32,48 +34,10 @@ class GlossaryTerm {
   }
 
   Color get categoryColor {
-    return switch (category) {
-      'Core' => Colors.blue,
-      'Subjects' => Colors.purple,
-      'Concepts' => Colors.teal,
-      'Operators' => Colors.orange,
-      'Transformation' => Colors.indigo,
-      'Filtering' => Colors.green,
-      'Combination' => Colors.cyan,
-      'Aggregate' => Colors.amber,
-      'Conditional' => Colors.deepOrange,
-      'Error Handling' => Colors.red,
-      'Utility' => Colors.blueGrey,
-      'Connectable' => Colors.pink,
-      'Creation' => Colors.lime,
-      'Conversion' => Colors.brown,
-      'Advanced' => Colors.deepPurple,
-      'Patterns' => Colors.green,
-      'Problems' => Colors.red,
-      _ => Colors.grey,
-    };
+    return Utils.getCategoryColor(category);
   }
 
   IconData get categoryIcon {
-    return switch (category) {
-      'Core' => Icons.hub,
-      'Subjects' => Icons.send,
-      'Concepts' => Icons.lightbulb,
-      'Operators' => Icons.build,
-      'Transformation' => Icons.transform,
-      'Filtering' => Icons.filter_alt,
-      'Combination' => Icons.merge,
-      'Aggregate' => Icons.functions,
-      'Conditional' => Icons.alt_route,
-      'Error Handling' => Icons.error,
-      'Utility' => Icons.settings,
-      'Connectable' => Icons.power,
-      'Creation' => Icons.add_circle,
-      'Conversion' => Icons.sync,
-      'Advanced' => Icons.psychology,
-      'Patterns' => Icons.pattern,
-      'Problems' => Icons.warning,
-      _ => Icons.help,
-    };
+    return Utils.getCategoryIcon(category);
   }
 }

@@ -123,18 +123,7 @@ enum OperatorCategory {
   String get label => displayName;
 
   Color get color {
-    return switch (this) {
-      OperatorCategory.creation => Colors.green,
-      OperatorCategory.transformation => AppTheme.marbleColors[0],
-      OperatorCategory.filtering => AppTheme.marbleColors[1],
-      OperatorCategory.combination => AppTheme.marbleColors[6],
-      OperatorCategory.errorHandling => Colors.red,
-      OperatorCategory.utility => AppTheme.marbleColors[7],
-      OperatorCategory.conditional => Colors.indigo,
-      OperatorCategory.aggregate => Colors.purple,
-      OperatorCategory.connectable => Colors.teal,
-      OperatorCategory.conversion => Colors.amber,
-    };
+    return Utils.getCategoryColor(displayName);
   }
 
   static OperatorCategory parse(String value) {
@@ -210,52 +199,10 @@ class OperatorDefinition {
   MarbleStream execute(List<MarbleStream> inputs) => executor(inputs);
 
   IconData get icon {
-    switch (category) {
-      case OperatorCategory.creation:
-        return Icons.add_circle_outline;
-      case OperatorCategory.transformation:
-        return Icons.transform;
-      case OperatorCategory.filtering:
-        return Icons.filter_alt;
-      case OperatorCategory.combination:
-        return Icons.merge;
-      case OperatorCategory.errorHandling:
-        return Icons.healing;
-      case OperatorCategory.utility:
-        return Icons.build;
-      case OperatorCategory.conditional:
-        return Icons.help_outline;
-      case OperatorCategory.aggregate:
-        return Icons.functions;
-      case OperatorCategory.connectable:
-        return Icons.share;
-      case OperatorCategory.conversion:
-        return Icons.swap_horiz;
-    }
+    return Utils.getCategoryIcon(category.displayName);
   }
 
   Color get categoryColor {
-    switch (category) {
-      case OperatorCategory.creation:
-        return Colors.green;
-      case OperatorCategory.transformation:
-        return AppTheme.marbleColors[0];
-      case OperatorCategory.filtering:
-        return AppTheme.marbleColors[1];
-      case OperatorCategory.combination:
-        return AppTheme.marbleColors[6];
-      case OperatorCategory.errorHandling:
-        return Colors.red;
-      case OperatorCategory.utility:
-        return AppTheme.marbleColors[7];
-      case OperatorCategory.conditional:
-        return Colors.indigo;
-      case OperatorCategory.aggregate:
-        return Colors.purple;
-      case OperatorCategory.connectable:
-        return Colors.teal;
-      case OperatorCategory.conversion:
-        return Colors.amber;
-    }
+    return Utils.getCategoryColor(category.displayName);
   }
 }

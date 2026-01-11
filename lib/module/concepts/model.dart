@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../common/common.dart';
+
 class ConceptData {
   final String id;
   final String title;
@@ -41,34 +43,10 @@ class ConceptData {
   }
 
   IconData get iconData {
-    return switch (icon) {
-      'stream' => Icons.stream,
-      'visibility' => Icons.visibility,
-      'link' => Icons.link,
-      'whatshot' => Icons.whatshot,
-      'swap_horiz' => Icons.swap_horiz,
-      'build' => Icons.build,
-      'healing' => Icons.healing,
-      'schedule' => Icons.schedule,
-      'compress' => Icons.compress,
-      'autorenew' => Icons.autorenew,
-      _ => Icons.school,
-    };
+    return Utils.getIcon(icon, fallback: Icons.school);
   }
 
   Color get colorValue {
-    return switch (color) {
-      'blue' => Colors.blue,
-      'green' => Colors.green,
-      'purple' => Colors.purple,
-      'orange' => Colors.orange,
-      'teal' => Colors.teal,
-      'indigo' => Colors.indigo,
-      'red' => Colors.red,
-      'cyan' => Colors.cyan,
-      'amber' => Colors.amber,
-      'brown' => Colors.brown,
-      _ => Colors.grey,
-    };
+    return Utils.getColor(color);
   }
 }
