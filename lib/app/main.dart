@@ -7,6 +7,7 @@ import 'splash.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  ModuleRegistry.register(AntiPatternsModule());
   ModuleRegistry.register(ConceptsModule());
   ModuleRegistry.register(OperatorsModule());
   ModuleRegistry.register(RecipesModule());
